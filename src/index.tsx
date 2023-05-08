@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
-import './index.css';
 
 const router = createBrowserRouter([
   {
