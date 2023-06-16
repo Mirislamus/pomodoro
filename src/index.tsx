@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App';
+import Main from './pages/Main';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <Main />,
   },
 ]);
 

@@ -11,8 +11,8 @@
     "build-storybook": "storybook build",
     "eslint": "eslint --ext .js,jsx,ts,tsx,md src",
     "eslint:fix": "eslint --fix --ext .js,jsx,ts,tsx,md src",
-    "prettier": "prettier --trailing-comma es5 `src/**/*.{js,jsx,ts,tsx,css,less,json}`",
-    "prettier:fix": "prettier --trailing-comma es5 --write `src/**/*.{js,jsx,ts,tsx,css,less,json}`"
+    "prettier": "prettier --trailing-comma es5 \"src/**/*.{js,jsx,ts,tsx,css,less,json}\"",
+    "prettier:fix": "prettier --trailing-comma es5 --write \"src/**/*.{js,jsx,ts,tsx,css,less,json}\""
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md}": [
