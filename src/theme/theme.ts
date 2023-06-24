@@ -5,9 +5,7 @@ import typography from './typography';
 const theme = {
   ...typography,
   components: {},
-  config: {
-    useSystemColorMode: false,
-  },
+  config: {},
   breakpoints,
 };
 
