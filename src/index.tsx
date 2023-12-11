@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client'; // Импортируем createRoot
 
-import './theme/fonts/fonts.css';
+import './theme/typography/fonts.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from './pages/Main';
@@ -14,11 +14,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root') as Element);
+
+root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <RouterProvider router={router} />
     </ChakraProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
