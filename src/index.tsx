@@ -1,6 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client'; // Импортируем createRoot
-
+import { createRoot } from 'react-dom/client';
 import './theme/typography/fonts.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
