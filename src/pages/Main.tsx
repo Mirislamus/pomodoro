@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import { Text } from '@chakra-ui/react';
+import Layout from '../components/Layout/Layout';
+
 const App: FC = () => {
   return (
     <>
-      <Text textStyle="title.lg">123</Text>
+      <Layout>Pomodoro</Layout>
     </>
   );
 };

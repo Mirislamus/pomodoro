@@ -1,9 +1,5 @@
 const spacing = {
   space: {
-    container: {
-      xl: '30px',
-      sm: '16px',
-    },
     gap: {
       4: '4px',
       10: '10px',
