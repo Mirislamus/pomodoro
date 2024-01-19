@@ -1,21 +1,16 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
-const useSetLocalStorage = <T,>(key: string, initialValue: T) => {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
-  });
+const useSetLocalStorage = () => {
+  const setLocalStorageValue = useCallback((key: string, value: any) => {
+    try {
+      const valueToStore = JSON.stringify(value);
+      localStorage.setItem(key, valueToStore);
+    } catch (error) {
+      console.error(`Ошибка при сохранении в localStorage: ${error}`);
+    }
+  }, []);
 
-  const setValue = useCallback(
-    (value: T | ((val: T) => T)) => {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
-      setStoredValue(valueToStore);
-      localStorage.setItem(key, JSON.stringify(valueToStore));
-    },
-    [key, storedValue]
-  );
-
-  return [storedValue, setValue];
+  return setLocalStorageValue;
 };
 
 export default useSetLocalStorage;
