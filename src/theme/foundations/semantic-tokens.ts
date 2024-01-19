@@ -1,8 +1,10 @@
+import { ChakraTheme } from '@chakra-ui/react';
+
 const semanticTokens = {
   colors: {
     primary: {
-      _light: 'black.1',
-      _dark: 'white',
+      _light: 'white',
+      _dark: 'black.1',
     },
     secondary: {
       _light: 'grey.1',
@@ -25,6 +27,6 @@ const semanticTokens = {
       },
     },
   },
-};
+} as ChakraTheme['semanticTokens'];
 
 export default semanticTokens;
