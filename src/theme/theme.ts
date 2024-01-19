@@ -13,15 +13,6 @@ const theme = {
   colors,
   semanticTokens,
   textStyles,
-  styles: {
-    global: {
-      body: {
-        color: 'white',
-        textStyles: 'text.md',
-        letterSpacing: 'normal',
-      },
-    },
-  },
   components: {
     Container: ContainerStyles,
   },
