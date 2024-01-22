@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, FC, Dispatch, SetStateAction, ReactNode } from 'react';
 import useGetLocalStorage from '../hooks/useGetLocalStorage';
 import useSetLocalStorage from '../hooks/useSetLocalStorage';
+import { Stage } from '../typings/enums';
 
 interface SettingsContextType {
   count: number;
@@ -11,6 +12,8 @@ interface SettingsContextType {
   setShortBreak: Dispatch<SetStateAction<number>>;
   longBreak: number;
   setLongBreak: Dispatch<SetStateAction<number>>;
+  stage: Stage;
+  setStage: Dispatch<SetStateAction<Stage>>;
 }
 
 interface SettingsProviderType {
@@ -26,6 +29,8 @@ const SettingsContext = createContext<SettingsContextType>({
   setShortBreak: () => {},
   longBreak: 20,
   setLongBreak: () => {},
+  stage: Stage.Pomodoro,
+  setStage: () => {},
 });
 
 export const useSettings = () => useContext(SettingsContext);
@@ -35,11 +40,13 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
   const initialDuration = useGetLocalStorage<number>('duration', 25);
   const initialShortBreak = useGetLocalStorage<number>('shortBreak', 5);
   const initialLongBreak = useGetLocalStorage<number>('longBreak', 20);
+  const initialStage = useGetLocalStorage<Stage>('stage', Stage.Pomodoro);
 
   const [count, setCount] = useState(initialCount);
   const [duration, setDuration] = useState(initialDuration);
   const [shortBreak, setShortBreak] = useState(initialShortBreak);
   const [longBreak, setLongBreak] = useState(initialLongBreak);
+  const [stage, setStage] = useState(initialStage);
 
   const setLocalStorage = useSetLocalStorage();
 
@@ -48,11 +55,23 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
     setLocalStorage('duration', duration);
     setLocalStorage('shortBreak', shortBreak);
     setLocalStorage('longBreak', longBreak);
-  }, [count, duration, shortBreak, longBreak, useSetLocalStorage]);
+    setLocalStorage('stage', stage);
+  }, [count, duration, shortBreak, longBreak, stage, setLocalStorage]);
 
   return (
     <SettingsContext.Provider
-      value={{ count, setCount, duration, setDuration, shortBreak, setShortBreak, longBreak, setLongBreak }}
+      value={{
+        count,
+        setCount,
+        duration,
+        setDuration,
+        shortBreak,
+        setShortBreak,
+        longBreak,
+        setLongBreak,
+        stage,
+        setStage,
+      }}
     >
       {children}
     </SettingsContext.Provider>
