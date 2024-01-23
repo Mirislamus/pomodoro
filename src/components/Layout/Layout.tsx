@@ -6,7 +6,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <Box
       minHeight="100vh"
-      bgColor="primary"
+      bgColor="background.primary"
       pt={{ base: 'gap.16', md: 'gap.30' }}
       pb={{ base: 'gap.20', md: 'gap.30' }}
     >

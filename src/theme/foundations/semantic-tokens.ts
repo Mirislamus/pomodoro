@@ -3,8 +3,8 @@ import { ChakraTheme } from '@chakra-ui/react';
 const semanticTokens = {
   colors: {
     primary: {
-      _light: 'white',
-      _dark: 'black.1',
+      _light: 'black.1',
+      _dark: 'white',
     },
     secondary: {
       _light: 'grey.1',
@@ -20,10 +20,24 @@ const semanticTokens = {
     background: {
       primary: {
         _light: 'white',
-        _dark: 'black',
+        _dark: 'black.1',
       },
       modal: {
-        default: 'black.alpha',
+        default: 'blackAlpha.50',
+      },
+      button: {
+        default: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.15',
+        },
+        hover: {
+          _light: 'blackAlpha.12',
+          _dark: 'whiteAlpha.20',
+        },
+        focus: {
+          _light: 'blackAlpha.18',
+          _dark: 'whiteAlpha.25',
+        },
       },
     },
   },
