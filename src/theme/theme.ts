@@ -7,6 +7,7 @@ import semanticTokens from './foundations/semantic-tokens';
 import ContainerStyles from './components/Container/Container.styles';
 import spacing from './foundations/spacing';
 import ButtonStyles from './components/Button/Button.styles';
+import DrawerStyles from './components/Drawer/Drawer.styles';
 
 const theme = {
   ...typography,
@@ -27,6 +28,7 @@ const theme = {
   components: {
     Container: ContainerStyles,
     Button: ButtonStyles,
+    Drawer: DrawerStyles,
   },
   config: {
     useSystemColorMode: false,

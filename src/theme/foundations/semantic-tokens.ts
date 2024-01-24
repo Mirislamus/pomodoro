@@ -17,13 +17,17 @@ const semanticTokens = {
     additionaly: {
       default: 'grey.3',
     },
+    border: {
+      _light: 'grey.6',
+      _dark: 'whiteAlpha.10',
+    },
     background: {
       primary: {
         _light: 'white',
         _dark: 'black.1',
       },
-      modal: {
-        default: 'blackAlpha.50',
+      overlay: {
+        _default: 'blackAlpha.50',
       },
       button: {
         default: {

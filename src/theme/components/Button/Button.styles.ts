@@ -1,24 +1,6 @@
 import { defineStyleConfig } from '@chakra-ui/react';
 
 const ButtonStyles = defineStyleConfig({
-  baseStyle: {
-    color: 'primary',
-    borderRadius: '100px',
-    bgColor: 'background.button.default',
-
-    _hover: {
-      bgColor: 'background.button.hover',
-    },
-    _focusVisible: {
-      bgColor: 'background.button.focus',
-    },
-    '.chakra-button__icon': {
-      mr: 'gap.4',
-      svg: {
-        boxSize: '24px',
-      },
-    },
-  },
   sizes: {
     md: {
       px: '20px',
@@ -28,11 +10,27 @@ const ButtonStyles = defineStyleConfig({
     },
   },
   variants: {
-    default: {},
+    default: {
+      color: 'primary',
+      borderRadius: '100px',
+      bgColor: 'background.button.default',
+      '.chakra-button__icon': {
+        mr: 'gap.4',
+        svg: {
+          boxSize: '24px',
+        },
+      },
+      _hover: {
+        bgColor: 'background.button.hover',
+      },
+      _focusVisible: {
+        bgColor: 'background.button.focus',
+      },
+    },
   },
   defaultProps: {
-    variant: 'default',
     size: 'md',
+    variant: 'default',
   },
 });
 
