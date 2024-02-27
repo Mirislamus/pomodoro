@@ -17,6 +17,9 @@ const theme = {
   textStyles,
   styles: {
     global: {
+      body: {
+        bg: 'background.primary',
+      },
       '*': {
         _focusVisible: {
           outline: 'none',

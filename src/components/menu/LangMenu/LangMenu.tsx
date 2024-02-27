@@ -16,15 +16,22 @@ import useGetLocales from '../../../hooks/useGetLocales';
 import LangButton from './LangButton/LangButton';
 import ActionButton from '../../ui-kit/ActionButton/ActionButton';
 import { IconArrow } from '../../../theme/foundations/icons';
+import { useSwipeable } from 'react-swipeable';
 
 const _LangMenu: FC<LangMenuProps> = ({ onClose, ...rest }) => {
   const { t, i18n } = useTranslation();
   const locales = useGetLocales();
 
+  const handlers = useSwipeable({
+    onSwipedRight: () => onClose(),
+    delta: 50,
+    trackMouse: true,
+  });
+
   return (
     <Drawer placement="right" onClose={onClose} {...rest}>
       <DrawerOverlay />
-      <DrawerContent maxW={{ base: '100%', md: '300px' }}>
+      <DrawerContent maxW={{ base: '100%', md: '300px' }} {...handlers}>
         <DrawerHeader
           display="flex"
           justifyContent="space-between"
@@ -66,5 +73,4 @@ const _LangMenu: FC<LangMenuProps> = ({ onClose, ...rest }) => {
 };
 
 const LangMenu = chakra(_LangMenu);
-
 export default LangMenu;

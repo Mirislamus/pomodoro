@@ -5,8 +5,6 @@ import en from './locales/en';
 import ru from './locales/ru';
 import { Locales } from '../typings/enums';
 
-const userLanguage = navigator.language;
-
 i18n
   .use(initReactI18next)
   .use(LanguageDetector)
@@ -23,7 +21,6 @@ i18n
         translation: ru,
       },
     },
-    lng: userLanguage,
     fallbackLng: Locales.En,
     interpolation: {
       escapeValue: false,

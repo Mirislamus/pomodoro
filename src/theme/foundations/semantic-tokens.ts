@@ -26,6 +26,10 @@ const semanticTokens = {
         _light: 'white',
         _dark: 'black.1',
       },
+      secondary: {
+        _light: 'white',
+        _dark: 'black.2',
+      },
       overlay: {
         _default: 'blackAlpha.50',
       },

@@ -2,7 +2,7 @@ import { defineStyleConfig } from '@chakra-ui/react';
 
 const styles = {
   p: 0,
-  bgColor: 'background.primary',
+  bgColor: 'background.secondary',
 };
 
 const DrawerStyles = defineStyleConfig({
