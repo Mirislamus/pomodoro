@@ -1,78 +1,87 @@
-import { createContext, useContext, useState, useEffect, FC, Dispatch, SetStateAction, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, FC, ReactNode } from 'react';
 import useGetLocalStorage from '../hooks/useGetLocalStorage';
 import useSetLocalStorage from '../hooks/useSetLocalStorage';
 import { Stage } from '../typings/enums';
 
-interface SettingsContextType {
+const defaultSettings = {
+  count: 5,
+  duration: 25,
+  shortBreak: 5,
+  longBreak: 20,
+  stage: Stage.Pomodoro,
+};
+
+const defaultSession = {
+  sessionCount: 0,
+  shortBrakeCount: 0,
+  longBrakeCount: 0,
+};
+
+interface Settings {
   count: number;
-  setCount: Dispatch<SetStateAction<number>>;
   duration: number;
-  setDuration: Dispatch<SetStateAction<number>>;
   shortBreak: number;
-  setShortBreak: Dispatch<SetStateAction<number>>;
   longBreak: number;
-  setLongBreak: Dispatch<SetStateAction<number>>;
   stage: Stage;
-  setStage: Dispatch<SetStateAction<Stage>>;
+}
+
+interface Session {
+  sessionCount: number;
+  shortBrakeCount: number;
+  longBrakeCount: number;
+}
+
+interface SettingsContextType {
+  settings: Settings;
+  session: Session;
+  updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
+  updateSession: <K extends keyof Session>(key: K, value: Session[K]) => void;
 }
 
 interface SettingsProviderType {
   children: ReactNode;
 }
 
-const SettingsContext = createContext<SettingsContextType>({
-  count: 5,
-  setCount: () => {},
-  duration: 25,
-  setDuration: () => {},
-  shortBreak: 5,
-  setShortBreak: () => {},
-  longBreak: 20,
-  setLongBreak: () => {},
-  stage: Stage.Pomodoro,
-  setStage: () => {},
-});
+const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
-export const useSettings = () => useContext(SettingsContext);
+export const useSettings = () => {
+  const context = useContext(SettingsContext);
+  if (context === undefined) {
+    throw new Error('useSettings must be used within a SettingsProvider');
+  }
+  return context;
+};
 
 export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
-  const initialCount = useGetLocalStorage<number>('count', 5);
-  const initialDuration = useGetLocalStorage<number>('duration', 25);
-  const initialShortBreak = useGetLocalStorage<number>('shortBreak', 5);
-  const initialLongBreak = useGetLocalStorage<number>('longBreak', 20);
-  const initialStage = useGetLocalStorage<Stage>('stage', Stage.Pomodoro);
+  const [settings, setSettings] = useState<Settings>({
+    count: useGetLocalStorage<number>('count', defaultSettings.count),
+    duration: useGetLocalStorage<number>('duration', defaultSettings.duration),
+    shortBreak: useGetLocalStorage<number>('shortBreak', defaultSettings.shortBreak),
+    longBreak: useGetLocalStorage<number>('longBreak', defaultSettings.longBreak),
+    stage: useGetLocalStorage<Stage>('stage', defaultSettings.stage),
+  });
 
-  const [count, setCount] = useState(initialCount);
-  const [duration, setDuration] = useState(initialDuration);
-  const [shortBreak, setShortBreak] = useState(initialShortBreak);
-  const [longBreak, setLongBreak] = useState(initialLongBreak);
-  const [stage, setStage] = useState(initialStage);
+  const [session, setSession] = useState<Session>(defaultSession);
 
   const setLocalStorage = useSetLocalStorage();
 
+  const updateSetting = <K extends keyof Settings>(key: K, value: Settings[K]) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
+    setLocalStorage(key, value);
+  };
+
+  const updateSession = <K extends keyof Session>(key: K, value: Session[K]) => {
+    setSession(prev => ({ ...prev, [key]: value }));
+  };
+
   useEffect(() => {
-    setLocalStorage('count', count);
-    setLocalStorage('duration', duration);
-    setLocalStorage('shortBreak', shortBreak);
-    setLocalStorage('longBreak', longBreak);
-    setLocalStorage('stage', stage);
-  }, [count, duration, shortBreak, longBreak, stage, setLocalStorage]);
+    Object.entries(settings).forEach(([key, value]) => {
+      setLocalStorage(key, value);
+    });
+  }, [settings, setLocalStorage]);
 
   return (
-    <SettingsContext.Provider
-      value={{
-        count,
-        setCount,
-        duration,
-        setDuration,
-        shortBreak,
-        setShortBreak,
-        longBreak,
-        setLongBreak,
-        stage,
-        setStage,
-      }}
-    >
+    <SettingsContext.Provider value={{ settings, session, updateSetting, updateSession }}>
       {children}
     </SettingsContext.Provider>
   );
