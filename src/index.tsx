@@ -6,7 +6,7 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from './pages/Main';
 import theme from './theme/theme';
-import { SettingsProvider } from './contexts/SettingsContext';
+import { SettingsProvider } from './contexts/SettingsContext/SettingsContext';
 
 const router = createBrowserRouter([
   {

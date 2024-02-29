@@ -1,7 +1,8 @@
-import { createContext, useContext, useState, useEffect, FC, ReactNode } from 'react';
-import useGetLocalStorage from '../hooks/useGetLocalStorage';
-import useSetLocalStorage from '../hooks/useSetLocalStorage';
-import { Stage } from '../typings/enums';
+import { createContext, useContext, useState, useEffect, FC } from 'react';
+import useGetLocalStorage from '../../hooks/useGetLocalStorage';
+import useSetLocalStorage from '../../hooks/useSetLocalStorage';
+import { Stage } from '../../typings/enums';
+import { Session, Settings, SettingsContextType, SettingsProviderType } from './types';
 
 const defaultSettings = {
   count: 5,
@@ -16,31 +17,6 @@ const defaultSession = {
   shortBrakeCount: 0,
   longBrakeCount: 0,
 };
-
-interface Settings {
-  count: number;
-  duration: number;
-  shortBreak: number;
-  longBreak: number;
-  stage: Stage;
-}
-
-interface Session {
-  sessionCount: number;
-  shortBrakeCount: number;
-  longBrakeCount: number;
-}
-
-interface SettingsContextType {
-  settings: Settings;
-  session: Session;
-  updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
-  updateSession: <K extends keyof Session>(key: K, value: Session[K]) => void;
-}
-
-interface SettingsProviderType {
-  children: ReactNode;
-}
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 

@@ -1,4 +1,4 @@
-import { useSettings } from '../contexts/SettingsContext';
+import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { Stage } from '../typings/enums';
 
 const useGetStageColor = () => {
