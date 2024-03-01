@@ -2,6 +2,7 @@ const colors = {
   black: {
     1: '#222222',
     2: '#262324',
+    3: '#333333',
   },
   blackAlpha: {
     8: 'rgba(34, 34, 34, 0.08)',
@@ -22,6 +23,7 @@ const colors = {
     4: '#4E4E4E',
     5: '#434343',
     6: '#EBEBEB',
+    7: '#E9E9E9',
   },
   accent: {
     red: '#ED4455',

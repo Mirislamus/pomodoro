@@ -8,6 +8,7 @@ import ContainerStyles from './components/Container/Container.styles';
 import spacing from './foundations/spacing';
 import ButtonStyles from './components/Button/Button.styles';
 import DrawerStyles from './components/Drawer/Drawer.styles';
+import TooltipStyles from './components/Tooltip/Tooltip.styles';
 
 const theme = {
   ...typography,
@@ -32,6 +33,7 @@ const theme = {
     Container: ContainerStyles,
     Button: ButtonStyles,
     Drawer: DrawerStyles,
+    Tooltip: TooltipStyles,
   },
   config: {
     useSystemColorMode: false,
