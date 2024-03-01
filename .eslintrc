@@ -8,10 +8,24 @@
   ],
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "rules": {
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "proseWrap": "never",
+        "semi": true,
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "jsxSingleQuote": false,
+        "printWidth": 120,
+        "tabWidth": 2,
+        "bracketSpacing": true,
+        "endOfLine": "lf",
+        "arrowParens": "avoid"
+      }
+    ]
   },
   "settings": {
     "react": {
