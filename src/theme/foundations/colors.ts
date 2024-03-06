@@ -29,6 +29,7 @@ const colors = {
     red: '#ED4455',
     yellow: '#EDE644',
     green: '#47ED44',
+    blue: '#4488ED',
   },
 };
 

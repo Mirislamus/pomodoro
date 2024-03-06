@@ -37,6 +37,10 @@ const semanticTokens = {
         _light: 'grey.7',
         _dark: 'black.3',
       },
+      toast: {
+        _light: 'white',
+        _dark: 'grey.5',
+      },
       button: {
         default: {
           _light: 'blackAlpha.8',
