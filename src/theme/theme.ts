@@ -9,6 +9,7 @@ import spacing from './foundations/spacing';
 import ButtonStyles from './components/Button/Button.styles';
 import DrawerStyles from './components/Drawer/Drawer.styles';
 import TooltipStyles from './components/Tooltip/Tooltip.styles';
+import SwitchStyles from './components/Switch/Switch.styles';
 
 const theme = {
   ...typography,
@@ -34,6 +35,7 @@ const theme = {
     Button: ButtonStyles,
     Drawer: DrawerStyles,
     Tooltip: TooltipStyles,
+    Switch: SwitchStyles,
   },
   config: {
     useSystemColorMode: false,

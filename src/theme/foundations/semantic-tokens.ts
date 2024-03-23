@@ -41,6 +41,10 @@ const semanticTokens = {
         _light: 'white',
         _dark: 'grey.5',
       },
+      switch: {
+        _light: 'grey.8',
+        _dark: 'whiteAlpha.15',
+      },
       button: {
         default: {
           _light: 'blackAlpha.8',
