@@ -24,6 +24,7 @@ const colors = {
     5: '#434343',
     6: '#EBEBEB',
     7: '#E9E9E9',
+    8: '#E6E6E6',
   },
   accent: {
     red: '#ED4455',
