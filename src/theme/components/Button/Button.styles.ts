@@ -13,7 +13,7 @@ const ButtonStyles = defineStyleConfig({
     default: {
       color: 'primary',
       borderRadius: '100px',
-      bgColor: 'background.button.default',
+      bgColor: 'background.button.fill.default',
       '.chakra-button__icon': {
         mr: 'gap.4',
         svg: {
@@ -21,10 +21,10 @@ const ButtonStyles = defineStyleConfig({
         },
       },
       _hover: {
-        bgColor: 'background.button.hover',
+        bgColor: 'background.button.fill.hover',
       },
       _focusVisible: {
-        bgColor: 'background.button.focus',
+        bgColor: 'background.button.fill.focus',
       },
     },
   },
