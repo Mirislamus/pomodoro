@@ -46,17 +46,29 @@ const semanticTokens = {
         _dark: 'whiteAlpha.15',
       },
       button: {
-        default: {
-          _light: 'blackAlpha.8',
-          _dark: 'whiteAlpha.15',
+        fill: {
+          default: {
+            _light: 'blackAlpha.8',
+            _dark: 'whiteAlpha.15',
+          },
+          hover: {
+            _light: 'blackAlpha.12',
+            _dark: 'whiteAlpha.20',
+          },
+          focus: {
+            _light: 'blackAlpha.18',
+            _dark: 'whiteAlpha.25',
+          },
         },
-        hover: {
-          _light: 'blackAlpha.12',
-          _dark: 'whiteAlpha.20',
-        },
-        focus: {
-          _light: 'blackAlpha.18',
-          _dark: 'whiteAlpha.25',
+        stroke: {
+          default: {
+            _light: 'blackAlpha.8',
+            _dark: 'whiteAlpha.30',
+          },
+          hover: {
+            _light: 'black.1',
+            _dark: 'white',
+          },
         },
       },
     },

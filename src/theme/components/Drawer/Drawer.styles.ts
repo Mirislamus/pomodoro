@@ -20,12 +20,12 @@ const DrawerStyles = defineStyleConfig({
       borderRadius: '50%',
       boxSize: '40px',
       position: 'static',
-      bgColor: 'background.button.default',
+      bgColor: 'background.button.fill.default',
       _hover: {
-        bgColor: 'background.button.hover',
+        bgColor: 'background.button.fill.hover',
       },
       _focusVisible: {
-        bgColor: 'background.button.focus',
+        bgColor: 'background.button.fill.focus',
       },
     },
   },
