@@ -45,30 +45,40 @@ const semanticTokens = {
         _light: 'grey.8',
         _dark: 'whiteAlpha.15',
       },
-      button: {
-        fill: {
-          default: {
-            _light: 'blackAlpha.8',
-            _dark: 'whiteAlpha.15',
-          },
-          hover: {
-            _light: 'blackAlpha.12',
-            _dark: 'whiteAlpha.20',
-          },
-          focus: {
-            _light: 'blackAlpha.18',
-            _dark: 'whiteAlpha.25',
-          },
+    },
+    button: {
+      fill: {
+        default: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.15',
         },
-        stroke: {
-          default: {
-            _light: 'blackAlpha.8',
-            _dark: 'whiteAlpha.30',
-          },
-          hover: {
-            _light: 'black.1',
-            _dark: 'white',
-          },
+        hover: {
+          _light: 'blackAlpha.12',
+          _dark: 'whiteAlpha.20',
+        },
+        active: {
+          _light: 'blackAlpha.18',
+          _dark: 'whiteAlpha.25',
+        },
+      },
+      stroke: {
+        default: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.30',
+        },
+        hover: {
+          _light: 'black.1',
+          _dark: 'white',
+        },
+      },
+      circle: {
+        default: {
+          _light: 'black.1',
+          _dark: 'white',
+        },
+        text: {
+          _light: 'white',
+          _dark: 'black.1',
         },
       },
     },

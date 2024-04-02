@@ -9,22 +9,22 @@ const ActionButtonStyles = defineStyleConfig({
   },
   variants: {
     fill: {
-      bgColor: 'background.button.fill.default',
+      bgColor: 'button.fill.default',
       _hover: {
-        bgColor: 'background.button.fill.hover',
+        bgColor: 'button.fill.hover',
       },
-      focusVisible: {
-        bgColor: 'background.button.fill.focus',
+      _active: {
+        bgColor: 'button.fill.active',
       },
     },
     stroke: {
       border: '2px solid',
-      borderColor: 'background.button.stroke.default',
+      borderColor: 'button.stroke.default',
       _hover: {
-        borderColor: 'background.button.stroke.hover',
+        borderColor: 'button.stroke.hover',
       },
-      focusVisible: {
-        bgColor: 'background.button.stroke.focus',
+      _active: {
+        bgColor: 'button.stroke.active',
       },
     },
   },

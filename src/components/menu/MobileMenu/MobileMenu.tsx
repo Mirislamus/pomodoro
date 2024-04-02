@@ -36,7 +36,7 @@ const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, ...rest }) 
           <MobileMenuButton onClick={toggleColorMode}>
             <Text>{t(`${colorMode === 'light' ? 'dark_mode' : 'light_mode'}`)}</Text>
             <Flex
-              bgColor="background.button.fill.default"
+              bgColor="button.fill.default"
               alignItems="center"
               justifyContent="center"
               boxSize="36px"
