@@ -18,12 +18,12 @@ const _LangButton: FC<LangButtonProps> = ({ lang, onClick, isActive, ...rest }) 
       borderRadius="10px"
       transition={ease}
       onClick={onClick}
-      bgColor={isActive ? 'background.button.fill.default' : 'none'}
+      bgColor={isActive ? 'button.fill.default' : 'none'}
       _hover={{
-        bgColor: 'background.button.fill.hover',
+        bgColor: 'button.fill.hover',
       }}
-      _focusVisible={{
-        bgColor: 'background.button.fill.focus',
+      _active={{
+        bgColor: 'button.fill.active',
       }}
       {...rest}
     >

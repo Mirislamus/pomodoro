@@ -27,6 +27,12 @@ const colors = {
     7: '#E9E9E9',
     8: '#E6E6E6',
   },
+  accentAlpha: {
+    red: {
+      15: 'rgba(237, 68, 85, 0.15)',
+      60: 'rgba(237, 68, 85, 0.6)',
+    },
+  },
   accent: {
     red: '#ED4455',
     yellow: '#EDE644',
