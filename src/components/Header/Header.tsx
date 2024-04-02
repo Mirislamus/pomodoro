@@ -18,8 +18,6 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
         <IconLogo w="116px" h="50px" stageColor={currentStageColor} />
       </Box>
       <Button
-        variant="circle"
-        size="md"
         leftIcon={<IconLang />}
         textTransform="uppercase"
         display={{ base: 'none', md: 'inline-flex' }}
