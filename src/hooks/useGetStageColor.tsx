@@ -1,18 +1,18 @@
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
-import { Stage } from '../typings/enums';
+import { Stage, StageColor } from '../typings/enums';
 
-const useGetStageColor = () => {
-  const { stage } = useSettings();
+const useGetStageColor = (): StageColor => {
+  const { settings } = useSettings();
 
-  if (stage === Stage.ShortBreak) {
-    return 'accent.yellow';
+  if (settings.stage === Stage.ShortBreak) {
+    return StageColor.ShortBreak;
   }
 
-  if (stage === Stage.LongBreak) {
-    return 'accent.green';
+  if (settings.stage === Stage.LongBreak) {
+    return StageColor.LongBreak;
   }
 
-  return 'accent.red';
+  return StageColor.Pomodoro;
 };
 
 export default useGetStageColor;

@@ -1,19 +1,19 @@
 import { useTranslation } from 'react-i18next';
-import { Locales } from '../typings/enums';
+import { Locale } from '../typings/enums';
 
-const useGetLocales = (lang?: Locales) => {
+const useGetLocales = (lang?: Locale) => {
   const { t, i18n } = useTranslation();
 
   const data = {
     en: {
-      id: Locales.En,
-      name: t(Locales.En),
-      onChangeLang: () => i18n.changeLanguage(Locales.En),
+      id: Locale.En,
+      name: t(Locale.En),
+      onChangeLang: () => i18n.changeLanguage(Locale.En),
     },
     ru: {
-      id: Locales.Ru,
-      name: t(Locales.Ru),
-      onChangeLang: () => i18n.changeLanguage(Locales.Ru),
+      id: Locale.Ru,
+      name: t(Locale.Ru),
+      onChangeLang: () => i18n.changeLanguage(Locale.Ru),
     },
   };
 

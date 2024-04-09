@@ -45,6 +45,10 @@ const semanticTokens = {
         _light: 'grey.8',
         _dark: 'whiteAlpha.15',
       },
+      stageSwitcher: {
+        _light: 'blackAlpha.8',
+        _dark: 'whiteAlpha.15',
+      },
     },
     button: {
       fill: {

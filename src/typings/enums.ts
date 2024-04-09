@@ -4,7 +4,13 @@ export enum Stage {
   LongBreak = 'long-break',
 }
 
-export enum Locales {
+export enum Locale {
   En = 'en',
   Ru = 'ru',
+}
+
+export enum StageColor {
+  Pomodoro = 'accent.red',
+  ShortBreak = 'accent.yellow',
+  LongBreak = 'accent.green',
 }

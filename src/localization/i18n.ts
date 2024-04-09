@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import en from './locales/en';
 import ru from './locales/ru';
-import { Locales } from '../typings/enums';
+import { Locale } from '../typings/enums';
 
 i18n
   .use(initReactI18next)
@@ -21,7 +21,7 @@ i18n
         translation: ru,
       },
     },
-    fallbackLng: Locales.En,
+    fallbackLng: Locale.En,
     interpolation: {
       escapeValue: false,
     },

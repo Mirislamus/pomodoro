@@ -25,6 +25,12 @@ const ButtonStyles = defineStyleConfig({
       fontWeight: 400,
       fontSize: '14px',
     },
+    xs: {
+      px: '20px',
+      h: '44px',
+      fontWeight: 400,
+      fontSize: '14px',
+    },
   },
   variants: {
     primary: {
