@@ -18,11 +18,10 @@ export type Session = {
 export interface SettingsContextType {
   settings: Settings;
   session: Session;
-  updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
-  updateSession: <K extends keyof Session>(key: K, value: Session[K]) => void;
+  setSettings: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
+  setSession: <K extends keyof Session>(key: K, value: Session[K]) => void;
 }
 
 export interface SettingsProviderType {
   children: ReactNode;
 }
-e;

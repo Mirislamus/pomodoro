@@ -65,6 +65,19 @@ const ButtonStyles = defineStyleConfig({
         color: 'accent.red',
       },
     },
+    ghost: {
+      color: 'primary',
+      borderRadius: '100px',
+      _hover: {
+        opacity: 0.7,
+      },
+      _active: {
+        opacity: 0.8,
+      },
+      ':hover, :active, :focus, :focus-visible': {
+        bgColor: 'transparent',
+      },
+    },
     circle: {
       boxSize: '100px',
       borderRadius: '50%',

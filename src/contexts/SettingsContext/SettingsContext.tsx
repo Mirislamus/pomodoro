@@ -41,7 +41,7 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
 
   const setLocalStorage = useSetLocalStorage();
 
-  const updateSetting = <K extends keyof Settings>(key: K, value: Settings[K]) => {
+  const updateSettings = <K extends keyof Settings>(key: K, value: Settings[K]) => {
     setSettings(prev => ({ ...prev, [key]: value }));
     setLocalStorage(key, value);
   };
@@ -57,7 +57,7 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
   }, [settings, setLocalStorage]);
 
   return (
-    <SettingsContext.Provider value={{ settings, session, updateSetting, updateSession }}>
+    <SettingsContext.Provider value={{ settings, session, setSettings: updateSettings, setSession: updateSession }}>
       {children}
     </SettingsContext.Provider>
   );

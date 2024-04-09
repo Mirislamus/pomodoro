@@ -75,6 +75,10 @@ const semanticTokens = {
           _dark: 'white',
         },
       },
+      ghostActive: {
+        _light: 'white',
+        _dark: 'black.1',
+      },
       circle: {
         default: {
           _light: 'black.1',
