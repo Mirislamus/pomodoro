@@ -24,7 +24,7 @@ const semanticTokens = {
     background: {
       primary: {
         _light: 'white',
-        _dark: 'black.1',
+        _dark: 'black',
       },
       secondary: {
         _light: 'white',
@@ -88,6 +88,16 @@ const semanticTokens = {
           _light: 'white',
           _dark: 'black.1',
         },
+      },
+    },
+    circle: {
+      primary: {
+        _light: 'blackAlpha.8',
+        _dark: 'whiteAlpha.20',
+      },
+      secondary: {
+        _light: 'black.1',
+        _dark: 'white',
       },
     },
   },

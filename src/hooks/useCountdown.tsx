@@ -1,31 +1,61 @@
 import { useState, useEffect, useCallback } from 'react';
+import { noop } from '../utils/noop';
 
-const useCountdown = (milliseconds: number) => {
-  const [endTime, setEndTime] = useState(Date.now() + milliseconds);
-  const [isActive, setIsActive] = useState(false);
+interface UseCountdownOptions {
+  milliseconds: number;
+  isPlaying?: boolean;
+  onComplete?: () => void;
+  onPlaying?: () => void;
+}
 
-  const getRemainingTime = () => {
+interface CountdownState {
+  countdown: number;
+  percentElapsed: number;
+  isPlaying: boolean;
+  startTimer: () => void;
+  stopTimer: () => void;
+  resetTimer: () => void;
+}
+
+const useCountdown = (options: UseCountdownOptions): CountdownState => {
+  const { milliseconds, onComplete = noop, onPlaying = noop } = options;
+  const [endTime, setEndTime] = useState<number>(Date.now() + milliseconds);
+  const [isPlaying, setIsPlaying] = useState<boolean>(options.isPlaying ?? false);
+
+  const getRemainingTime = (): number => {
     const now = Date.now();
     return Math.max(endTime - now, 0);
   };
 
-  const [countdown, setCountdown] = useState(getRemainingTime());
-  const [percentElapsed, setPercentElapsed] = useState(0);
+  const [countdown, setCountdown] = useState<number>(getRemainingTime());
+  const [percentElapsed, setPercentElapsed] = useState<number>(0);
 
-  const updatePercentElapsed = () => {
+  const updatePercentElapsed = (): void => {
     const elapsed = milliseconds - getRemainingTime();
     setPercentElapsed((elapsed / milliseconds) * 100);
   };
 
   const startTimer = useCallback(() => {
     setEndTime(Date.now() + milliseconds);
-    setIsActive(true);
+    setIsPlaying(true);
+    if (onPlaying) {
+      onPlaying();
+    }
+  }, [milliseconds, onPlaying]);
+
+  const stopTimer = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
+  const resetTimer = useCallback(() => {
+    setEndTime(Date.now() + milliseconds);
+    setCountdown(milliseconds);
+    setPercentElapsed(0);
+    setIsPlaying(false);
   }, [milliseconds]);
 
   useEffect(() => {
-    if (!isActive) {
-      setCountdown(milliseconds);
-      setPercentElapsed(0);
+    if (!isPlaying) {
       return;
     }
 
@@ -36,14 +66,24 @@ const useCountdown = (milliseconds: number) => {
 
       if (remaining <= 0) {
         clearInterval(intervalId);
-        setIsActive(false);
+        setIsPlaying(false);
+        if (onComplete) {
+          onComplete();
+        }
       }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [isActive, milliseconds, endTime]);
+  }, [isPlaying, milliseconds, endTime, onComplete]);
 
-  return { countdown, percentElapsed, startTimer };
+  return {
+    countdown,
+    percentElapsed,
+    isPlaying,
+    startTimer,
+    stopTimer,
+    resetTimer,
+  };
 };
 
 export default useCountdown;

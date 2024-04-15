@@ -17,7 +17,10 @@ const _Timer: FC = () => {
     countdown: countdownPomodoro,
     percentElapsed: percentElapsedPomodoro,
     startTimer: startPomodoro,
-  } = useCountdown(settings.duration);
+    isPlaying: isPlayingPomodoro,
+  } = useCountdown({ milliseconds: settings.duration });
+
+  console.log(isPlayingPomodoro);
 
   console.log(formatMilliseconds(countdownPomodoro));
 
@@ -46,7 +49,7 @@ const _Timer: FC = () => {
         ]}
       />
       {formatMilliseconds(countdownPomodoro)}
-      <CircleTimer fillPercentage={percentElapsedPomodoro} stage={settings.stage} />
+      <CircleTimer isPlaying={isPlayingPomodoro} fillPercentage={percentElapsedPomodoro} />
       <button type="button" onClick={startPomodoro}>
         123
       </button>
