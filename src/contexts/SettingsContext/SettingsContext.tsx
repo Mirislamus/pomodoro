@@ -6,9 +6,9 @@ import { Session, Settings, SettingsContextType, SettingsProviderType } from './
 
 const defaultSettings = {
   count: 5,
-  duration: 25,
-  shortBreak: 5,
-  longBreak: 20,
+  duration: 25 * (60 * 1000),
+  shortBreak: 5 * (60 * 1000),
+  longBreak: 20 * (60 * 1000),
   stage: Stage.Pomodoro,
 };
 
