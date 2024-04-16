@@ -2,13 +2,13 @@ import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { Stage, StageColor } from '../typings/enums';
 
 const useGetStageColor = (): StageColor => {
-  const { settings } = useSettings();
+  const { session } = useSettings();
 
-  if (settings.stage === Stage.ShortBreak) {
+  if (session.stage === Stage.ShortBreak) {
     return StageColor.ShortBreak;
   }
 
-  if (settings.stage === Stage.LongBreak) {
+  if (session.stage === Stage.LongBreak) {
     return StageColor.LongBreak;
   }
 

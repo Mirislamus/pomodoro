@@ -4,18 +4,19 @@ import useSetLocalStorage from '../../hooks/useSetLocalStorage';
 import { Stage } from '../../typings/enums';
 import { Session, Settings, SettingsContextType, SettingsProviderType } from './types';
 
-const defaultSettings = {
+const defaultSettings: Settings = {
   count: 5,
   duration: 25 * (60 * 1000),
   shortBreak: 5 * (60 * 1000),
   longBreak: 20 * (60 * 1000),
-  stage: Stage.Pomodoro,
 };
 
-const defaultSession = {
-  sessionCount: 0,
-  shortBrakeCount: 0,
-  longBrakeCount: 0,
+const defaultSession: Session = {
+  sessionCount: 1,
+  stage: Stage.Pomodoro,
+  pomodoroCurrentTime: 0,
+  shortBrakeCurrentTime: 0,
+  longBrakeCurrentTime: 0,
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -34,10 +35,15 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
     duration: useGetLocalStorage<number>('duration', defaultSettings.duration),
     shortBreak: useGetLocalStorage<number>('shortBreak', defaultSettings.shortBreak),
     longBreak: useGetLocalStorage<number>('longBreak', defaultSettings.longBreak),
-    stage: useGetLocalStorage<Stage>('stage', defaultSettings.stage),
   });
 
-  const [session, setSession] = useState<Session>(defaultSession);
+  const [session, setSession] = useState<Session>({
+    sessionCount: useGetLocalStorage<number>('sessionCount', defaultSession.sessionCount),
+    stage: useGetLocalStorage<Stage>('stage', defaultSession.stage),
+    pomodoroCurrentTime: useGetLocalStorage<number>('pomodoroCurrentTime', defaultSession.pomodoroCurrentTime),
+    shortBrakeCurrentTime: useGetLocalStorage<number>('shortBrakeCurrentTime', defaultSession.shortBrakeCurrentTime),
+    longBrakeCurrentTime: useGetLocalStorage<number>('longBrakeCurrentTime', defaultSession.longBrakeCurrentTime),
+  });
 
   const setLocalStorage = useSetLocalStorage();
 
@@ -55,6 +61,12 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
       setLocalStorage(key, value);
     });
   }, [settings, setLocalStorage]);
+
+  useEffect(() => {
+    Object.entries(session).forEach(([key, value]) => {
+      setLocalStorage(key, value);
+    });
+  }, [session, setLocalStorage]);
 
   return (
     <SettingsContext.Provider value={{ settings, session, setSettings: updateSettings, setSession: updateSession }}>

@@ -6,13 +6,14 @@ export type Settings = {
   duration: number;
   shortBreak: number;
   longBreak: number;
-  stage: Stage;
 };
 
 export type Session = {
   sessionCount: number;
-  shortBrakeCount: number;
-  longBrakeCount: number;
+  pomodoroCurrentTime: number;
+  shortBrakeCurrentTime: number;
+  longBrakeCurrentTime: number;
+  stage: Stage;
 };
 
 export interface SettingsContextType {

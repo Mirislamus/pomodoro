@@ -3,7 +3,6 @@ import { noop } from '../utils/noop';
 
 interface UseCountdownOptions {
   milliseconds: number;
-  isPlaying?: boolean;
   onComplete?: () => void;
   onPlaying?: () => void;
 }
@@ -13,14 +12,14 @@ interface CountdownState {
   percentElapsed: number;
   isPlaying: boolean;
   startTimer: () => void;
-  stopTimer: () => void;
+  pauseTimer: () => void;
   resetTimer: () => void;
 }
 
 const useCountdown = (options: UseCountdownOptions): CountdownState => {
   const { milliseconds, onComplete = noop, onPlaying = noop } = options;
-  const [endTime, setEndTime] = useState<number>(Date.now() + milliseconds);
-  const [isPlaying, setIsPlaying] = useState<boolean>(options.isPlaying ?? false);
+  const [endTime, setEndTime] = useState<number>(Date.now() + milliseconds + 100);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const getRemainingTime = (): number => {
     const now = Date.now();
@@ -31,24 +30,22 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
   const [percentElapsed, setPercentElapsed] = useState<number>(0);
 
   const updatePercentElapsed = (): void => {
-    const elapsed = milliseconds - getRemainingTime();
+    const elapsed = milliseconds - countdown;
     setPercentElapsed((elapsed / milliseconds) * 100);
   };
 
   const startTimer = useCallback(() => {
-    setEndTime(Date.now() + milliseconds);
+    setEndTime(Date.now() + countdown);
     setIsPlaying(true);
-    if (onPlaying) {
-      onPlaying();
-    }
-  }, [milliseconds, onPlaying]);
+    onPlaying();
+  }, [countdown, onPlaying]);
 
-  const stopTimer = useCallback(() => {
+  const pauseTimer = useCallback(() => {
     setIsPlaying(false);
   }, []);
 
   const resetTimer = useCallback(() => {
-    setEndTime(Date.now() + milliseconds);
+    setEndTime(Date.now() + milliseconds + 100);
     setCountdown(milliseconds);
     setPercentElapsed(0);
     setIsPlaying(false);
@@ -67,21 +64,19 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
       if (remaining <= 0) {
         clearInterval(intervalId);
         setIsPlaying(false);
-        if (onComplete) {
-          onComplete();
-        }
+        onComplete();
       }
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [isPlaying, milliseconds, endTime, onComplete]);
+  }, [isPlaying, endTime, onComplete]);
 
   return {
     countdown,
     percentElapsed,
     isPlaying,
     startTimer,
-    stopTimer,
+    pauseTimer,
     resetTimer,
   };
 };

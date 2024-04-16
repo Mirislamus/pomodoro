@@ -9,6 +9,9 @@ const en = {
   pomodoro: 'Pomodoro',
   short_break: 'Short break',
   long_break: 'Long break',
+  of: 'of',
+  start: 'Start',
+  pause: 'Pause',
 };
 
 export default en;

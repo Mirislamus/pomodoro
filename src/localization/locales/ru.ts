@@ -9,6 +9,9 @@ const ru = {
   pomodoro: 'Помодоро',
   short_break: 'Короткий перерыв',
   long_break: 'Длинный перерыв',
+  of: 'из',
+  start: 'Старт',
+  pause: 'Пауза',
 };
 
 export default ru;

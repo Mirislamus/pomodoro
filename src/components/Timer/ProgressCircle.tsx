@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { Box, chakra, useToken } from '@chakra-ui/react';
 import useGetStageColor from '../../hooks/useGetStageColor';
 
-interface CircleTimerProps {
+interface ProgressCircleProps {
   fillPercentage: number;
   isPlaying?: boolean;
 }
 
-const _CircleTimer: FC<CircleTimerProps> = ({ fillPercentage, isPlaying = false, ...props }) => {
+const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isPlaying = false, ...props }) => {
   const radius = 230;
   const strokeWidth = 36;
   const circumference = 2 * Math.PI * radius;
@@ -54,5 +54,5 @@ const _CircleTimer: FC<CircleTimerProps> = ({ fillPercentage, isPlaying = false,
   );
 };
 
-const CircleTimer = chakra(_CircleTimer);
-export default CircleTimer;
+const ProgressCircle = chakra(_ProgressCircle);
+export default ProgressCircle;
