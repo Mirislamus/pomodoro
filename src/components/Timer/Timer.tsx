@@ -8,48 +8,96 @@ import ProgressCircle from './ProgressCircle';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconRestart, IconSkip } from '../../theme/foundations/icons';
 import { Stage } from '../../typings/enums';
+import useGetStageColor from '../../hooks/useGetStageColor';
+import getTextColor from '../../utils/getTextColor';
+import getPercent from '../../utils/getPercent';
 
 const _Timer: FC = () => {
   const { settings, session, setSession } = useSettings();
+  const stageColor = useGetStageColor();
 
   const {
     countdown: countdownPomodoro,
-    percentElapsed: percentElapsedPomodoro,
     startTimer: startPomodoro,
     isPlaying: isPlayingPomodoro,
     pauseTimer: pausePomodoro,
     resetTimer: resetPomodoro,
-  } = useCountdown({ milliseconds: settings.duration });
+  } = useCountdown({
+    maxMilliseconds: settings.duration,
+    currentMilliseconds: session.pomodoroCurrentTime,
+    onComplete: () => {
+      setSession('pomodoroCurrentTime', 0);
+      if (session.sessionCount >= settings.count) {
+        setSession('stage', Stage.LongBreak);
+      } else {
+        setSession('stage', Stage.ShortBreak);
+      }
+    },
+  });
 
   const {
     countdown: countdownShortBreak,
-    percentElapsed: percentElapsedShortBreak,
     startTimer: startShortBreak,
     isPlaying: isPlayingShortBreak,
     pauseTimer: pauseShortBreak,
     resetTimer: resetShortBreak,
-  } = useCountdown({ milliseconds: settings.shortBreak });
+  } = useCountdown({
+    maxMilliseconds: settings.shortBreak,
+    currentMilliseconds: session.shortBrakeCurrentTime,
+    onComplete: () => {
+      setSession('shortBrakeCurrentTime', 0);
+      if (session.sessionCount <= settings.count) {
+        setSession('sessionCount', session.sessionCount + 1);
+        setSession('stage', Stage.Pomodoro);
+      }
+    },
+  });
 
   const {
     countdown: countdownLongBreak,
-    percentElapsed: percentElapsedLongBreak,
     startTimer: startLongBreak,
     isPlaying: isPlayingLongBreak,
     pauseTimer: pauseLongBreak,
     resetTimer: resetLongBreak,
-  } = useCountdown({ milliseconds: settings.longBreak });
+  } = useCountdown({
+    maxMilliseconds: settings.longBreak,
+    currentMilliseconds: session.longBrakeCurrentTime,
+    onComplete: () => {
+      setSession('longBrakeCurrentTime', 0);
+      setSession('sessionCount', 1);
+      setSession('stage', Stage.Pomodoro);
+    },
+  });
 
-  useEffect(() => { }, []);
+  useEffect(() => {
+    if (countdownPomodoro > 0 && isPlayingPomodoro) {
+      setSession('pomodoroCurrentTime', countdownPomodoro);
+    }
+  }, [countdownPomodoro, isPlayingPomodoro]);
+
+  useEffect(() => {
+    if (countdownShortBreak > 0 && isPlayingShortBreak) {
+      setSession('shortBrakeCurrentTime', countdownShortBreak);
+    }
+  }, [countdownShortBreak, isPlayingShortBreak]);
+
+  useEffect(() => {
+    if (countdownLongBreak > 0 && isPlayingLongBreak) {
+      setSession('longBrakeCurrentTime', countdownLongBreak);
+    }
+  }, [countdownLongBreak, isPlayingLongBreak]);
 
   const onSkipButtonClickHandler = () => {
     if (session.stage === Stage.Pomodoro) {
-      resetPomodoro();
-      setSession('stage', Stage.ShortBreak);
-    } else if (session.stage === Stage.ShortBreak) {
-      resetShortBreak();
       if (session.sessionCount >= settings.count) {
         setSession('stage', Stage.LongBreak);
       } else {
+        resetPomodoro();
+        setSession('stage', Stage.ShortBreak);
+      }
+    } else if (session.stage === Stage.ShortBreak) {
+      resetShortBreak();
+      if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
         setSession('stage', Stage.Pomodoro);
       }
@@ -63,10 +111,13 @@ const _Timer: FC = () => {
   const onResetButtonClickHandler = () => {
     if (session.stage === Stage.Pomodoro) {
       resetPomodoro();
+      setSession('pomodoroCurrentTime', settings.duration);
     } else if (session.stage === Stage.ShortBreak) {
       resetShortBreak();
+      setSession('shortBrakeCurrentTime', settings.shortBreak);
     } else {
       resetLongBreak();
+      setSession('longBrakeCurrentTime', settings.longBreak);
     }
   };
 
@@ -90,17 +141,19 @@ const _Timer: FC = () => {
     }
   };
 
-  const getCurrentPercentElapsed = () => {
+  const currentPercent = () => {
     if (session.stage === Stage.Pomodoro) {
-      return percentElapsedPomodoro;
+      return getPercent(session.pomodoroCurrentTime, settings.duration);
     } else if (session.stage === Stage.ShortBreak) {
-      return percentElapsedShortBreak;
+      return getPercent(session.shortBrakeCurrentTime, settings.shortBreak);
     } else {
-      return percentElapsedLongBreak;
+      return getPercent(session.longBrakeCurrentTime, settings.longBreak);
     }
   };
 
-  const getCurrentPlaying = () => {
+  console.log('currentPercent', currentPercent());
+
+  const getIsCurrentPlaying = () => {
     if (session.stage === Stage.Pomodoro) {
       return isPlayingPomodoro;
     } else if (session.stage === Stage.ShortBreak) {
@@ -110,10 +163,19 @@ const _Timer: FC = () => {
     }
   };
 
+  const getToggleButtonStyles = () => {
+    if (getIsCurrentPlaying()) {
+      return {
+        bgColor: stageColor,
+        color: getTextColor(session.stage),
+      };
+    }
+  };
+
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" paddingBlockStart="30px">
       <Flex alignItems="center" justifyContent="center" pos="relative" w="fit-content" m="auto">
-        <ProgressCircle isPlaying={isPlayingPomodoro} fillPercentage={getCurrentPercentElapsed()} />
+        <ProgressCircle isActive={getIsCurrentPlaying()} fillPercentage={currentPercent()} />
         <Flex pos="absolute" w="fit-content" flexDirection="column" justifyContent="center" alignItems="center">
           <Text textStyle="text.xl" fontWeight="400" marginBlockEnd="65px">
             {session.sessionCount} {t('of')} {settings.count}
@@ -123,10 +185,10 @@ const _Timer: FC = () => {
           </Text>
           <HStack spacing="20px">
             <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
-            <Button variant="circle" size="lg" onClick={onToggleButtonClickHandler}>
-              {getCurrentPlaying() ? t('pause') : t('start')}
+            <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
+              {getIsCurrentPlaying() ? t('pause') : t('start')}
             </Button>
-            <ActionButton icon={IconSkip} onClick={onSkipButtonClickHandler} />
+            <ActionButton icon={IconSkip} isDisabled={!getIsCurrentPlaying()} onClick={onSkipButtonClickHandler} />
           </HStack>
         </Flex>
       </Flex>

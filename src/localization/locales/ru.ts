@@ -12,6 +12,7 @@ const ru = {
   of: 'из',
   start: 'Старт',
   pause: 'Пауза',
+  resume: 'Продолжить',
 };
 
 export default ru;

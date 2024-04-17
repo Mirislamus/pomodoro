@@ -6,9 +6,9 @@ import { Session, Settings, SettingsContextType, SettingsProviderType } from './
 
 const defaultSettings: Settings = {
   count: 5,
-  duration: 25 * (60 * 1000),
-  shortBreak: 5 * (60 * 1000),
-  longBreak: 20 * (60 * 1000),
+  duration: 0.3 * (60 * 1000),
+  shortBreak: 0.1 * (60 * 1000),
+  longBreak: 0.2 * (60 * 1000),
 };
 
 const defaultSession: Session = {

@@ -6,6 +6,7 @@ const ActionButtonStyles = defineStyleConfig({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '50%',
+
   },
   variants: {
     fill: {
@@ -16,6 +17,11 @@ const ActionButtonStyles = defineStyleConfig({
       _active: {
         bgColor: 'button.fill.active',
       },
+      _disabled: {
+        cursor: 'not-allowed',
+        opacity: '0.7',
+        pointerEvents: 'none',
+      },
     },
     stroke: {
       border: '2px solid',
@@ -25,6 +31,11 @@ const ActionButtonStyles = defineStyleConfig({
       },
       _active: {
         bgColor: 'button.stroke.active',
+      },
+      _disabled: {
+        cursor: 'not-allowed',
+        opacity: '0.7',
+        pointerEvents: 'none',
       },
     },
   },

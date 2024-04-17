@@ -41,6 +41,7 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
             isActive: session.stage === Stage.LongBreak,
           },
         ]}
+        display={{ base: 'none', lg: 'flex' }}
       />
       <Button
         leftIcon={<IconLang />}

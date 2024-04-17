@@ -12,6 +12,7 @@ const en = {
   of: 'of',
   start: 'Start',
   pause: 'Pause',
+  resume: 'Resume',
 };
 
 export default en;

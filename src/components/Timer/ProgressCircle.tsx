@@ -4,15 +4,16 @@ import useGetStageColor from '../../hooks/useGetStageColor';
 
 interface ProgressCircleProps {
   fillPercentage: number;
-  isPlaying?: boolean;
+  isActive?: boolean;
 }
 
-const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isPlaying = false, ...props }) => {
+const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isActive = false, ...props }) => {
   const radius = 230;
   const strokeWidth = 36;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = ((100 - fillPercentage) / 100) * circumference;
   const stageColor = useGetStageColor();
+
   const [circlePrimary, circleSecondary, currentStageColor] = useToken('colors', [
     'circle.primary',
     'circle.secondary',
@@ -37,7 +38,7 @@ const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isPlaying = 
           cy="250"
           r={radius}
           fill="none"
-          stroke={isPlaying ? currentStageColor : circleSecondary}
+          stroke={fillPercentage > 0 && isActive ? currentStageColor : circleSecondary}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
