@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface MobileMenuButtonProps {
+export interface CircleButtonProps {
   onClick: () => void;
   children: ReactNode;
 }

@@ -1,8 +1,8 @@
 import { Flex, chakra } from '@chakra-ui/react';
 import { FC } from 'react';
-import { MobileMenuButtonProps } from './types';
+import { CircleButtonProps } from './types';
 
-const _MobileMenuButton: FC<MobileMenuButtonProps> = ({ children, onClick, ...rest }) => {
+const _CircleButton: FC<CircleButtonProps> = ({ children, onClick, ...rest }) => {
   return (
     <Flex
       as="button"
@@ -19,5 +19,5 @@ const _MobileMenuButton: FC<MobileMenuButtonProps> = ({ children, onClick, ...re
   );
 };
 
-const MobileMenuButton = chakra(_MobileMenuButton);
-export default MobileMenuButton;
+const CircleButton = chakra(_CircleButton);
+export default CircleButton;

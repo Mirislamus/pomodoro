@@ -18,7 +18,7 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
       <Box
         as={Link}
         to="/"
-        display={{ base: 'none', md: 'inline-flex' }}
+        display="inline-flex"
         color="primary"
         sx={{ svg: { maxW: '100%', h: 'auto' } }}
         w={{ base: '100px', md: '116px' }}
