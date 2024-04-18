@@ -11,6 +11,7 @@ import { Stage } from '../../typings/enums';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import getTextColor from '../../utils/getTextColor';
 import getPercent from '../../utils/getPercent';
+import StageSwitcher from '../StageSwitcher/StageSwitcher';
 
 const _Timer: FC = () => {
   const { settings, session, setSession } = useSettings();
@@ -141,7 +142,7 @@ const _Timer: FC = () => {
     }
   };
 
-  const currentPercent = () => {
+  const getCurrentPercent = () => {
     if (session.stage === Stage.Pomodoro) {
       return getPercent(session.pomodoroCurrentTime, settings.duration);
     } else if (session.stage === Stage.ShortBreak) {
@@ -150,8 +151,6 @@ const _Timer: FC = () => {
       return getPercent(session.longBrakeCurrentTime, settings.longBreak);
     }
   };
-
-  console.log('currentPercent', currentPercent());
 
   const getIsCurrentPlaying = () => {
     if (session.stage === Stage.Pomodoro) {
@@ -173,9 +172,47 @@ const _Timer: FC = () => {
   };
 
   return (
-    <Flex flexDirection="column" paddingBlockStart="30px">
+    <Flex flexDirection="column" paddingBlockStart="gap.30">
+      <StageSwitcher
+        pos="absolute"
+        top={{ base: 'gap.16', md: 'gap.30' }}
+        left="0"
+        right="0"
+        mx="auto"
+        stageColor={stageColor}
+        stages={[
+          {
+            text: t('pomodoro'),
+            onClick: () => {
+              resetPomodoro();
+              setSession('pomodoroCurrentTime', 0);
+              setSession('stage', Stage.Pomodoro);
+            },
+            isActive: session.stage === Stage.Pomodoro,
+          },
+          {
+            text: t('short_break'),
+            onClick: () => {
+              resetShortBreak();
+              setSession('shortBrakeCurrentTime', 0);
+              setSession('stage', Stage.ShortBreak);
+            },
+            isActive: session.stage === Stage.ShortBreak,
+          },
+          {
+            text: t('long_break'),
+            onClick: () => {
+              resetLongBreak();
+              setSession('longBrakeCurrentTime', 0);
+              setSession('stage', Stage.LongBreak);
+            },
+            isActive: session.stage === Stage.LongBreak,
+          },
+        ]}
+        display={{ base: 'none', md: 'flex' }}
+      />
       <Flex alignItems="center" justifyContent="center" pos="relative" w="fit-content" m="auto">
-        <ProgressCircle isActive={getIsCurrentPlaying()} fillPercentage={currentPercent()} />
+        <ProgressCircle isActive={getIsCurrentPlaying()} fillPercentage={getCurrentPercent()} />
         <Flex pos="absolute" w="fit-content" flexDirection="column" justifyContent="center" alignItems="center">
           <Text textStyle="text.xl" fontWeight="400" marginBlockEnd="65px">
             {session.sessionCount} {t('of')} {settings.count}
