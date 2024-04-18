@@ -28,11 +28,13 @@ const _Timer: FC = () => {
     currentMilliseconds: session.pomodoroCurrentTime,
     onComplete: () => {
       setSession('pomodoroCurrentTime', 0);
-      if (session.sessionCount >= settings.count) {
-        setSession('stage', Stage.LongBreak);
-      } else {
-        setSession('stage', Stage.ShortBreak);
-      }
+      setTimeout(() => {
+        if (session.sessionCount >= settings.count) {
+          setSession('stage', Stage.LongBreak);
+        } else {
+          setSession('stage', Stage.ShortBreak);
+        }
+      }, 1000);
     },
   });
 
@@ -49,7 +51,9 @@ const _Timer: FC = () => {
       setSession('shortBrakeCurrentTime', 0);
       if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
-        setSession('stage', Stage.Pomodoro);
+        setTimeout(() => {
+          setSession('stage', Stage.Pomodoro);
+        }, 1000);
       }
     },
   });
@@ -66,7 +70,9 @@ const _Timer: FC = () => {
     onComplete: () => {
       setSession('longBrakeCurrentTime', 0);
       setSession('sessionCount', 1);
-      setSession('stage', Stage.Pomodoro);
+      setTimeout(() => {
+        setSession('stage', Stage.Pomodoro);
+      }, 1000);
     },
   });
 
