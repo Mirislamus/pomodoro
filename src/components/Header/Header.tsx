@@ -6,6 +6,7 @@ import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconLang, IconLogo, IconMenu } from '../../theme/foundations/icons';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
   const stageColor = useGetStageColor();
@@ -14,7 +15,14 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
 
   return (
     <Flex as="header" alignItems="center" justifyContent="space-between" {...rest}>
-      <Box color="primary" sx={{ svg: { maxW: '100%', h: 'auto' } }} w={{ base: '100px', md: '116px' }}>
+      <Box
+        as={Link}
+        to="/"
+        display={{ base: 'none', md: 'inline-flex' }}
+        color="primary"
+        sx={{ svg: { maxW: '100%', h: 'auto' } }}
+        w={{ base: '100px', md: '116px' }}
+      >
         <IconLogo w="116px" h="50px" stageColor={currentStageColor} />
       </Box>
       <Button
