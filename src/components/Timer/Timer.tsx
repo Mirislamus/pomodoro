@@ -172,14 +172,14 @@ const _Timer: FC = () => {
   };
 
   return (
-    <Flex flexDirection="column" paddingBlockStart="gap.30">
+    <Flex flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
       <StageSwitcher
-        pos="absolute"
-        top={{ base: 'gap.16', md: 'gap.30' }}
         left="0"
         right="0"
         mx="auto"
         stageColor={stageColor}
+        pos={{ md: 'absolute' }}
+        top={{ base: '140px', lg: 'gap.30' }}
         stages={[
           {
             text: t('pomodoro'),
@@ -211,16 +211,45 @@ const _Timer: FC = () => {
         ]}
         display={{ base: 'none', md: 'flex' }}
       />
-      <Flex alignItems="center" justifyContent="center" pos="relative" w="fit-content" m="auto">
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        pos="relative"
+        w="fit-content"
+        m="auto"
+        paddingBlockEnd={{ base: '96px', md: '0' }}
+      >
         <ProgressCircle isActive={getIsCurrentPlaying()} fillPercentage={getCurrentPercent()} />
-        <Flex pos="absolute" w="fit-content" flexDirection="column" justifyContent="center" alignItems="center">
-          <Text textStyle="text.xl" fontWeight="400" marginBlockEnd="65px">
+        <Flex
+          pos="absolute"
+          w="fit-content"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          boxSize={{ base: '300px', md: '500px' }}
+        >
+          <Text
+            fontWeight="400"
+            textStyle={{ base: 'text.lg', md: 'text.xl' }}
+            marginBlockEnd={{ base: '45px', md: '65px' }}
+          >
             {session.sessionCount} {t('of')} {settings.count}
           </Text>
-          <Text textStyle="title.lg" marginBlockEnd="35px" minW="340px">
+          <Text
+            textStyle="title.lg"
+            minW={{ base: '200px', md: '340px' }}
+            marginBlockEnd={{ base: '65px', md: '35px' }}
+          >
             {formatMilliseconds(getCurrentCountdown())}
           </Text>
-          <HStack spacing="20px">
+          <HStack
+            spacing="20px"
+            justifyContent="center"
+            left="0"
+            right="0"
+            bottom="-96px"
+            pos={{ base: 'absolute', md: 'static' }}
+          >
             <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
             <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
               {getIsCurrentPlaying() ? t('pause') : t('start')}

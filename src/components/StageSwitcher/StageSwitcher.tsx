@@ -28,7 +28,7 @@ const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest })
       pos="relative"
       zIndex="1"
       p="3px"
-      w="fit-content"
+      w={{ md: '500px', lg: 'fit-content' }}
       gap="2px"
       borderRadius="100px"
       bgColor="background.stageSwitcher"
@@ -37,6 +37,7 @@ const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest })
       {stages.map((stage, index) => (
         <Button
           key={stage.text}
+          w={{ md: 'calc(100% / 3)', lg: 'fit-content' }}
           size="xs"
           variant="ghost"
           color={stage.isActive ? getTextColor(session.stage) : 'primary'}

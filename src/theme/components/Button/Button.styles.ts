@@ -79,7 +79,7 @@ const ButtonStyles = defineStyleConfig({
       },
     },
     circle: {
-      boxSize: '100px',
+      boxSize: { base: '80px', md: '100px' },
       borderRadius: '50%',
       bgColor: 'button.circle.default',
       color: 'button.circle.text',
