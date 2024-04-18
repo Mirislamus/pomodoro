@@ -12,9 +12,11 @@ import useGetStageColor from '../../hooks/useGetStageColor';
 import getTextColor from '../../utils/getTextColor';
 import getPercent from '../../utils/getPercent';
 import StageSwitcher from '../StageSwitcher/StageSwitcher';
+import { useSession } from '../../contexts/SessionContext/SessionContext';
 
 const _Timer: FC = () => {
-  const { settings, session, setSession } = useSettings();
+  const { settings } = useSettings();
+  const { session, setSession } = useSession();
   const stageColor = useGetStageColor();
 
   const {
@@ -177,6 +179,12 @@ const _Timer: FC = () => {
     }
   };
 
+  const getSessionStarted = () => {
+    if (session.pomodoroCurrentTime > 0 || session.shortBrakeCurrentTime > 0 || session.longBrakeCurrentTime > 0) {
+      return true;
+    }
+  };
+
   return (
     <Flex flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
       <StageSwitcher
@@ -258,7 +266,7 @@ const _Timer: FC = () => {
           >
             <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
             <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
-              {getIsCurrentPlaying() ? t('pause') : t('start')}
+              {getIsCurrentPlaying() ? t('pause') : getSessionStarted() ? t('resume') : t('start')}
             </Button>
             <ActionButton icon={IconSkip} isDisabled={!getIsCurrentPlaying()} onClick={onSkipButtonClickHandler} />
           </HStack>

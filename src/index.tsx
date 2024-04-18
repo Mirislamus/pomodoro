@@ -6,6 +6,7 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import Main from './pages/Main';
 import theme from './theme/theme';
 import { SettingsProvider } from './contexts/SettingsContext/SettingsContext';
+import { SessionProvider } from './contexts/SessionContext/SessionContext';
 
 const root = createRoot(document.getElementById('root') as Element);
 
@@ -14,7 +15,9 @@ root.render(
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <SettingsProvider>
-        <Main />
+        <SessionProvider>
+          <Main />
+        </SessionProvider>
       </SettingsProvider>
     </ChakraProvider>
   </React.StrictMode>

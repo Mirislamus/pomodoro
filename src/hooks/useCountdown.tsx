@@ -29,7 +29,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
   } = options;
 
   const initialTime = currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds;
-  const [endTime, setEndTime] = useState<number>(Date.now() + initialTime + 100); // Добавляем буферную задержку
+  const [endTime, setEndTime] = useState<number>(Date.now() + initialTime + 100);
   const [countdown, setCountdown] = useState<number>(initialTime);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 

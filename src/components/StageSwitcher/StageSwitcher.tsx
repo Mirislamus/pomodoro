@@ -3,10 +3,10 @@ import { StageSwitcherProps } from './types';
 import { Button, chakra, Flex, Box } from '@chakra-ui/react';
 import { easeIn } from '../../theme/foundations/transitions';
 import getTextColor from '../../utils/getTextColor';
-import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
+import { useSession } from '../../contexts/SessionContext/SessionContext';
 
 const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest }) => {
-  const { session } = useSettings();
+  const { session } = useSession();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [boxStyle, setBoxStyle] = useState({ width: 0, transform: '' });
 
