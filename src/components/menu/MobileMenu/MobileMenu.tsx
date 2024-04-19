@@ -8,7 +8,7 @@ import { IconChevron } from '../../../theme/foundations/icons';
 import CircleButton from '../../ui-kit/CircleButton/CircleButton';
 import ColorModeButton from '../../ui-kit/ColorModeButton/ColorModeButton';
 
-const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, colorMode, onChangeColorMode, ...rest }) => {
+const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, colorMode, onColorModeClick, ...rest }) => {
   const { t, i18n } = useTranslation();
 
   const handlers = useSwipeable({
@@ -33,7 +33,7 @@ const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, colorMode, 
             </Text>
             <IconChevron color="primary" w="7px" h="13px" />
           </CircleButton>
-          <ColorModeButton colorMode={colorMode} onClick={onChangeColorMode} />
+          <ColorModeButton colorMode={colorMode} onClick={onColorModeClick} />
         </DrawerBody>
       </DrawerContent>
     </Drawer>

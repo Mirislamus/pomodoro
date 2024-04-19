@@ -22,6 +22,7 @@ const theme = {
     global: {
       body: {
         bg: 'background.primary',
+        minH: '100vh',
       },
       '*': {
         _focusVisible: {

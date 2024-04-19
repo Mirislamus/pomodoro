@@ -179,12 +179,6 @@ const _Timer: FC = () => {
     }
   };
 
-  const getSessionStarted = () => {
-    if (session.pomodoroCurrentTime > 0 || session.shortBrakeCurrentTime > 0 || session.longBrakeCurrentTime > 0) {
-      return true;
-    }
-  };
-
   return (
     <Flex flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
       <StageSwitcher
@@ -266,7 +260,7 @@ const _Timer: FC = () => {
           >
             <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
             <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
-              {getIsCurrentPlaying() ? t('pause') : getSessionStarted() ? t('resume') : t('start')}
+              {getIsCurrentPlaying() ? t('pause') : t('start')}
             </Button>
             <ActionButton icon={IconSkip} isDisabled={!getIsCurrentPlaying()} onClick={onSkipButtonClickHandler} />
           </HStack>

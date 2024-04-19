@@ -13,6 +13,7 @@ const ru = {
   start: 'Старт',
   pause: 'Пауза',
   resume: 'Продолжить',
+  close: 'Закрыть',
 };
 
 export default ru;

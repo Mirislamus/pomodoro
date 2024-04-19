@@ -7,6 +7,7 @@ import Main from './pages/Main';
 import theme from './theme/theme';
 import { SettingsProvider } from './contexts/SettingsContext/SettingsContext';
 import { SessionProvider } from './contexts/SessionContext/SessionContext';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = createRoot(document.getElementById('root') as Element);
 
@@ -16,7 +17,9 @@ root.render(
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <SettingsProvider>
         <SessionProvider>
-          <Main />
+          <BrowserRouter>
+            <Main />
+          </BrowserRouter>
         </SessionProvider>
       </SettingsProvider>
     </ChakraProvider>

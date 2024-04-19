@@ -13,6 +13,7 @@ const en = {
   start: 'Start',
   pause: 'Pause',
   resume: 'Resume',
+  close: 'Close',
 };
 
 export default en;
