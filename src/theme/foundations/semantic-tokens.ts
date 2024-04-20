@@ -49,6 +49,20 @@ const semanticTokens = {
         _light: 'blackAlpha.8',
         _dark: 'whiteAlpha.15',
       },
+      stageItem: {
+        default: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.10',
+        },
+        tick: {
+          _light: 'accent.red',
+          _dark: 'white',
+        },
+        active: {
+          _light: 'black.1',
+          _dark: 'accent.red',
+        },
+      },
     },
     button: {
       fill: {

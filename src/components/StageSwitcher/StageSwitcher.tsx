@@ -40,6 +40,7 @@ const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest })
           w={{ md: 'calc(100% / 3)', lg: 'fit-content' }}
           size="xs"
           variant="ghost"
+          fontWeight="600"
           color={stage.isActive ? getTextColor(session.stage) : 'primary'}
           onClick={stage.onClick}
           ref={el => (buttonRefs.current[index] = el)}

@@ -7,9 +7,12 @@ import { IconLang, IconLogo, IconMenu } from '../../theme/foundations/icons';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import getTextColor from '../../utils/getTextColor';
+import { useSession } from '../../contexts/SessionContext/SessionContext';
 
 const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
   const stageColor = useGetStageColor();
+  const { session } = useSession();
   const [currentStageColor] = useToken('colors', [stageColor]);
   const { t } = useTranslation();
 
@@ -23,7 +26,7 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
         sx={{ svg: { maxW: '100%', h: 'auto' } }}
         w={{ base: '100px', md: '116px' }}
       >
-        <IconLogo w="116px" h="50px" stageColor={currentStageColor} />
+        <IconLogo w="116px" h="50px" pathColor={getTextColor(session.stage)} stageColor={currentStageColor} />
       </Box>
       <Button
         leftIcon={<IconLang />}

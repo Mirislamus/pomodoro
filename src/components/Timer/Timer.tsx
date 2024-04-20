@@ -1,4 +1,4 @@
-import { Button, Flex, HStack, Text, chakra } from '@chakra-ui/react';
+import { Button, Flex, HStack, Text, chakra, useDisclosure } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
 import { t } from 'i18next';
@@ -13,11 +13,14 @@ import getTextColor from '../../utils/getTextColor';
 import getPercent from '../../utils/getPercent';
 import StageSwitcher from '../StageSwitcher/StageSwitcher';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
+import StageSelect from '../StageSelect/StageSelect';
+import StageModal from '../StageModal/StageModal';
 
 const _Timer: FC = () => {
   const { settings } = useSettings();
   const { session, setSession } = useSession();
   const stageColor = useGetStageColor();
+  const { isOpen: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
 
   const {
     countdown: countdownPomodoro,
@@ -219,6 +222,16 @@ const _Timer: FC = () => {
         ]}
         display={{ base: 'none', md: 'flex' }}
       />
+      <StageSelect
+        display={{ base: 'flex', md: 'none' }}
+        maxW="328px"
+        mx="auto"
+        marginBlockEnd="gap.16"
+        isActive={true}
+        stage={session.stage}
+        onClick={onStageModalOpen}
+      />
+      <StageModal isOpen={isStageModalOpen} onClose={onStageModalClose} />
       <Flex
         alignItems="center"
         justifyContent="center"

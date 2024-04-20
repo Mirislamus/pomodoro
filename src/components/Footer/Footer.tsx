@@ -4,7 +4,7 @@ import { FooterProps } from './types';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconClose, IconDark, IconLight, IconNotify, IconSettings } from '../../theme/foundations/icons';
 import { t } from 'i18next';
-import { ease } from '../../theme/foundations/transitions';
+import { ease, easeIn } from '../../theme/foundations/transitions';
 
 const _Footer: FC<FooterProps> = ({
   isSettings = false,
@@ -25,9 +25,9 @@ const _Footer: FC<FooterProps> = ({
       {...props}
     >
       <ActionButton variant="fill" onClick={onNotifyClick}>
-        <IconNotify boxSize="24px" color="primary" isActive={allowNotify} />
+        <IconNotify transition={easeIn} boxSize="24px" color="primary" isActive={allowNotify} />
       </ActionButton>
-      <Button role="group" textTransform="uppercase" onClick={onSettingsClick}>
+      <Button minW="150px" role="group" textTransform="uppercase" onClick={onSettingsClick}>
         {isSettings ? (
           <>
             <IconClose boxSize="24px" mr="gap.4" />

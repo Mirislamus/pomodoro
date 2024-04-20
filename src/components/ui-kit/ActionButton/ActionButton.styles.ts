@@ -6,7 +6,6 @@ const ActionButtonStyles = defineStyleConfig({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '50%',
-
   },
   variants: {
     fill: {

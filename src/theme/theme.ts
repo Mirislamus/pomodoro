@@ -11,6 +11,7 @@ import DrawerStyles from './components/Drawer/Drawer.styles';
 import TooltipStyles from './components/Tooltip/Tooltip.styles';
 import SwitchStyles from './components/Switch/Switch.styles';
 import ActionButtonStyles from '../components/ui-kit/ActionButton/ActionButton.styles';
+import { ease } from './foundations/transitions';
 
 const theme = {
   ...typography,
@@ -23,6 +24,7 @@ const theme = {
       body: {
         bg: 'background.primary',
         minH: '100vh',
+        transition: ease,
       },
       '*': {
         _focusVisible: {

@@ -14,6 +14,7 @@ const ru = {
   pause: 'Пауза',
   resume: 'Продолжить',
   close: 'Закрыть',
+  stage_select: 'Выбор этапа',
 };
 
 export default ru;

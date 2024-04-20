@@ -68,12 +68,6 @@ const ButtonStyles = defineStyleConfig({
     ghost: {
       color: 'primary',
       borderRadius: '100px',
-      _hover: {
-        opacity: 0.7,
-      },
-      _active: {
-        opacity: 0.8,
-      },
       ':hover, :active, :focus, :focus-visible': {
         bgColor: 'transparent',
       },

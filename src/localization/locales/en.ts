@@ -14,6 +14,7 @@ const en = {
   pause: 'Pause',
   resume: 'Resume',
   close: 'Close',
+  stage_select: 'Stage select',
 };
 
 export default en;
