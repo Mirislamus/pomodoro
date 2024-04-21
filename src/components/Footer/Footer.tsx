@@ -27,7 +27,7 @@ const _Footer: FC<FooterProps> = ({
       <ActionButton variant="fill" onClick={onNotifyClick}>
         <IconNotify transition={easeIn} boxSize="24px" color="primary" isActive={allowNotify} />
       </ActionButton>
-      <Button minW="150px" role="group" textTransform="uppercase" onClick={onSettingsClick}>
+      <Button minW="150px" role="group" textTransform="uppercase" fontWeight="600" onClick={onSettingsClick}>
         {isSettings ? (
           <>
             <IconClose boxSize="24px" mr="gap.4" />

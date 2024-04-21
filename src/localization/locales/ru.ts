@@ -15,6 +15,8 @@ const ru = {
   resume: 'Продолжить',
   close: 'Закрыть',
   stage_select: 'Выбор этапа',
+  timer: 'Таймер',
+  notification: 'Уведомление',
 };
 
 export default ru;

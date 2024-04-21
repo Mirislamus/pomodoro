@@ -7,6 +7,7 @@ import MobileMenu from '../components/menu/MobileMenu/MobileMenu';
 import Timer from '../components/Timer/Timer';
 import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
+import Settings from '../components/Settings/Settings';
 
 const Main: FC = () => {
   const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
@@ -31,7 +32,7 @@ const Main: FC = () => {
         <Header onLangClick={onLangMenuOpen} onMenuClick={onMobileMenuOpen} />
         <Routes>
           <Route path="/" element={<Timer />} />
-          <Route path="/settings" element={<>Settings</>} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
         <Footer
           allowNotify={false}

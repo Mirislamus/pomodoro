@@ -63,6 +63,14 @@ const semanticTokens = {
           _dark: 'accent.red',
         },
       },
+      settings: {
+        _light: 'white',
+        _dark: 'whiteAlpha.15',
+      },
+      tabs: {
+        _light: 'grey.2',
+        _dark: 'whiteAlpha.10',
+      },
     },
     button: {
       fill: {

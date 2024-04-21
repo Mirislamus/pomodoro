@@ -12,6 +12,7 @@ import TooltipStyles from './components/Tooltip/Tooltip.styles';
 import SwitchStyles from './components/Switch/Switch.styles';
 import ActionButtonStyles from '../components/ui-kit/ActionButton/ActionButton.styles';
 import { ease } from './foundations/transitions';
+import TabsStyles from './components/Tabs/Tabs.styles';
 
 const theme = {
   ...typography,
@@ -40,6 +41,7 @@ const theme = {
     Drawer: DrawerStyles,
     Tooltip: TooltipStyles,
     Switch: SwitchStyles,
+    Tabs: TabsStyles,
     ActionButtonStyles,
   },
   config: {

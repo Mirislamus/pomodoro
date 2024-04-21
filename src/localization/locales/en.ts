@@ -15,6 +15,8 @@ const en = {
   resume: 'Resume',
   close: 'Close',
   stage_select: 'Stage select',
+  timer: 'Timer',
+  notification: 'Notification',
 };
 
 export default en;
