@@ -32,7 +32,7 @@ const StageModal: FC<StageModalProps> = ({ isOpen, onClose, ...props }) => {
   return (
     <Modal variant="default" isOpen={isOpen} onClose={onClose} {...props}>
       <ModalOverlay />
-      <ModalContent p="30px 24px" borderRadius="20px" maxW="328px">
+      <ModalContent p="24px 24px 30px" borderRadius="20px" bgColor="background.secondary" maxW="328px">
         <ModalHeader display="flex" alignItems="center" justifyContent="space-between" p="0" paddingBlockEnd="16px">
           <Text fontWeight="600" textStyle="text.xl">
             {t('stage_select')}

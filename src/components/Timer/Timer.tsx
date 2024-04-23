@@ -226,6 +226,7 @@ const _Timer: FC = () => {
         display={{ base: 'flex', md: 'none' }}
         maxW="328px"
         mx="auto"
+        marginBlockStart="gap.20"
         marginBlockEnd="gap.16"
         isActive={true}
         stage={session.stage}
