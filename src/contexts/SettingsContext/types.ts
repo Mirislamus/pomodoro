@@ -10,6 +10,7 @@ export type Settings = {
 export interface SettingsContextType {
   settings: Settings;
   setSettings: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
+  resetSettings: () => void;
 }
 
 export interface SettingsProviderType {

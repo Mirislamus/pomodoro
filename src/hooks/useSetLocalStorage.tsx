@@ -6,7 +6,7 @@ const useSetLocalStorage = () => {
       const valueToStore = JSON.stringify(value);
       localStorage.setItem(key, valueToStore);
     } catch (error) {
-      console.error(`Ошибка при сохранении в localStorage: ${error}`);
+      console.error(`Error when saving to localStorage: ${error}`);
     }
   }, []);
 

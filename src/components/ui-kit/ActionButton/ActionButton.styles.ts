@@ -2,10 +2,17 @@ import { defineStyleConfig } from '@chakra-ui/react';
 
 const ActionButtonStyles = defineStyleConfig({
   baseStyle: {
-    boxSize: { base: '44px', md: '50px' },
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '50%',
+  },
+  sizes: {
+    sm: {
+      boxSize: '42px',
+    },
+    lg: {
+      boxSize: { base: '44px', md: '50px' },
+    },
   },
   variants: {
     fill: {
@@ -40,6 +47,7 @@ const ActionButtonStyles = defineStyleConfig({
   },
   defaultProps: {
     variant: 'stroke',
+    size: 'lg',
   },
 });
 

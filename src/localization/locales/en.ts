@@ -17,6 +17,10 @@ const en = {
   stage_select: 'Stage select',
   timer: 'Timer',
   notification: 'Notification',
+  pomodoro_count: 'Pomodoro count',
+  up_to: 'up to',
+  from: 'from',
+  minutes: 'min',
 };
 
 export default en;

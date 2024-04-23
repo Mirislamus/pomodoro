@@ -5,9 +5,21 @@ import { t } from 'i18next';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconClose } from '../../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
+import NumericInput from '../ui-kit/NumericInput/NumericInput';
+import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
+import { Settings } from '../../contexts/SettingsContext/types';
+import { useSession } from '../../contexts/SessionContext/SessionContext';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
+  const { settings, setSettings } = useSettings();
+  const { resetSession } = useSession();
+
+  const onChangeSettingsHandler = (value: number, key: keyof Settings) => {
+    resetSession();
+    setSettings(key, value);
+  };
+
   return (
     <Box
       w="100%"
@@ -32,7 +44,9 @@ const _Settings: FC = ({ ...props }) => {
         justifyContent="space-between"
         paddingBlockEnd="16px"
       >
-        <Text textStyle="text.xl">{t('settings')}</Text>
+        <Text textStyle="text.xl" textTransform="uppercase" color="primary">
+          {t('settings')}
+        </Text>
         <ActionButton boxSize="40px" variant="fill" onClick={() => navigate('/')}>
           <IconClose mt="-2px" boxSize="20px" />
         </ActionButton>
@@ -56,7 +70,14 @@ const _Settings: FC = ({ ...props }) => {
           borderColor="border"
         >
           <TabPanel>
-            <p>one!</p>
+            <NumericInput
+              title={t('pomodoro_count')}
+              value={settings.count}
+              step={1}
+              min={2}
+              max={10}
+              onChange={value => onChangeSettingsHandler(value, 'count')}
+            />
           </TabPanel>
           <TabPanel>
             <p>two!</p>

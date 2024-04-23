@@ -37,11 +37,18 @@ export const SessionProvider: FC<SessionProviderType> = ({ children }) => {
     setSession(prev => ({ ...prev, [key]: value }));
   };
 
+  const resetSession = () => {
+    setSession(defaultSession);
+    Object.entries(defaultSession).forEach(([key, value]) => {
+      setLocalStorage(key, value);
+    });
+  };
+
   useEffect(() => {
     Object.entries(session).forEach(([key, value]) => {
       setLocalStorage(key, value);
     });
   }, [session, setLocalStorage]);
 
-  return <SessionContext.Provider value={{ session, setSession: updateSession }}>{children}</SessionContext.Provider>;
+  return <SessionContext.Provider value={{ session, setSession: updateSession, resetSession }}>{children}</SessionContext.Provider>;
 };

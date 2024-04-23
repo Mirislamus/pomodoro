@@ -17,6 +17,10 @@ const ru = {
   stage_select: 'Выбор этапа',
   timer: 'Таймер',
   notification: 'Уведомление',
+  pomodoro_count: 'Количество помодоро',
+  up_to: 'до',
+  from: 'от',
+  minutes: 'мин',
 };
 
 export default ru;

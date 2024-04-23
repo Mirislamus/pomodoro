@@ -35,6 +35,13 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
     setLocalStorage(key, value);
   };
 
+  const resetSettings = () => {
+    setSettings(defaultSettings);
+    Object.entries(defaultSettings).forEach(([key, value]) => {
+      setLocalStorage(key, value);
+    });
+  };
+
   useEffect(() => {
     Object.entries(settings).forEach(([key, value]) => {
       setLocalStorage(key, value);
@@ -42,6 +49,8 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
   }, [settings, setLocalStorage]);
 
   return (
-    <SettingsContext.Provider value={{ settings, setSettings: updateSettings }}>{children}</SettingsContext.Provider>
+    <SettingsContext.Provider value={{ settings, setSettings: updateSettings, resetSettings }}>
+      {children}
+    </SettingsContext.Provider>
   );
 };
