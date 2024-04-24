@@ -1,5 +1,5 @@
 import { Box, Flex, HStack, Input, Text, chakra } from '@chakra-ui/react';
-import { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC, useId } from 'react';
 import { NumericInputProps } from './types';
 import ActionButton from '../ActionButton/ActionButton';
 import { IconMinus, IconPlus } from '../../../theme/foundations/icons';
@@ -15,6 +15,8 @@ const _NumericInput: FC<NumericInputProps> = ({
   onChange,
   ...props
 }) => {
+  const id = useId();
+
   const clampValue = (value: number) => Math.min(Math.max(value, min), max);
 
   const onChangeHandler = (value: number) => {
@@ -30,9 +32,17 @@ const _NumericInput: FC<NumericInputProps> = ({
     }
   };
 
+  const handleIncrease = () => {
+    onChangeHandler(value + step);
+  };
+
+  const handleDecrease = () => {
+    onChangeHandler(value - step);
+  };
+
   return (
-    <Flex alignItems="center" justifyContent="space-between">
-      <Box>
+    <Flex alignItems="center" justifyContent="space-between" {...props}>
+      <Box as="label" htmlFor={`input-${id}`}>
         <Text fontSize="16px" fontWeight="500" color="primary">
           {title}
         </Text>
@@ -40,15 +50,10 @@ const _NumericInput: FC<NumericInputProps> = ({
           {t('up_to')} {max} {hasMinutes && t('minutes')}
         </Text>
       </Box>
-      <HStack spacing="gap.8" {...props}>
-        <ActionButton
-          isDisabled={value <= min}
-          size="sm"
-          variant="fill"
-          icon={IconMinus}
-          onClick={() => onChangeHandler(value - step)}
-        />
+      <HStack spacing="gap.8">
+        <ActionButton isDisabled={value <= min} size="sm" variant="fill" icon={IconMinus} onClick={handleDecrease} />
         <Input
+          id={`input-${id}`}
           variant="numeric"
           value={value}
           step={step}
@@ -57,13 +62,7 @@ const _NumericInput: FC<NumericInputProps> = ({
           onChange={handleInputChange}
           onBlur={() => onChangeHandler(value)}
         />
-        <ActionButton
-          isDisabled={value >= max}
-          size="sm"
-          variant="fill"
-          icon={IconPlus}
-          onClick={() => onChangeHandler(value + step)}
-        />
+        <ActionButton isDisabled={value >= max} size="sm" variant="fill" icon={IconPlus} onClick={handleIncrease} />
       </HStack>
     </Flex>
   );

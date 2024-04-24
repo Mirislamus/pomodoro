@@ -1,7 +1,7 @@
 import { Box, Flex, Text, useToast } from '@chakra-ui/react';
 import { ease } from '../../../theme/foundations/transitions';
 import { UseToastCustomOptions } from './types';
-import { noop } from '../../../utils/noop';
+import { noop } from '../../../utils';
 import { IconClose, IconInfo } from '../../../theme/foundations/icons';
 
 const getIconColor = (status: UseToastCustomOptions['status']) => {

@@ -1,13 +1,5 @@
 import { ReactNode } from 'react';
-import { Stage } from '../../typings/enums';
-
-export type Session = {
-  sessionCount: number;
-  pomodoroCurrentTime: number;
-  shortBrakeCurrentTime: number;
-  longBrakeCurrentTime: number;
-  stage: Stage;
-};
+import { Session } from '../../typings/types';
 
 export interface SessionContextType {
   session: Session;

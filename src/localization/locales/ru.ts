@@ -18,6 +18,7 @@ const ru = {
   timer: 'Таймер',
   notification: 'Уведомление',
   pomodoro_count: 'Количество помодоро',
+  pomodoro_duration: 'Длительность помодоро',
   up_to: 'до',
   from: 'от',
   minutes: 'мин',

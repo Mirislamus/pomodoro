@@ -2,7 +2,7 @@ import { FC, useLayoutEffect, useRef, useState } from 'react';
 import { StageSwitcherProps } from './types';
 import { Button, chakra, Flex, Box } from '@chakra-ui/react';
 import { easeIn } from '../../theme/foundations/transitions';
-import getTextColor from '../../utils/getTextColor';
+import { getTextColor } from '../../utils';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 
 const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest }) => {

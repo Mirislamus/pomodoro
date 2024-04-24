@@ -1,14 +1,9 @@
 import { createContext, useContext, useState, useEffect, FC } from 'react';
 import useGetLocalStorage from '../../hooks/useGetLocalStorage';
 import useSetLocalStorage from '../../hooks/useSetLocalStorage';
-import { Settings, SettingsContextType, SettingsProviderType } from './types';
-
-const defaultSettings: Settings = {
-  count: 5,
-  duration: 0.3 * (60 * 1000),
-  shortBreak: 0.1 * (60 * 1000),
-  longBreak: 0.2 * (60 * 1000),
-};
+import { SettingsContextType, SettingsProviderType } from './types';
+import { defaultSettings } from '../../consts/settings';
+import { Settings } from '../../typings/types';
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 

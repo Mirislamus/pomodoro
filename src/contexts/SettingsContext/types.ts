@@ -1,11 +1,5 @@
 import { ReactNode } from 'react';
-
-export type Settings = {
-  count: number;
-  duration: number;
-  shortBreak: number;
-  longBreak: number;
-};
+import { Settings } from '../../typings/types';
 
 export interface SettingsContextType {
   settings: Settings;

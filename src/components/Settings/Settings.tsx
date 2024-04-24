@@ -7,8 +7,11 @@ import { IconClose } from '../../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
 import NumericInput from '../ui-kit/NumericInput/NumericInput';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
-import { Settings } from '../../contexts/SettingsContext/types';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
+import FieldWrap from '../FieldWrap/FieldWrap';
+import { getMinFromMs, getMsFromMin } from '../../utils';
+import { Settings } from '../../typings/types';
+import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
@@ -31,7 +34,7 @@ const _Settings: FC = ({ ...props }) => {
       bottom="0"
       mt={{ base: '0', md: '75px', lg: '-5px', xl: '-75px' }}
       mx="auto"
-      maxW="550px"
+      maxW={{ base: '100%', md: '550px' }}
       borderRadius={{ base: '0', md: '30px' }}
       p={{ base: '16px', md: '40px' }}
       boxShadow="0px 0px 50px rgba(0, 0, 0, 0.1)"
@@ -70,14 +73,27 @@ const _Settings: FC = ({ ...props }) => {
           borderColor="border"
         >
           <TabPanel>
-            <NumericInput
-              title={t('pomodoro_count')}
-              value={settings.count}
-              step={1}
-              min={2}
-              max={10}
-              onChange={value => onChangeSettingsHandler(value, 'count')}
-            />
+            <FieldWrap>
+              <NumericInput
+                title={t('pomodoro_count')}
+                value={settings.count}
+                step={1}
+                min={minSettingsLimits.count}
+                max={maxSettingsLimits.count}
+                onChange={value => onChangeSettingsHandler(value, 'count')}
+              />
+            </FieldWrap>
+            <FieldWrap>
+              <NumericInput
+                hasMinutes
+                title={t('pomodoro_duration')}
+                value={getMinFromMs(settings.duration)}
+                step={5}
+                min={minSettingsLimits.duration}
+                max={maxSettingsLimits.duration}
+                onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'duration')}
+              />
+            </FieldWrap>
           </TabPanel>
           <TabPanel>
             <p>two!</p>

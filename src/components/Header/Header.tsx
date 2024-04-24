@@ -7,7 +7,7 @@ import { IconLang, IconLogo, IconMenu } from '../../theme/foundations/icons';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import getTextColor from '../../utils/getTextColor';
+import { getTextColor } from '../../utils';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 
 const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {

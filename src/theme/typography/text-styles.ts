@@ -11,6 +11,17 @@ const textStyles = {
       },
       fontWeight: 'medium',
     },
+    md: {
+      fontSize: {
+        base: '60px',
+        md: '100px',
+      },
+      lineHeight: {
+        base: '75px',
+        md: '125px',
+      },
+      fontWeight: 'medium',
+    },
     sm: {
       fontSize: '14px',
       lineHeight: '17px',

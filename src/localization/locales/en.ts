@@ -18,6 +18,7 @@ const en = {
   timer: 'Timer',
   notification: 'Notification',
   pomodoro_count: 'Pomodoro count',
+  pomodoro_duration: 'Pomodoro duration',
   up_to: 'up to',
   from: 'from',
   minutes: 'min',

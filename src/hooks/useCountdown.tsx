@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { noop } from '../utils/noop';
+import { noop } from '../utils';
 
 interface UseCountdownOptions {
   maxMilliseconds: number;

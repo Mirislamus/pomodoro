@@ -3,14 +3,14 @@ import { FC, useEffect } from 'react';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
 import { t } from 'i18next';
 import useCountdown from '../../hooks/useCountdown';
-import formatMilliseconds from '../../utils/formatMilliseconds';
+import { formatMilliseconds } from '../../utils';
 import ProgressCircle from './ProgressCircle';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconRestart, IconSkip } from '../../theme/foundations/icons';
 import { Stage } from '../../typings/enums';
 import useGetStageColor from '../../hooks/useGetStageColor';
-import getTextColor from '../../utils/getTextColor';
-import getPercent from '../../utils/getPercent';
+import { getTextColor } from '../../utils';
+import { getPercent } from '../../utils';
 import StageSwitcher from '../StageSwitcher/StageSwitcher';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 import StageSelect from '../StageSelect/StageSelect';
@@ -182,6 +182,15 @@ const _Timer: FC = () => {
     }
   };
 
+  const getTitleStyle = () => {
+    if (getCurrentCountdown() > 60 * 60 * 1000) {
+      return 'title.md';
+    }
+    return 'title.lg';
+  };
+
+  console.log(getCurrentPercent());
+
   return (
     <Flex flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
       <StageSwitcher
@@ -258,7 +267,7 @@ const _Timer: FC = () => {
             {session.sessionCount} {t('of')} {settings.count}
           </Text>
           <Text
-            textStyle="title.lg"
+            textStyle={getTitleStyle()}
             minW={{ base: '200px', md: '340px' }}
             marginBlockEnd={{ base: '65px', md: '35px' }}
           >
