@@ -22,6 +22,8 @@ const en = {
   up_to: 'up to',
   from: 'from',
   minutes: 'min',
+  main: 'Main',
+  additional: 'Additional',
 };
 
 export default en;

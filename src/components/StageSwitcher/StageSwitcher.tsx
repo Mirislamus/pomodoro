@@ -11,17 +11,27 @@ const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest })
   const [boxStyle, setBoxStyle] = useState({ width: 0, transform: '' });
 
   useLayoutEffect(() => {
-    const activeButtonIndex = stages.findIndex(stage => stage.isActive);
-    const activeButtonRef = buttonRefs.current[activeButtonIndex];
+    const updateBoxStyle = () => {
+      const activeButtonIndex = stages.findIndex(stage => stage.isActive);
+      const activeButtonRef = buttonRefs.current[activeButtonIndex];
 
-    if (activeButtonRef) {
-      const { offsetLeft, clientWidth } = activeButtonRef;
-      setBoxStyle({
-        width: clientWidth,
-        transform: `translateX(${offsetLeft - 2}px)`,
-      });
-    }
-  }, [stages]);
+      if (activeButtonRef) {
+        const { offsetLeft, clientWidth } = activeButtonRef;
+        setBoxStyle({
+          width: clientWidth,
+          transform: `translateX(${offsetLeft}px)`,
+        });
+      }
+    };
+
+    setTimeout(updateBoxStyle, 0);
+
+    window.addEventListener('resize', updateBoxStyle);
+
+    return () => {
+      window.removeEventListener('resize', updateBoxStyle);
+    };
+  }, [stages, session.stage]);
 
   return (
     <Flex
@@ -49,11 +59,12 @@ const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest })
         </Button>
       ))}
       <Box
+        marginInlineStart="-3px"
         pos="absolute"
         zIndex="-1"
         top="3px"
         bottom="3px"
-        width={`${boxStyle.width - 2}px`}
+        width={`${boxStyle.width}px`}
         borderRadius="100px"
         bgColor={stageColor}
         style={{ transform: boxStyle.transform }}

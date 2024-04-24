@@ -56,8 +56,8 @@ const _Settings: FC = ({ ...props }) => {
       </Flex>
       <Tabs variant="soft-rounded">
         <TabList>
-          <Tab>{t('timer')}</Tab>
-          <Tab>{t('notification')}</Tab>
+          <Tab>{t('main')}</Tab>
+          <Tab>{t('additional')}</Tab>
         </TabList>
         <TabIndicator
           top="3px"

@@ -22,6 +22,8 @@ const ru = {
   up_to: 'до',
   from: 'от',
   minutes: 'мин',
+  main: 'Главные',
+  additional: 'Дополнительные',
 };
 
 export default ru;
