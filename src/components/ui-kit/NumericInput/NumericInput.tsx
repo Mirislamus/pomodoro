@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Input, Text, chakra } from '@chakra-ui/react';
+import { FormControl, FormLabel, HStack, Input, Text, chakra } from '@chakra-ui/react';
 import { ChangeEvent, FC, useId } from 'react';
 import { NumericInputProps } from './types';
 import ActionButton from '../ActionButton/ActionButton';
@@ -41,15 +41,15 @@ const _NumericInput: FC<NumericInputProps> = ({
   };
 
   return (
-    <Flex alignItems="center" justifyContent="space-between" {...props}>
-      <Box as="label" htmlFor={`input-${id}`}>
+    <FormControl display="flex" alignItems="center" justifyContent="space-between" {...props}>
+      <FormLabel m="0" htmlFor={`input-${id}`}>
         <Text fontSize="16px" fontWeight="500" color="primary">
           {title}
         </Text>
         <Text textStyle="text.md" fontWeight="400" color="grey.3">
           {t('up_to')} {max} {hasMinutes && t('minutes')}
         </Text>
-      </Box>
+      </FormLabel>
       <HStack spacing="gap.8">
         <ActionButton isDisabled={value <= min} size="sm" variant="fill" icon={IconMinus} onClick={handleDecrease} />
         <Input
@@ -64,7 +64,7 @@ const _NumericInput: FC<NumericInputProps> = ({
         />
         <ActionButton isDisabled={value >= max} size="sm" variant="fill" icon={IconPlus} onClick={handleIncrease} />
       </HStack>
-    </Flex>
+    </FormControl>
   );
 };
 

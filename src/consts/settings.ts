@@ -1,21 +1,21 @@
-import { Settings } from '../typings/types';
 import { getMsFromMin } from '../utils';
 
-export const defaultSettings: Settings = {
-  count: 5,
-  duration: getMsFromMin(25),
-  shortBreak: getMsFromMin(5),
-  longBreak: getMsFromMin(20),
+export const defaultSettings = {
+  count: 2,
+  duration: getMsFromMin(0.1),
+  shortBreak: getMsFromMin(0.2),
+  longBreak: getMsFromMin(0.3),
+  hasAutoStart: true,
 };
 
-export const minSettingsLimits: Settings = {
+export const minSettingsLimits = {
   count: 2,
   duration: 10,
   shortBreak: 5,
   longBreak: 10,
 };
 
-export const maxSettingsLimits: Settings = {
+export const maxSettingsLimits = {
   count: 10,
   duration: 120,
   shortBreak: 20,

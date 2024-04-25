@@ -18,7 +18,7 @@ import StageModal from '../StageModal/StageModal';
 
 const _Timer: FC = () => {
   const { settings } = useSettings();
-  const { session, setSession } = useSession();
+  const { session, setSession, resetSession } = useSession();
   const stageColor = useGetStageColor();
   const { isOpen: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
 
@@ -33,13 +33,17 @@ const _Timer: FC = () => {
     currentMilliseconds: session.pomodoroCurrentTime,
     onComplete: () => {
       setSession('pomodoroCurrentTime', 0);
-      setTimeout(() => {
-        if (session.sessionCount >= settings.count) {
-          setSession('stage', Stage.LongBreak);
-        } else {
-          setSession('stage', Stage.ShortBreak);
+      if (session.sessionCount >= settings.count) {
+        setSession('stage', Stage.LongBreak);
+        if (settings.hasAutoStart) {
+          startLongBreak();
         }
-      }, 1000);
+      } else {
+        setSession('stage', Stage.ShortBreak);
+        if (settings.hasAutoStart) {
+          startShortBreak();
+        }
+      }
     },
   });
 
@@ -56,9 +60,10 @@ const _Timer: FC = () => {
       setSession('shortBrakeCurrentTime', 0);
       if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
-        setTimeout(() => {
-          setSession('stage', Stage.Pomodoro);
-        }, 1000);
+        setSession('stage', Stage.Pomodoro);
+        if (settings.hasAutoStart) {
+          startPomodoro();
+        }
       }
     },
   });
@@ -73,11 +78,8 @@ const _Timer: FC = () => {
     maxMilliseconds: settings.longBreak,
     currentMilliseconds: session.longBrakeCurrentTime,
     onComplete: () => {
-      setSession('longBrakeCurrentTime', 0);
-      setSession('sessionCount', 1);
-      setTimeout(() => {
-        setSession('stage', Stage.Pomodoro);
-      }, 1000);
+      resetSession();
+      setSession('stage', Stage.Pomodoro);
     },
   });
 
@@ -101,10 +103,10 @@ const _Timer: FC = () => {
 
   const onSkipButtonClickHandler = () => {
     if (session.stage === Stage.Pomodoro) {
+      resetPomodoro();
       if (session.sessionCount >= settings.count) {
         setSession('stage', Stage.LongBreak);
       } else {
-        resetPomodoro();
         setSession('stage', Stage.ShortBreak);
       }
     } else if (session.stage === Stage.ShortBreak) {
@@ -189,7 +191,35 @@ const _Timer: FC = () => {
     return 'title.lg';
   };
 
-  console.log(getCurrentPercent());
+  const stages = [
+    {
+      text: t('pomodoro'),
+      onClick: () => {
+        resetPomodoro();
+        setSession('pomodoroCurrentTime', 0);
+        setSession('stage', Stage.Pomodoro);
+      },
+      isActive: session.stage === Stage.Pomodoro,
+    },
+    {
+      text: t('short_break'),
+      onClick: () => {
+        resetShortBreak();
+        setSession('shortBrakeCurrentTime', 0);
+        setSession('stage', Stage.ShortBreak);
+      },
+      isActive: session.stage === Stage.ShortBreak,
+    },
+    {
+      text: t('long_break'),
+      onClick: () => {
+        resetLongBreak();
+        setSession('longBrakeCurrentTime', 0);
+        setSession('stage', Stage.LongBreak);
+      },
+      isActive: session.stage === Stage.LongBreak,
+    },
+  ];
 
   return (
     <Flex flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
@@ -200,35 +230,7 @@ const _Timer: FC = () => {
         stageColor={stageColor}
         pos={{ md: 'absolute' }}
         top={{ base: '140px', lg: 'gap.30' }}
-        stages={[
-          {
-            text: t('pomodoro'),
-            onClick: () => {
-              resetPomodoro();
-              setSession('pomodoroCurrentTime', 0);
-              setSession('stage', Stage.Pomodoro);
-            },
-            isActive: session.stage === Stage.Pomodoro,
-          },
-          {
-            text: t('short_break'),
-            onClick: () => {
-              resetShortBreak();
-              setSession('shortBrakeCurrentTime', 0);
-              setSession('stage', Stage.ShortBreak);
-            },
-            isActive: session.stage === Stage.ShortBreak,
-          },
-          {
-            text: t('long_break'),
-            onClick: () => {
-              resetLongBreak();
-              setSession('longBrakeCurrentTime', 0);
-              setSession('stage', Stage.LongBreak);
-            },
-            isActive: session.stage === Stage.LongBreak,
-          },
-        ]}
+        stages={stages}
         display={{ base: 'none', md: 'flex' }}
       />
       <StageSelect

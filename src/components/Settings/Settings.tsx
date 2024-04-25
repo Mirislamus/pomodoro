@@ -12,13 +12,14 @@ import FieldWrap from '../FieldWrap/FieldWrap';
 import { getMinFromMs, getMsFromMin } from '../../utils';
 import { Settings } from '../../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
+import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
   const { settings, setSettings } = useSettings();
   const { resetSession } = useSession();
 
-  const onChangeSettingsHandler = (value: number, key: keyof Settings) => {
+  const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
     resetSession();
     setSettings(key, value);
   };
@@ -75,7 +76,7 @@ const _Settings: FC = ({ ...props }) => {
           <TabPanel>
             <FieldWrap>
               <NumericInput
-                title={t('pomodoro_count')}
+                title={t('pomodoro_count_settings')}
                 value={settings.count}
                 step={1}
                 min={minSettingsLimits.count}
@@ -86,12 +87,41 @@ const _Settings: FC = ({ ...props }) => {
             <FieldWrap>
               <NumericInput
                 hasMinutes
-                title={t('pomodoro_duration')}
+                title={t('pomodoro_duration_settings')}
                 value={getMinFromMs(settings.duration)}
                 step={5}
                 min={minSettingsLimits.duration}
                 max={maxSettingsLimits.duration}
                 onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'duration')}
+              />
+            </FieldWrap>
+            <FieldWrap>
+              <NumericInput
+                hasMinutes
+                title={t('short_break')}
+                value={getMinFromMs(settings.shortBreak)}
+                step={5}
+                min={minSettingsLimits.shortBreak}
+                max={maxSettingsLimits.shortBreak}
+                onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'shortBreak')}
+              />
+            </FieldWrap>
+            <FieldWrap>
+              <NumericInput
+                hasMinutes
+                title={t('long_break')}
+                value={getMinFromMs(settings.longBreak)}
+                step={5}
+                min={minSettingsLimits.longBreak}
+                max={maxSettingsLimits.longBreak}
+                onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'longBreak')}
+              />
+            </FieldWrap>
+            <FieldWrap>
+              <SwitchInput
+                title={t('auto_start')}
+                isChecked={settings.hasAutoStart}
+                onChange={value => onChangeSettingsHandler(value, 'hasAutoStart')}
               />
             </FieldWrap>
           </TabPanel>

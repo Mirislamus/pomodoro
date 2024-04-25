@@ -5,6 +5,7 @@ export type Settings = {
   duration: number;
   shortBreak: number;
   longBreak: number;
+  hasAutoStart: boolean;
 };
 
 export type Session = {

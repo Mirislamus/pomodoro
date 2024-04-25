@@ -21,6 +21,7 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
     duration: useGetLocalStorage<number>('duration', defaultSettings.duration),
     shortBreak: useGetLocalStorage<number>('shortBreak', defaultSettings.shortBreak),
     longBreak: useGetLocalStorage<number>('longBreak', defaultSettings.longBreak),
+    hasAutoStart: useGetLocalStorage<boolean>('hasAutoStart', defaultSettings.hasAutoStart),
   });
 
   const setLocalStorage = useSetLocalStorage();

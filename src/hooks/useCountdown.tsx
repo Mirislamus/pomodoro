@@ -70,6 +70,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
       if (remaining <= 0) {
         clearInterval(intervalId);
         setIsPlaying(false);
+        resetTimer();
         onComplete();
       }
     }, 1000);
