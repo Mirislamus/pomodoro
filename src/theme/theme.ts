@@ -14,6 +14,7 @@ import ActionButtonStyles from '../components/ui-kit/ActionButton/ActionButton.s
 import { ease } from './foundations/transitions';
 import TabsStyles from './components/Tabs/Tabs.styles';
 import InputStyles from './components/Input/Input.styles';
+import LinkStyles from './components/Link/Link.styles';
 
 const theme = {
   ...typography,
@@ -44,6 +45,7 @@ const theme = {
     Switch: SwitchStyles,
     Tabs: TabsStyles,
     Input: InputStyles,
+    Link: LinkStyles,
     ActionButtonStyles,
   },
   config: {

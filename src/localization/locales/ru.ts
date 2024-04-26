@@ -25,6 +25,9 @@ const ru = {
   minutes: 'мин',
   main: 'Главные',
   additional: 'Дополнительные',
+  reset_settings: 'Сбросить настройки',
+  copy_settings: 'Cкопировать настройки',
+  settings_copied_info: 'Ссылка со всеми настройками скопирована в буфер обмена',
 };
 
 export default ru;

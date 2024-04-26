@@ -19,12 +19,15 @@ const en = {
   notification: 'Notification',
   pomodoro_count_settings: 'Pomodoro count',
   pomodoro_duration_settings: 'Pomodoro duration',
-  auto_start: 'Auto start',
+  auto_start: 'Autostart',
   up_to: 'up to',
   from: 'from',
   minutes: 'min',
   main: 'Main',
   additional: 'Additional',
+  reset_settings: 'Reset settings',
+  copy_settings: 'Copy settings',
+  settings_copied_toast_info: 'The link with all the settings has been copied to the clipboard',
 };
 
 export default en;

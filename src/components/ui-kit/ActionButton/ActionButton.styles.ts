@@ -10,8 +10,11 @@ const ActionButtonStyles = defineStyleConfig({
     sm: {
       boxSize: '42px',
     },
-    lg: {
+    md: {
       boxSize: { base: '44px', md: '50px' },
+    },
+    lg: {
+      boxSize: { base: '50px', md: '60px' },
     },
   },
   variants: {
@@ -47,7 +50,7 @@ const ActionButtonStyles = defineStyleConfig({
   },
   defaultProps: {
     variant: 'stroke',
-    size: 'lg',
+    size: 'md',
   },
 });
 

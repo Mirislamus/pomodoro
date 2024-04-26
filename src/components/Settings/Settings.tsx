@@ -1,9 +1,21 @@
-import { Box, Flex, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, Text, chakra } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Tab,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  chakra,
+} from '@chakra-ui/react';
 import { FC } from 'react';
 import { easeIn } from '../../theme/foundations/transitions';
 import { t } from 'i18next';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
-import { IconClose } from '../../theme/foundations/icons';
+import { IconClose, IconCopy } from '../../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
 import NumericInput from '../ui-kit/NumericInput/NumericInput';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
@@ -13,11 +25,14 @@ import { getMinFromMs, getMsFromMin } from '../../utils';
 import { Settings } from '../../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
 import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
+import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
+import { useSettingsLink } from '../../hooks/useSettingsLink';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
-  const { settings, setSettings } = useSettings();
+  const { settings, setSettings, resetSettings } = useSettings();
   const { resetSession } = useSession();
+  const { onSettingsLinkCopy } = useSettingsLink();
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
     resetSession();
@@ -117,7 +132,7 @@ const _Settings: FC = ({ ...props }) => {
                 onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'longBreak')}
               />
             </FieldWrap>
-            <FieldWrap>
+            <FieldWrap hasBorder={false}>
               <SwitchInput
                 title={t('auto_start')}
                 isChecked={settings.hasAutoStart}
@@ -130,6 +145,16 @@ const _Settings: FC = ({ ...props }) => {
           </TabPanel>
         </TabPanels>
       </Tabs>
+      <Flex justifyContent="space-between" gap="20px" alignItems="center" marginBlockStart="30px" pos="relative">
+        <Button w="100%" variant="secondary" size="md" onClick={() => resetSettings()} mt="auto">
+          {t('reset_settings')}
+        </Button>
+        <PomodoroTooltip label={t('copy_settings')}>
+          <Box>
+            <ActionButton size="lg" variant="fill" icon={IconCopy} onClick={onSettingsLinkCopy} />
+          </Box>
+        </PomodoroTooltip>
+      </Flex>
     </Box>
   );
 };

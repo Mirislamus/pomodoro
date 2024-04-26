@@ -37,7 +37,9 @@ export const RenderToast = (toast: ReturnType<typeof useToast>, options: UseToas
       pos="relative"
     >
       <IconInfo boxSize="24px" color={getIconColor(status)} flexShrink="0" mr="gap.10" />
-      <Text textStyle="text.sm">{title}</Text>
+      <Text textStyle="text.sm" lineHeight="24px">
+        {title}
+      </Text>
       {isClosable && (
         <Box
           role="group"

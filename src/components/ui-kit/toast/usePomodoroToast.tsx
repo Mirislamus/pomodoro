@@ -14,7 +14,7 @@ export const usePomodoroToast = () => {
       containerStyle: {
         ...toastStyles,
       },
-      position: 'bottom',
+      position: 'top-left',
       render: () => RenderToast(toast, options),
     });
   };
