@@ -22,6 +22,10 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
     shortBreak: useGetLocalStorage<number>('shortBreak', defaultSettings.shortBreak),
     longBreak: useGetLocalStorage<number>('longBreak', defaultSettings.longBreak),
     hasAutoStart: useGetLocalStorage<boolean>('hasAutoStart', defaultSettings.hasAutoStart),
+    alarmSound: useGetLocalStorage<Settings['alarmSound']>(
+      'alarmSound',
+      defaultSettings.alarmSound
+    ),
   });
 
   const setLocalStorage = useSetLocalStorage();

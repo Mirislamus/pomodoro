@@ -10,6 +10,7 @@ import {
   Tabs,
   Text,
   chakra,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { easeIn } from '../../theme/foundations/transitions';
@@ -27,17 +28,38 @@ import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
 import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
 import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
 import { useSettingsLink } from '../../hooks/useSettingsLink';
+import Scroll from '../ui-kit/Scroll/Scroll';
+import SelectMenu from '../SelectMenu/SelectMenu';
+import { AlarmSound } from '../../typings/enums';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
   const { settings, setSettings, resetSettings } = useSettings();
   const { resetSession } = useSession();
   const { onSettingsLinkCopy } = useSettingsLink();
+  const {
+    isOpen: isAlarmSoundOpen,
+    onClose: onAlarmSoundClose,
+    onOpen: onAlarmSoundOpen,
+  } = useDisclosure();
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
     resetSession();
     setSettings(key, value);
   };
+
+  const alarmSounds = [
+    {
+      id: AlarmSound.Bell,
+      name: 'Bell',
+      onClick: () => alert('Bell'),
+    },
+    {
+      id: AlarmSound.Bird,
+      name: 'Bird',
+      onClick: () => alert('Bird'),
+    },
+  ];
 
   return (
     <Box
@@ -52,109 +74,141 @@ const _Settings: FC = ({ ...props }) => {
       mx="auto"
       maxW={{ base: '100%', md: '550px' }}
       borderRadius={{ base: '0', md: '30px' }}
-      p={{ base: '16px', md: '40px' }}
       boxShadow="0px 0px 50px rgba(0, 0, 0, 0.1)"
-      bgColor={{ base: 'background.settings.mobile', md: 'background.settings.desktop' }}
+      bgColor={{
+        base: 'background.settings.mobile',
+        md: 'background.settings.desktop',
+      }}
       {...props}
     >
-      <Flex
-        display={{ base: 'flex', md: 'none' }}
-        alignItems="center"
-        justifyContent="space-between"
-        paddingBlockEnd="16px"
-      >
-        <Text textStyle="text.xl" textTransform="uppercase" color="primary">
-          {t('settings')}
-        </Text>
-        <ActionButton boxSize="40px" variant="fill" onClick={() => navigate('/')}>
-          <IconClose mt="-2px" boxSize="20px" />
-        </ActionButton>
-      </Flex>
-      <Tabs variant="soft-rounded">
-        <TabList>
-          <Tab>{t('main')}</Tab>
-          <Tab>{t('additional')}</Tab>
-        </TabList>
-        <TabIndicator
-          top="3px"
-          height={{ base: '44px', md: '50px' }}
-          bgColor="background.primary"
-          borderRadius="100px"
-          transition={easeIn}
-        />
-        <TabPanels
-          paddingBlockStart={{ base: '20px', md: '30px' }}
-          marginBlockStart={{ base: '20px', md: '0' }}
-          borderBlockStart={{ base: '1px solid', md: '0' }}
-          borderColor="border"
-        >
-          <TabPanel>
-            <FieldWrap>
-              <NumericInput
-                title={t('pomodoro_count_settings')}
-                value={settings.count}
-                step={1}
-                min={minSettingsLimits.count}
-                max={maxSettingsLimits.count}
-                onChange={value => onChangeSettingsHandler(value, 'count')}
-              />
-            </FieldWrap>
-            <FieldWrap>
-              <NumericInput
-                hasMinutes
-                title={t('pomodoro_duration_settings')}
-                value={getMinFromMs(settings.duration)}
-                step={5}
-                min={minSettingsLimits.duration}
-                max={maxSettingsLimits.duration}
-                onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'duration')}
-              />
-            </FieldWrap>
-            <FieldWrap>
-              <NumericInput
-                hasMinutes
-                title={t('short_break')}
-                value={getMinFromMs(settings.shortBreak)}
-                step={5}
-                min={minSettingsLimits.shortBreak}
-                max={maxSettingsLimits.shortBreak}
-                onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'shortBreak')}
-              />
-            </FieldWrap>
-            <FieldWrap>
-              <NumericInput
-                hasMinutes
-                title={t('long_break')}
-                value={getMinFromMs(settings.longBreak)}
-                step={5}
-                min={minSettingsLimits.longBreak}
-                max={maxSettingsLimits.longBreak}
-                onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'longBreak')}
-              />
-            </FieldWrap>
-            <FieldWrap hasBorder={false}>
-              <SwitchInput
-                title={t('auto_start')}
-                isChecked={settings.hasAutoStart}
-                onChange={value => onChangeSettingsHandler(value, 'hasAutoStart')}
-              />
-            </FieldWrap>
-          </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-      <Flex justifyContent="space-between" gap="20px" alignItems="center" marginBlockStart="30px" pos="relative">
-        <Button w="100%" variant="secondary" size="md" onClick={() => resetSettings()} mt="auto">
-          {t('reset_settings')}
-        </Button>
-        <PomodoroTooltip label={t('copy_settings')}>
-          <Box>
-            <ActionButton size="lg" variant="fill" icon={IconCopy} onClick={onSettingsLinkCopy} />
-          </Box>
-        </PomodoroTooltip>
-      </Flex>
+      <Scroll maxScrollHeight="100%">
+        <Box p={{ base: '16px', md: '40px' }}>
+          <Flex
+            display={{ base: 'flex', md: 'none' }}
+            alignItems="center"
+            justifyContent="space-between"
+            paddingBlockEnd="16px"
+          >
+            <Text textStyle="text.xl" textTransform="uppercase" color="primary">
+              {t('settings')}
+            </Text>
+            <ActionButton boxSize="40px" variant="fill" onClick={() => navigate('/')}>
+              <IconClose mt="-2px" boxSize="20px" />
+            </ActionButton>
+          </Flex>
+          <Tabs variant="soft-rounded">
+            <TabList>
+              <Tab>{t('main')}</Tab>
+              <Tab>{t('additional')}</Tab>
+            </TabList>
+            <TabIndicator
+              top="3px"
+              height={{ base: '44px', md: '50px' }}
+              bgColor="background.primary"
+              borderRadius="100px"
+              transition={easeIn}
+            />
+            <TabPanels
+              paddingBlockStart={{ base: '20px', md: '30px' }}
+              marginBlockStart={{ base: '20px', md: '0' }}
+              borderBlockStart={{ base: '1px solid', md: '0' }}
+              borderColor="border"
+            >
+              <TabPanel>
+                <Scroll maxScrollHeight={{ base: '100%', md: '328px' }}>
+                  <SelectMenu
+                    isOpen={isAlarmSoundOpen}
+                    onClose={onAlarmSoundClose}
+                    onOpen={onAlarmSoundOpen}
+                    selectedItem={settings.alarmSound}
+                    items={alarmSounds}
+                  />
+                  <FieldWrap>
+                    <NumericInput
+                      title={t('pomodoro_count_settings')}
+                      value={settings.count}
+                      step={1}
+                      min={minSettingsLimits.count}
+                      max={maxSettingsLimits.count}
+                      onChange={value => onChangeSettingsHandler(value, 'count')}
+                    />
+                  </FieldWrap>
+                  <FieldWrap>
+                    <NumericInput
+                      hasMinutes
+                      title={t('pomodoro_duration_settings')}
+                      value={getMinFromMs(settings.duration)}
+                      step={5}
+                      min={minSettingsLimits.duration}
+                      max={maxSettingsLimits.duration}
+                      onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'duration')}
+                    />
+                  </FieldWrap>
+                  <FieldWrap>
+                    <NumericInput
+                      hasMinutes
+                      title={t('short_break')}
+                      value={getMinFromMs(settings.shortBreak)}
+                      step={5}
+                      min={minSettingsLimits.shortBreak}
+                      max={maxSettingsLimits.shortBreak}
+                      onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'shortBreak')}
+                    />
+                  </FieldWrap>
+                  <FieldWrap>
+                    <NumericInput
+                      hasMinutes
+                      title={t('long_break')}
+                      value={getMinFromMs(settings.longBreak)}
+                      step={5}
+                      min={minSettingsLimits.longBreak}
+                      max={maxSettingsLimits.longBreak}
+                      onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'longBreak')}
+                    />
+                  </FieldWrap>
+                  <FieldWrap hasBorder={false}>
+                    <SwitchInput
+                      title={t('auto_start')}
+                      isChecked={settings.hasAutoStart}
+                      onChange={value => onChangeSettingsHandler(value, 'hasAutoStart')}
+                    />
+                  </FieldWrap>
+                </Scroll>
+              </TabPanel>
+              <TabPanel>
+                <p>two!</p>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+          <Flex
+            justifyContent="space-between"
+            gap="20px"
+            alignItems="center"
+            marginBlockStart="30px"
+            pos="relative"
+          >
+            <Button
+              w="100%"
+              variant="secondary"
+              size="md"
+              onClick={() => resetSettings()}
+              mt="auto"
+            >
+              {t('reset_settings')}
+            </Button>
+            <PomodoroTooltip label={t('copy_settings')}>
+              <Box>
+                <ActionButton
+                  size="lg"
+                  variant="fill"
+                  icon={IconCopy}
+                  onClick={onSettingsLinkCopy}
+                />
+              </Box>
+            </PomodoroTooltip>
+          </Flex>
+        </Box>
+      </Scroll>
     </Box>
   );
 };

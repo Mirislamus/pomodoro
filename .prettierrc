@@ -4,8 +4,10 @@
   "trailingComma": "es5",
   "singleQuote": true,
   "jsxSingleQuote": false,
-  "printWidth": 120,
+  "printWidth": 100,
   "tabWidth": 2,
   "bracketSpacing": true,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "arrowParens": "avoid",
+  "objectCurlySpacing": "never"
 }

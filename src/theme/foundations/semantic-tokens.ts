@@ -128,6 +128,34 @@ const semanticTokens = {
         _dark: 'white',
       },
     },
+    scroll: {
+      thumb: {
+        _light: 'black.1',
+        _dark: 'whiteAlpha.15',
+      },
+      track: {
+        _light: 'grey.8',
+        _dark: 'whiteAlpha.10',
+      },
+    },
+    select: {
+      button: {
+        primary: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.15',
+        },
+        secondary: {
+          _light: 'blackAlpha.10',
+          _dark: 'whiteAlpha.10',
+        },
+      },
+      item: {
+        hover: {
+          _light: 'blackAlpha.12',
+          _dark: 'whiteAlpha.20',
+        },
+      },
+    },
   },
 } as ChakraTheme['semanticTokens'];
 

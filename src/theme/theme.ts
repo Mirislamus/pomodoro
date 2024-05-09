@@ -15,6 +15,7 @@ import { ease } from './foundations/transitions';
 import TabsStyles from './components/Tabs/Tabs.styles';
 import InputStyles from './components/Input/Input.styles';
 import LinkStyles from './components/Link/Link.styles';
+import MenuStyles from './components/Menu/Menu.styles';
 
 const theme = {
   ...typography,
@@ -46,6 +47,7 @@ const theme = {
     Tabs: TabsStyles,
     Input: InputStyles,
     Link: LinkStyles,
+    Menu: MenuStyles,
     ActionButtonStyles,
   },
   config: {

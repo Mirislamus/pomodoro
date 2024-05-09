@@ -1,4 +1,4 @@
-import { Stage } from './enums';
+import { AlarmSound, Stage } from './enums';
 
 export type Settings = {
   count: number;
@@ -6,6 +6,7 @@ export type Settings = {
   shortBreak: number;
   longBreak: number;
   hasAutoStart: boolean;
+  alarmSound: AlarmSound;
 };
 
 export type Session = {

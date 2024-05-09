@@ -1,3 +1,4 @@
+import { AlarmSound } from '../typings/enums';
 import { getMsFromMin } from '../utils';
 
 export const defaultSettings = {
@@ -6,6 +7,7 @@ export const defaultSettings = {
   shortBreak: getMsFromMin(0.2),
   longBreak: getMsFromMin(0.3),
   hasAutoStart: true,
+  alarmSound: AlarmSound.Bell,
 };
 
 export const minSettingsLimits = {

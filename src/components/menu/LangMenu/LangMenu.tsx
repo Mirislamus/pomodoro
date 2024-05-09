@@ -50,7 +50,12 @@ const _LangMenu: FC<LangMenuProps> = ({ onClose, ...rest }) => {
             {t('lang_selection')}
           </Text>
           <DrawerCloseButton display={{ base: 'none', md: 'flex' }} />
-          <ActionButton boxSize="40px" display={{ base: 'flex', md: 'none' }} icon={IconArrow} onClick={onClose} />
+          <ActionButton
+            boxSize="40px"
+            display={{ base: 'flex', md: 'none' }}
+            icon={IconArrow}
+            onClick={onClose}
+          />
         </DrawerHeader>
         <DrawerBody p="15px">
           <VStack spacing="4px">
