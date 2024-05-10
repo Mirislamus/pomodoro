@@ -26,6 +26,10 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
       'alarmSound',
       defaultSettings.alarmSound
     ),
+    allowNotifications: useGetLocalStorage<boolean>(
+      'allowNotification',
+      defaultSettings.allowNotifications
+    ),
   });
 
   const setLocalStorage = useSetLocalStorage();

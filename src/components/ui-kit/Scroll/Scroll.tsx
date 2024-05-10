@@ -4,7 +4,7 @@ import { ScrollProps } from './types';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
-const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight }) => {
+const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight, hasScrollOffset }) => {
   return (
     <Box
       display="contents"
@@ -13,8 +13,8 @@ const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight }) => {
           paddingBlockStart: '2px',
           paddingBlockEnd: '2px',
           maxH: maxScrollHeight ? maxScrollHeight : '100%',
-          marginInlineEnd: { base: '0', md: '-40px' },
-          paddingInlineEnd: { base: '0', md: '40px' },
+          marginInlineEnd: hasScrollOffset ? { base: '0', md: '-40px' } : '0',
+          paddingInlineEnd: hasScrollOffset ? { base: '0', md: '40px' } : '0',
         },
         '.simplebar-track.simplebar-vertical': {
           w: '4px',

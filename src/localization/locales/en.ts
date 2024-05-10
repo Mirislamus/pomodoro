@@ -16,7 +16,7 @@ const en = {
   close: 'Close',
   stage_select: 'Stage select',
   timer: 'Timer',
-  notification: 'Notification',
+  notifications: 'Notifications',
   pomodoro_count_settings: 'Pomodoro count',
   pomodoro_duration_settings: 'Pomodoro duration',
   auto_start: 'Autostart',

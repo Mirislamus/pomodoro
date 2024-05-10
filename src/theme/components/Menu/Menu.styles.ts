@@ -1,4 +1,5 @@
 import { defineStyleConfig } from '@chakra-ui/react';
+import { easeIn } from '../../foundations/transitions';
 
 const MenuStyles = defineStyleConfig({
   baseStyle: {
@@ -8,6 +9,7 @@ const MenuStyles = defineStyleConfig({
       bgColor: 'select.button.primary',
       borderRadius: '100px',
       paddingInline: 'gap.24',
+      fontStyle: 'text.xl',
       span: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -22,7 +24,22 @@ const MenuStyles = defineStyleConfig({
       w: '100%',
       maxW: '100%',
       overflow: 'hidden',
-      p: '0',
+      p: '10px',
+      border: 'none',
+      bgColor: 'select.list',
+      boxShadow: '0 0 30px 0 rgba(0, 0, 0, 0.08)',
+    },
+    item: {
+      transition: easeIn,
+      bgColor: 'transparent',
+      px: '15px',
+      py: '0',
+      h: '44px',
+      borderRadius: '16px',
+      flexDirection: 'row-reverse',
+      _hover: {
+        bgColor: 'select.item.hover',
+      },
     },
   },
 });

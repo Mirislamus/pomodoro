@@ -8,6 +8,7 @@ export const defaultSettings = {
   longBreak: getMsFromMin(0.3),
   hasAutoStart: true,
   alarmSound: AlarmSound.Bell,
+  allowNotifications: true,
 };
 
 export const minSettingsLimits = {

@@ -52,14 +52,18 @@ const _Settings: FC = ({ ...props }) => {
     {
       id: AlarmSound.Bell,
       name: 'Bell',
-      onClick: () => alert('Bell'),
+      onClick: () => setSettings('alarmSound', AlarmSound.Bell),
     },
     {
       id: AlarmSound.Bird,
       name: 'Bird',
-      onClick: () => alert('Bird'),
+      onClick: () => setSettings('alarmSound', AlarmSound.Bird),
     },
   ];
+
+  const getAlarmName = (name: AlarmSound) => {
+    return alarmSounds.find(item => item.id === name)?.name;
+  };
 
   return (
     <Box
@@ -70,7 +74,8 @@ const _Settings: FC = ({ ...props }) => {
       left="0"
       right="0"
       bottom="0"
-      mt={{ base: '0', md: '75px', lg: '-5px', xl: '-75px' }}
+      marginBlockStart={{ base: '0', md: '50px', lg: '-5px', xl: '-50px' }}
+      marginBlockEnd="auto"
       mx="auto"
       maxW={{ base: '100%', md: '550px' }}
       borderRadius={{ base: '0', md: '30px' }}
@@ -115,14 +120,7 @@ const _Settings: FC = ({ ...props }) => {
               borderColor="border"
             >
               <TabPanel>
-                <Scroll maxScrollHeight={{ base: '100%', md: '328px' }}>
-                  <SelectMenu
-                    isOpen={isAlarmSoundOpen}
-                    onClose={onAlarmSoundClose}
-                    onOpen={onAlarmSoundOpen}
-                    selectedItem={settings.alarmSound}
-                    items={alarmSounds}
-                  />
+                <Scroll hasScrollOffset maxScrollHeight={{ base: '100%', md: '328px' }}>
                   <FieldWrap>
                     <NumericInput
                       title={t('pomodoro_count_settings')}
@@ -176,7 +174,20 @@ const _Settings: FC = ({ ...props }) => {
                 </Scroll>
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
+                <SelectMenu
+                  isOpen={isAlarmSoundOpen}
+                  onClose={onAlarmSoundClose}
+                  onOpen={onAlarmSoundOpen}
+                  selectedItem={getAlarmName(settings.alarmSound) ?? ''}
+                  items={alarmSounds}
+                />
+                <FieldWrap hasBorder={false}>
+                  <SwitchInput
+                    title={t('notifications')}
+                    isChecked={settings.allowNotifications}
+                    onChange={value => onChangeSettingsHandler(value, 'allowNotifications')}
+                  />
+                </FieldWrap>
               </TabPanel>
             </TabPanels>
           </Tabs>

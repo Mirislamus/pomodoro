@@ -149,10 +149,18 @@ const semanticTokens = {
           _dark: 'whiteAlpha.10',
         },
       },
+      list: {
+        _light: 'grey.9',
+        _dark: 'black.4',
+      },
       item: {
+        selected: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.8',
+        },
         hover: {
-          _light: 'blackAlpha.12',
-          _dark: 'whiteAlpha.20',
+          _light: 'blackAlpha.6',
+          _dark: 'whiteAlpha.6',
         },
       },
     },

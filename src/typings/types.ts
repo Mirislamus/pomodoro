@@ -7,6 +7,7 @@ export type Settings = {
   longBreak: number;
   hasAutoStart: boolean;
   alarmSound: AlarmSound;
+  allowNotifications: boolean;
 };
 
 export type Session = {
