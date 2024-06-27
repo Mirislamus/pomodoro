@@ -2,7 +2,8 @@ import { createContext, useContext, useState, useEffect, FC } from 'react';
 import useGetLocalStorage from '../../hooks/useGetLocalStorage';
 import useSetLocalStorage from '../../hooks/useSetLocalStorage';
 import { Stage } from '../../typings/enums';
-import { Session, SessionContextType, SessionProviderType } from './types';
+import { SessionContextType, SessionProviderType } from './types';
+import { Session } from '../../typings/types';
 
 const defaultSession: Session = {
   sessionCount: 1,
@@ -26,9 +27,18 @@ export const SessionProvider: FC<SessionProviderType> = ({ children }) => {
   const [session, setSession] = useState<Session>({
     sessionCount: useGetLocalStorage<number>('sessionCount', defaultSession.sessionCount),
     stage: useGetLocalStorage<Stage>('stage', defaultSession.stage),
-    pomodoroCurrentTime: useGetLocalStorage<number>('pomodoroCurrentTime', defaultSession.pomodoroCurrentTime),
-    shortBrakeCurrentTime: useGetLocalStorage<number>('shortBrakeCurrentTime', defaultSession.shortBrakeCurrentTime),
-    longBrakeCurrentTime: useGetLocalStorage<number>('longBrakeCurrentTime', defaultSession.longBrakeCurrentTime),
+    pomodoroCurrentTime: useGetLocalStorage<number>(
+      'pomodoroCurrentTime',
+      defaultSession.pomodoroCurrentTime
+    ),
+    shortBrakeCurrentTime: useGetLocalStorage<number>(
+      'shortBrakeCurrentTime',
+      defaultSession.shortBrakeCurrentTime
+    ),
+    longBrakeCurrentTime: useGetLocalStorage<number>(
+      'longBrakeCurrentTime',
+      defaultSession.longBrakeCurrentTime
+    ),
   });
 
   const setLocalStorage = useSetLocalStorage();
@@ -50,5 +60,9 @@ export const SessionProvider: FC<SessionProviderType> = ({ children }) => {
     });
   }, [session, setLocalStorage]);
 
-  return <SessionContext.Provider value={{ session, setSession: updateSession, resetSession }}>{children}</SessionContext.Provider>;
+  return (
+    <SessionContext.Provider value={{ session, setSession: updateSession, resetSession }}>
+      {children}
+    </SessionContext.Provider>
+  );
 };

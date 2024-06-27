@@ -6,6 +6,8 @@ const en = {
   ru: 'Russian',
   light_mode: 'Light mode',
   dark_mode: 'Dark mode',
+  notification_on: 'Enable notifications',
+  notification_off: 'Disable notifications',
   pomodoro: 'Pomodoro',
   short_break: 'Short break',
   long_break: 'Long break',

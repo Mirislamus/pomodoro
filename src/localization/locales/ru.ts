@@ -6,6 +6,8 @@ const ru = {
   en: 'Английский',
   light_mode: 'Светлый режим',
   dark_mode: 'Тёмный режим',
+  notification_on: 'Включить уведомления',
+  notification_off: 'Выключить уведомления',
   pomodoro: 'Помодоро',
   short_break: 'Короткий перерыв',
   long_break: 'Длинный перерыв',

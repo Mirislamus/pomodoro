@@ -174,13 +174,15 @@ const _Settings: FC = ({ ...props }) => {
                 </Scroll>
               </TabPanel>
               <TabPanel>
-                <SelectMenu
-                  isOpen={isAlarmSoundOpen}
-                  onClose={onAlarmSoundClose}
-                  onOpen={onAlarmSoundOpen}
-                  selectedItem={getAlarmName(settings.alarmSound) ?? ''}
-                  items={alarmSounds}
-                />
+                <FieldWrap hasBorder>
+                  <SelectMenu
+                    isOpen={isAlarmSoundOpen}
+                    onClose={onAlarmSoundClose}
+                    onOpen={onAlarmSoundOpen}
+                    selectedItem={getAlarmName(settings.alarmSound) ?? ''}
+                    items={alarmSounds}
+                  />
+                </FieldWrap>
                 <FieldWrap hasBorder={false}>
                   <SwitchInput
                     title={t('notifications')}

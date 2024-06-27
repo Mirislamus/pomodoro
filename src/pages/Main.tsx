@@ -8,14 +8,23 @@ import Timer from '../components/Timer/Timer';
 import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
 import Settings from '../components/Settings/Settings';
+import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 
 const Main: FC = () => {
-  const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
-  const { isOpen: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
+  const {
+    isOpen: isLangMenuOpen,
+    onClose: onLangMenuClose,
+    onOpen: onLangMenuOpen,
+  } = useDisclosure();
+  const {
+    isOpen: isMobileMenuOpen,
+    onClose: onMobileMenuClose,
+    onOpen: onMobileMenuOpen,
+  } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-
   const navigate = useNavigate();
   const location = useLocation();
+  const { settings, setSettings } = useSettings();
   const isSettings = location.pathname === '/settings';
 
   return (
@@ -35,11 +44,11 @@ const Main: FC = () => {
           <Route path="/settings" element={<Settings />} />
         </Routes>
         <Footer
-          allowNotify={false}
+          allowNotify={settings.allowNotifications}
           isSettings={isSettings}
           colorMode={colorMode}
           onColorModeClick={toggleColorMode}
-          onNotifyClick={() => alert('notify')}
+          onNotifyClick={() => setSettings('allowNotifications', !settings.allowNotifications)}
           onSettingsClick={() => {
             if (isSettings) {
               navigate('/');
