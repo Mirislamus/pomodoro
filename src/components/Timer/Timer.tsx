@@ -7,7 +7,7 @@ import { formatMilliseconds } from '../../utils';
 import ProgressCircle from './ProgressCircle';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconRestart, IconSkip } from '../../theme/foundations/icons';
-import { Stage } from '../../typings/enums';
+import { AlarmSound, Stage } from '../../typings/enums';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import { getTextColor } from '../../utils';
 import { getPercent } from '../../utils';
@@ -20,7 +20,11 @@ const _Timer: FC = () => {
   const { settings } = useSettings();
   const { session, setSession, resetSession } = useSession();
   const stageColor = useGetStageColor();
-  const { isOpen: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
+  const {
+    isOpen: isStageModalOpen,
+    onClose: onStageModalClose,
+    onOpen: onStageModalOpen,
+  } = useDisclosure();
 
   const {
     countdown: countdownPomodoro,
@@ -100,6 +104,10 @@ const _Timer: FC = () => {
       setSession('longBrakeCurrentTime', countdownLongBreak);
     }
   }, [countdownLongBreak, isPlayingLongBreak]);
+
+  useEffect(() => {
+    setAudio(`/sounds/${AlarmSound.Bell}.mp3`);
+  }, []);
 
   const onSkipButtonClickHandler = () => {
     if (session.stage === Stage.Pomodoro) {
@@ -284,10 +292,19 @@ const _Timer: FC = () => {
             pos={{ base: 'absolute', md: 'static' }}
           >
             <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
-            <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
+            <Button
+              variant="circle"
+              size="lg"
+              sx={getToggleButtonStyles()}
+              onClick={onToggleButtonClickHandler}
+            >
               {getIsCurrentPlaying() ? t('pause') : t('start')}
             </Button>
-            <ActionButton icon={IconSkip} isDisabled={!getIsCurrentPlaying()} onClick={onSkipButtonClickHandler} />
+            <ActionButton
+              icon={IconSkip}
+              isDisabled={!getIsCurrentPlaying()}
+              onClick={onSkipButtonClickHandler}
+            />
           </HStack>
         </Flex>
       </Flex>
@@ -297,3 +314,6 @@ const _Timer: FC = () => {
 
 const Timer = chakra(_Timer);
 export default Timer;
+function setAudio(arg0: string) {
+  throw new Error('Function not implemented.');
+}
