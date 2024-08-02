@@ -11,13 +11,19 @@
     "eslint": "eslint --ext .js,jsx,ts,tsx,md src",
     "eslint:fix": "eslint --fix --ext .js,jsx,ts,tsx,md src",
     "prettier": "prettier --trailing-comma es5 \"src/**/*.{js,jsx,ts,tsx,css,less,json}\"",
-    "prettier:fix": "prettier --trailing-comma es5 --write \"src/**/*.{js,jsx,ts,tsx,css,less,json}\""
+    "prettier:fix": "prettier --trailing-comma es5 --write \"src/**/*.{js,jsx,ts,tsx,css,less,json}\"",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md}": [
       "yarn prettier",
       "yarn eslint"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
