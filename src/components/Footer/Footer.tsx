@@ -33,11 +33,16 @@ const _Footer: FC<FooterProps> = ({
     >
       <PomodoroTooltip
         placement="top-start"
-        label={t(allowNotify ? 'notification_on' : 'notification_off')}
+        label={t(allowNotify ? 'notification_off' : 'notification_on')}
       >
         <Box>
           <ActionButton variant="fill" onClick={onNotifyClick}>
-            <IconNotify transition={easeIn} boxSize="24px" color="primary" isActive={allowNotify} />
+            <IconNotify
+              transition={easeIn}
+              boxSize="24px"
+              color="primary"
+              isActive={!allowNotify}
+            />
           </ActionButton>
         </Box>
       </PomodoroTooltip>
