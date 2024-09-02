@@ -7,7 +7,11 @@ interface ProgressCircleProps {
   isActive?: boolean;
 }
 
-const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isActive = false, ...props }) => {
+const _ProgressCircle: FC<ProgressCircleProps> = ({
+  fillPercentage,
+  isActive = false,
+  ...props
+}) => {
   const radius = 230;
   const strokeWidth = 36;
   const circumference = 2 * Math.PI * radius;
@@ -21,7 +25,11 @@ const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isActive = f
   ]);
 
   return (
-    <Box boxSize={{ base: '300px', md: '500px' }} __css={{ svg: { maxW: '100%', h: 'auto' } }} {...props}>
+    <Box
+      boxSize={{ base: '300px', md: '500px' }}
+      __css={{ svg: { maxW: '100%', h: 'auto' } }}
+      {...props}
+    >
       <svg width="500" height="500" viewBox="0 0 500 500" fill="none">
         <circle
           cx="250"

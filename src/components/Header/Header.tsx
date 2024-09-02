@@ -26,7 +26,12 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
         sx={{ svg: { maxW: '100%', h: 'auto' } }}
         w={{ base: '100px', md: '116px' }}
       >
-        <IconLogo w="116px" h="50px" pathColor={getTextColor(session.stage)} stageColor={currentStageColor} />
+        <IconLogo
+          w="116px"
+          h="50px"
+          pathColor={getTextColor(session.stage)}
+          stageColor={currentStageColor}
+        />
       </Box>
       <Button
         leftIcon={<IconLang />}

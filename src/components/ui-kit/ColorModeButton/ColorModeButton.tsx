@@ -9,7 +9,13 @@ const _ColorModeButton: FC<ColorModeButtonProps> = ({ colorMode, onClick, ...pro
   return (
     <CircleButton onClick={onClick} {...props}>
       <Text>{t(`${colorMode === 'light' ? 'dark_mode' : 'light_mode'}`)}</Text>
-      <Flex bgColor="button.fill.default" alignItems="center" justifyContent="center" boxSize="36px" borderRadius="50%">
+      <Flex
+        bgColor="button.fill.default"
+        alignItems="center"
+        justifyContent="center"
+        boxSize="36px"
+        borderRadius="50%"
+      >
         {colorMode === 'light' ? <IconDark boxSize="20px" /> : <IconLight boxSize="20px" />}
       </Flex>
     </CircleButton>

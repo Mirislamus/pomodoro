@@ -7,7 +7,7 @@ import { formatMilliseconds } from '../../utils';
 import ProgressCircle from './ProgressCircle';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconRestart, IconSkip } from '../../theme/foundations/icons';
-import { AlarmSound, Stage } from '../../typings/enums';
+import { Stage } from '../../typings/enums';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import { getTextColor } from '../../utils';
 import { getPercent } from '../../utils';
@@ -17,9 +17,10 @@ import StageSelect from '../StageSelect/StageSelect';
 import StageModal from '../StageModal/StageModal';
 
 const _Timer: FC = () => {
+  const stageColor = useGetStageColor();
   const { settings } = useSettings();
   const { session, setSession, resetSession } = useSession();
-  const stageColor = useGetStageColor();
+
   const {
     isOpen: isStageModalOpen,
     onClose: onStageModalClose,
@@ -104,10 +105,6 @@ const _Timer: FC = () => {
       setSession('longBrakeCurrentTime', countdownLongBreak);
     }
   }, [countdownLongBreak, isPlayingLongBreak]);
-
-  useEffect(() => {
-    setAudio(`/sounds/${AlarmSound.Bell}.mp3`);
-  }, []);
 
   const onSkipButtonClickHandler = () => {
     if (session.stage === Stage.Pomodoro) {
@@ -314,6 +311,3 @@ const _Timer: FC = () => {
 
 const Timer = chakra(_Timer);
 export default Timer;
-function setAudio(arg0: string) {
-  throw new Error('Function not implemented.');
-}
