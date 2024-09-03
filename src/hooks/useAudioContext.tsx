@@ -38,10 +38,6 @@ const useAudioContext = (): AudioContextReturnType => {
     }
   };
 
-  useEffect(() => {
-    play();
-  }, [audio]);
-
   return {
     setAudio,
     setVolume,

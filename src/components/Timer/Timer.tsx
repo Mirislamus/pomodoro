@@ -15,11 +15,13 @@ import StageSwitcher from '../StageSwitcher/StageSwitcher';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 import StageSelect from '../StageSelect/StageSelect';
 import StageModal from '../StageModal/StageModal';
+import useAlarmSound from '../../hooks/useAlarmSound';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
   const { settings } = useSettings();
   const { session, setSession, resetSession } = useSession();
+  const { play: playAlarmSound } = useAlarmSound();
 
   const {
     isOpen: isStageModalOpen,
@@ -37,6 +39,7 @@ const _Timer: FC = () => {
     maxMilliseconds: settings.duration,
     currentMilliseconds: session.pomodoroCurrentTime,
     onComplete: () => {
+      playAlarmSound();
       setSession('pomodoroCurrentTime', 0);
       if (session.sessionCount >= settings.count) {
         setSession('stage', Stage.LongBreak);
@@ -62,6 +65,7 @@ const _Timer: FC = () => {
     maxMilliseconds: settings.shortBreak,
     currentMilliseconds: session.shortBrakeCurrentTime,
     onComplete: () => {
+      playAlarmSound();
       setSession('shortBrakeCurrentTime', 0);
       if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
@@ -83,6 +87,7 @@ const _Timer: FC = () => {
     maxMilliseconds: settings.longBreak,
     currentMilliseconds: session.longBrakeCurrentTime,
     onComplete: () => {
+      playAlarmSound();
       resetSession();
       setSession('stage', Stage.Pomodoro);
     },
