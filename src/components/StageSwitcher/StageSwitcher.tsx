@@ -8,7 +8,7 @@ import { useSession } from '../../contexts/SessionContext/SessionContext';
 const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest }) => {
   const { session } = useSession();
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [boxStyle, setBoxStyle] = useState({ width: 0, transform: '' });
+  const [boxStyle, setBoxStyle] = useState({ width: 120, transform: '' });
 
   useLayoutEffect(() => {
     const updateBoxStyle = () => {
