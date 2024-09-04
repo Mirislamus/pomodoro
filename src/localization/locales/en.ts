@@ -30,6 +30,8 @@ const en = {
   reset_settings: 'Reset settings',
   copy_settings: 'Copy settings',
   settings_copied_toast_info: 'The link with all the settings has been copied to the clipboard',
+  finish_sound: 'Finish sound',
+  tick_sound: 'Tick sound',
 };
 
 export default en;

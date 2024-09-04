@@ -18,4 +18,15 @@ export enum StageColor {
 export enum AlarmSound {
   Bell = 'alarm-bell',
   Bird = 'alarm-bird',
+  Wood = 'alarm-wood',
+  Digital = 'alarm-digital',
+  Kitchen = 'alarm-kitchen',
+}
+
+export enum TickSound {
+  None = 'none',
+  Fast = 'tick-fast',
+  Slow = 'tick-slow',
+  BrownNoise = 'tick-brown-noise',
+  WhiteNoise = 'tick-white-noise',
 }

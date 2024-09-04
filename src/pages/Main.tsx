@@ -27,6 +27,18 @@ const Main: FC = () => {
   const { settings, setSettings } = useSettings();
   const isSettings = location.pathname === '/settings';
 
+  const onSettingsClickHandler = () => {
+    if (isSettings) {
+      navigate('/');
+    } else {
+      navigate('/settings');
+    }
+  };
+
+  const onNotifyClickHandler = () => {
+    setSettings('allowNotifications', !settings.allowNotifications);
+  };
+
   return (
     <>
       <LangMenu isOpen={isLangMenuOpen} onClose={onLangMenuClose} />
@@ -48,14 +60,8 @@ const Main: FC = () => {
           isSettings={isSettings}
           colorMode={colorMode}
           onColorModeClick={toggleColorMode}
-          onNotifyClick={() => setSettings('allowNotifications', !settings.allowNotifications)}
-          onSettingsClick={() => {
-            if (isSettings) {
-              navigate('/');
-            } else {
-              navigate('/settings');
-            }
-          }}
+          onNotifyClick={onNotifyClickHandler}
+          onSettingsClick={onSettingsClickHandler}
         />
       </Layout>
     </>

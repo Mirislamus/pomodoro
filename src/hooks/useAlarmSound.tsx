@@ -12,7 +12,7 @@ const useAlarmSound = (): AlarmSoundReturnType => {
 
   useEffect(() => {
     if (settings.alarmSound) {
-      setAudio(`/sounds/${settings.alarmSound}.mp3`);
+      setAudio(`/sounds/alarm/${settings.alarmSound}.mp3`);
     }
   }, [settings.alarmSound]);
 

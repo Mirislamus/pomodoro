@@ -26,6 +26,7 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
       'alarmSound',
       defaultSettings.alarmSound
     ),
+    tickSound: useGetLocalStorage<Settings['tickSound']>('tickSound', defaultSettings.tickSound),
     allowNotifications: useGetLocalStorage<boolean>(
       'allowNotification',
       defaultSettings.allowNotifications

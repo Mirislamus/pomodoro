@@ -1,4 +1,4 @@
-import { AlarmSound, Stage } from './enums';
+import { AlarmSound, Stage, TickSound } from './enums';
 
 export type Settings = {
   count: number;
@@ -7,6 +7,7 @@ export type Settings = {
   longBreak: number;
   hasAutoStart: boolean;
   alarmSound: AlarmSound;
+  tickSound: TickSound;
   allowNotifications: boolean;
 };
 
@@ -16,4 +17,10 @@ export type Session = {
   shortBrakeCurrentTime: number;
   longBrakeCurrentTime: number;
   stage: Stage;
+};
+
+export type Sound = {
+  id: AlarmSound | TickSound;
+  name: string;
+  onClick: () => void;
 };

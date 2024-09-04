@@ -23,14 +23,14 @@ import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 import FieldWrap from '../FieldWrap/FieldWrap';
 import { getMinFromMs, getMsFromMin } from '../../utils';
-import { Settings } from '../../typings/types';
+import { Settings, Sound } from '../../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
 import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
 import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
 import { useSettingsLink } from '../../hooks/useSettingsLink';
 import Scroll from '../ui-kit/Scroll/Scroll';
 import SelectMenu from '../SelectMenu/SelectMenu';
-import { AlarmSound } from '../../typings/enums';
+import { AlarmSound, TickSound } from '../../typings/enums';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const _Settings: FC = ({ ...props }) => {
     setSettings(key, value);
   };
 
-  const alarmSounds = [
+  const alarmSounds: Sound[] = [
     {
       id: AlarmSound.Bell,
       name: 'Bell',
@@ -59,10 +59,57 @@ const _Settings: FC = ({ ...props }) => {
       name: 'Bird',
       onClick: () => setSettings('alarmSound', AlarmSound.Bird),
     },
+    {
+      id: AlarmSound.Wood,
+      name: 'Wood',
+      onClick: () => setSettings('alarmSound', AlarmSound.Wood),
+    },
+    {
+      id: AlarmSound.Digital,
+      name: 'Digital',
+      onClick: () => setSettings('alarmSound', AlarmSound.Digital),
+    },
+    {
+      id: AlarmSound.Kitchen,
+      name: 'Kitchen',
+      onClick: () => setSettings('alarmSound', AlarmSound.Kitchen),
+    },
   ];
 
-  const getAlarmName = (name: AlarmSound) => {
-    return alarmSounds.find(item => item.id === name)?.name;
+  const tickSounds: Sound[] = [
+    {
+      id: TickSound.None,
+      name: 'None',
+      onClick: () => setSettings('tickSound', TickSound.None),
+    },
+    {
+      id: TickSound.Fast,
+      name: 'Fast',
+      onClick: () => setSettings('tickSound', TickSound.Fast),
+    },
+    {
+      id: TickSound.Slow,
+      name: 'Slow',
+      onClick: () => setSettings('tickSound', TickSound.Slow),
+    },
+    {
+      id: TickSound.BrownNoise,
+      name: 'Brown noise',
+      onClick: () => setSettings('tickSound', TickSound.BrownNoise),
+    },
+    {
+      id: TickSound.WhiteNoise,
+      name: 'White noise',
+      onClick: () => setSettings('tickSound', TickSound.WhiteNoise),
+    },
+  ];
+
+  const getSoundName = (name: AlarmSound | TickSound, sounds: Sound[]): string => {
+    const foundSound = sounds.find(item => item.id === name);
+    if (!foundSound) {
+      throw new Error(`Sound with id '${name}' not found`);
+    }
+    return foundSound.name;
   };
 
   return (
@@ -175,12 +222,27 @@ const _Settings: FC = ({ ...props }) => {
               </TabPanel>
               <TabPanel>
                 <FieldWrap hasBorder>
+                  <Text fontSize="16px" fontWeight="500" color="primary" mb="gap.10">
+                    {t('finish_sound')}
+                  </Text>
                   <SelectMenu
                     isOpen={isAlarmSoundOpen}
                     onClose={onAlarmSoundClose}
                     onOpen={onAlarmSoundOpen}
-                    selectedItem={getAlarmName(settings.alarmSound) ?? ''}
+                    selectedItem={getSoundName(settings.alarmSound, alarmSounds)}
                     items={alarmSounds}
+                  />
+                </FieldWrap>
+                <FieldWrap hasBorder>
+                  <Text fontSize="16px" fontWeight="500" color="primary" mb="gap.10">
+                    {t('tick_sound')}
+                  </Text>
+                  <SelectMenu
+                    isOpen={isAlarmSoundOpen}
+                    onClose={onAlarmSoundClose}
+                    onOpen={onAlarmSoundOpen}
+                    selectedItem={getSoundName(settings.tickSound, tickSounds)}
+                    items={tickSounds}
                   />
                 </FieldWrap>
                 <FieldWrap hasBorder={false}>

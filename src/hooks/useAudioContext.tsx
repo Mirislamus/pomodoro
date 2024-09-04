@@ -6,7 +6,7 @@ interface AudioContextReturnType {
   play: () => void;
 }
 
-const useAudioContext = (): AudioContextReturnType => {
+const useAudioContext = (loop: boolean = false): AudioContextReturnType => {
   const [audio, setAudio] = useState<string>('');
   const [volume, setVolume] = useState<number>(1);
   const audioContext = new AudioContext();
@@ -24,6 +24,9 @@ const useAudioContext = (): AudioContextReturnType => {
   const playAudio = (buffer: AudioBuffer) => {
     const audioSource = audioContext.createBufferSource();
     audioSource.buffer = buffer;
+    if (loop) {
+      audioSource.loop = loop;
+    }
     audioSource.connect(gainNode);
     audioSource.start();
   };

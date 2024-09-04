@@ -5,7 +5,6 @@ import { IconChevronDown, IconTickLg } from '../../theme/foundations/icons';
 import { easeIn } from '../../theme/foundations/transitions';
 
 const SelectMenu: FC<SelectMenuProps> = ({ items, selectedItem, isOpen, ...props }) => {
-  console.log(selectedItem, items);
   return (
     <Box pos="relative">
       <Menu {...props}>
@@ -17,7 +16,7 @@ const SelectMenu: FC<SelectMenuProps> = ({ items, selectedItem, isOpen, ...props
             transform={isOpen ? 'rotate(180deg)' : ''}
           />
         </MenuButton>
-        <MenuList maxWidth="100%">
+        <MenuList maxWidth="100%" zIndex={10}>
           <MenuOptionGroup defaultValue={selectedItem} type="radio">
             {items.map(item => (
               <MenuItemOption

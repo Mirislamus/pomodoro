@@ -30,6 +30,8 @@ const ru = {
   reset_settings: 'Сбросить настройки',
   copy_settings: 'Cкопировать настройки',
   settings_copied_info: 'Ссылка со всеми настройками скопирована в буфер обмена',
+  finish_sound: 'Звук завершения',
+  tick_sound: 'Звук тикания',
 };
 
 export default ru;

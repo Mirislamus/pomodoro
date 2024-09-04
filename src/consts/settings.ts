@@ -1,4 +1,4 @@
-import { AlarmSound } from '../typings/enums';
+import { AlarmSound, TickSound } from '../typings/enums';
 import { getMsFromMin } from '../utils';
 
 export const defaultSettings = {
@@ -8,6 +8,7 @@ export const defaultSettings = {
   longBreak: getMsFromMin(0.3),
   hasAutoStart: true,
   alarmSound: AlarmSound.Bell,
+  tickSound: TickSound.None,
   allowNotifications: true,
 };
 
