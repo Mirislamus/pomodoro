@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { WrapperProps } from './types';
+import { LayoutProps } from './types';
 import { Box, Container } from '@chakra-ui/react';
 
-const Wrapper: FC<WrapperProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <Box minHeight="100vh" paddingBlockStart={{ base: 'gap.16', md: 'gap.30' }}>
       <Container
@@ -17,4 +17,4 @@ const Wrapper: FC<WrapperProps> = ({ children }) => {
   );
 };
 
-export default Wrapper;
+export default Layout;

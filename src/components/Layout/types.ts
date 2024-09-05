@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
 
-export interface WrapperProps {
+export interface LayoutProps {
   children: ReactNode;
 }

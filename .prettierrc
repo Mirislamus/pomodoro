@@ -8,5 +8,6 @@
   "tabWidth": 2,
   "bracketSpacing": true,
   "endOfLine": "lf",
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "objectCurlySpacing": "never"
 }

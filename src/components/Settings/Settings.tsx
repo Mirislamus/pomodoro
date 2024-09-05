@@ -17,6 +17,7 @@ import { easeIn } from '../../theme/foundations/transitions';
 import { t } from 'i18next';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconClose, IconCopy } from '../../theme/foundations/icons';
+import { useNavigate } from 'react-router-dom';
 import NumericInput from '../ui-kit/NumericInput/NumericInput';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
@@ -32,6 +33,7 @@ import SelectMenu from '../SelectMenu/SelectMenu';
 import { AlarmSound, TickSound } from '../../typings/enums';
 
 const _Settings: FC = ({ ...props }) => {
+  const navigate = useNavigate();
   const { settings, setSettings, resetSettings } = useSettings();
   const { resetSession } = useSession();
   const { onSettingsLinkCopy } = useSettingsLink();
@@ -40,8 +42,6 @@ const _Settings: FC = ({ ...props }) => {
     onClose: onAlarmSoundClose,
     onOpen: onAlarmSoundOpen,
   } = useDisclosure();
-
-  // TODO: Add links
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
     resetSession();
@@ -144,7 +144,7 @@ const _Settings: FC = ({ ...props }) => {
             <Text textStyle="text.xl" textTransform="uppercase" color="primary">
               {t('settings')}
             </Text>
-            <ActionButton boxSize="40px" variant="fill" onClick={() => console.log('TODO')}>
+            <ActionButton boxSize="40px" variant="fill" onClick={() => navigate('/')}>
               <IconClose mt="-2px" boxSize="20px" />
             </ActionButton>
           </Flex>

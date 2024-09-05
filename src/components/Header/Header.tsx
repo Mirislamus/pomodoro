@@ -6,6 +6,7 @@ import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconLang, IconLogo, IconMenu } from '../../theme/foundations/icons';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { getTextColor } from '../../utils';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 
@@ -15,10 +16,11 @@ const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
   const [currentStageColor] = useToken('colors', [stageColor]);
   const { t } = useTranslation();
 
-  // TODO: Add links
   return (
     <Flex as="header" alignItems="center" justifyContent="space-between" {...rest}>
       <Box
+        as={Link}
+        to="/"
         display="inline-flex"
         color="primary"
         sx={{ svg: { maxW: '100%', h: 'auto' } }}

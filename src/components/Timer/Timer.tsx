@@ -23,8 +23,6 @@ const _Timer: FC = () => {
   const { session, setSession, resetSession } = useSession();
   const { play: playAlarmSound } = useAlarmSound();
 
-  // TODO: Add links
-
   const {
     isOpen: isStageModalOpen,
     onClose: onStageModalClose,

@@ -1,24 +1,12 @@
-export default {
+module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:astro/recommended',
     'prettier',
     'plugin:prettier/recommended',
   ],
-  plugins: ['@typescript-eslint', 'react', 'prettier', 'astro'],
-  overrides: [
-    {
-      files: ['*.astro'],
-      extends: ['plugin:astro/recommended'],
-      parser: 'astro-eslint-parser',
-      parserOptions: {
-        extraFileExtensions: ['.astro'],
-      },
-      rules: {},
-    },
-  ],
+  plugins: ['@typescript-eslint', 'react', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -37,6 +25,7 @@ export default {
         endOfLine: 'lf',
         arrowParens: 'avoid',
         objectCurlySpacing: 'never',
+        spaceInfixOps: false,
       },
     ],
   },
@@ -45,28 +34,4 @@ export default {
       version: 'detect',
     },
   },
-  ignores: [
-    'node_modules/',
-    'dist/',
-    'build/',
-    'public/',
-    '.astro/types/',
-    'coverage/',
-    '*.config.js',
-    '*.config.cjs',
-    '*.d.ts',
-    '.vscode/',
-    '.env',
-    '.env.*',
-    'temp/',
-    'tmp/',
-    '.DS_Store',
-    '._*',
-    '.AppleDouble',
-    '.idea/',
-    '*.iml',
-    'Thumbs.db',
-    '*.log'
-  ]
-
 };
