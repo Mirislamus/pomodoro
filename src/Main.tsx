@@ -1,14 +1,12 @@
 import { FC } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
-import Header from '../components/Header/Header';
-import LangMenu from '../components/menu/LangMenu/LangMenu';
-import MobileMenu from '../components/menu/MobileMenu/MobileMenu';
-import Timer from '../components/Timer/Timer';
+import Wrapper from './components/Wrapper/Wrapper';
+import Header from './components/Header/Header';
+import LangMenu from './components/menu/LangMenu/LangMenu';
+import MobileMenu from './components/menu/MobileMenu/MobileMenu';
+import Timer from './components/Timer/Timer';
 import { useColorMode, useDisclosure } from '@chakra-ui/react';
-import Footer from '../components/Footer/Footer';
-import Settings from '../components/Settings/Settings';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
+import Footer from './components/Footer/Footer';
+import { useSettings } from './contexts/SettingsContext/SettingsContext';
 
 const Main: FC = () => {
   const {
@@ -22,17 +20,12 @@ const Main: FC = () => {
     onOpen: onMobileMenuOpen,
   } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const navigate = useNavigate();
-  const location = useLocation();
   const { settings, setSettings } = useSettings();
-  const isSettings = location.pathname === '/settings';
+
+  // TODO: Add links
 
   const onSettingsClickHandler = () => {
-    if (isSettings) {
-      navigate('/');
-    } else {
-      navigate('/settings');
-    }
+    // TODO
   };
 
   const onNotifyClickHandler = () => {
@@ -49,21 +42,18 @@ const Main: FC = () => {
         onLangMenuOpen={onLangMenuOpen}
         onColorModeClick={toggleColorMode}
       />
-      <Layout>
+      <Wrapper>
         <Header onLangClick={onLangMenuOpen} onMenuClick={onMobileMenuOpen} />
-        <Routes>
-          <Route path="/" element={<Timer />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
+        <Timer />
         <Footer
           allowNotify={settings.allowNotifications}
-          isSettings={isSettings}
+          isSettings={false}
           colorMode={colorMode}
           onColorModeClick={toggleColorMode}
           onNotifyClick={onNotifyClickHandler}
           onSettingsClick={onSettingsClickHandler}
         />
-      </Layout>
+      </Wrapper>
     </>
   );
 };

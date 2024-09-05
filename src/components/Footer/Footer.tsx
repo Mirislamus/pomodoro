@@ -48,10 +48,14 @@ const _Footer: FC<FooterProps> = ({
       </PomodoroTooltip>
       <Button
         minW="150px"
-        role="group"
         textTransform="uppercase"
         fontWeight="600"
         onClick={onSettingsClick}
+        _hover={{
+          svg: {
+            transform: 'rotate(90deg)',
+          },
+        }}
       >
         {isSettings ? (
           <>
@@ -60,12 +64,7 @@ const _Footer: FC<FooterProps> = ({
           </>
         ) : (
           <>
-            <IconSettings
-              _groupHover={{ transform: 'rotate(90deg)' }}
-              transition={ease}
-              boxSize="24px"
-              mr="gap.4"
-            />
+            <IconSettings transition={ease} boxSize="24px" mr="gap.4" />
             {t('settings')}
           </>
         )}

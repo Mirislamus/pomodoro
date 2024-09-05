@@ -1,27 +1,22 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import './theme/typography/fonts.css';
-import './localization/i18n';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import Main from './pages/Main';
 import theme from './theme/theme';
 import { SettingsProvider } from './contexts/SettingsContext/SettingsContext';
 import { SessionProvider } from './contexts/SessionContext/SessionContext';
-import { BrowserRouter } from 'react-router-dom';
+import Main from './Main';
+import './theme/typography/fonts.css';
+import './localization/i18n';
 
-const root = createRoot(document.getElementById('root') as Element);
-
-root.render(
-  <React.StrictMode>
+const App = () => {
+  return (
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <SettingsProvider>
         <SessionProvider>
-          <BrowserRouter>
-            <Main />
-          </BrowserRouter>
+          <Main />
         </SessionProvider>
       </SettingsProvider>
     </ChakraProvider>
-  </React.StrictMode>
-);
+  );
+};
+
+export default App;
