@@ -7,7 +7,7 @@ import { formatMilliseconds } from '../../utils';
 import ProgressCircle from './ProgressCircle';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconRestart, IconSkip } from '../../theme/foundations/icons';
-import { Stage } from '../../typings/enums';
+import { Stage, TickSound } from '../../typings/enums';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import { getTextColor } from '../../utils';
 import { getPercent } from '../../utils';
@@ -16,12 +16,37 @@ import { useSession } from '../../contexts/SessionContext/SessionContext';
 import StageSelect from '../StageSelect/StageSelect';
 import StageModal from '../StageModal/StageModal';
 import useAlarmSound from '../../hooks/useAlarmSound';
+import useTickSound from '../../hooks/useTickSound';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
   const { settings } = useSettings();
   const { session, setSession, resetSession } = useSession();
   const { play: playAlarmSound } = useAlarmSound();
+  const { play: playTickSound, stop: stopTickSound, pause: pauseTickSound } = useTickSound();
+  const allowNotifications = settings.allowNotifications;
+  const allowTickSound = settings.tickSound !== TickSound.None;
+
+  const playTick = () => {
+    if (allowTickSound && allowNotifications) {
+      playTickSound();
+    }
+  };
+
+  const pauseTick = () => {
+    if (allowTickSound && allowNotifications) {
+      pauseTickSound();
+    }
+  };
+
+  const alarmAndTickSoundControl = () => {
+    if (allowNotifications) {
+      playAlarmSound();
+      if (allowTickSound) {
+        stopTickSound();
+      }
+    }
+  };
 
   const {
     isOpen: isStageModalOpen,
@@ -38,8 +63,10 @@ const _Timer: FC = () => {
   } = useCountdown({
     maxMilliseconds: settings.duration,
     currentMilliseconds: session.pomodoroCurrentTime,
+    onStart: () => playTick(),
+    onPause: () => pauseTick(),
     onComplete: () => {
-      playAlarmSound();
+      alarmAndTickSoundControl();
       setSession('pomodoroCurrentTime', 0);
       if (session.sessionCount >= settings.count) {
         setSession('stage', Stage.LongBreak);
@@ -64,8 +91,10 @@ const _Timer: FC = () => {
   } = useCountdown({
     maxMilliseconds: settings.shortBreak,
     currentMilliseconds: session.shortBrakeCurrentTime,
+    onStart: () => playTick(),
+    onPause: () => pauseTick(),
     onComplete: () => {
-      playAlarmSound();
+      alarmAndTickSoundControl();
       setSession('shortBrakeCurrentTime', 0);
       if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
@@ -86,8 +115,10 @@ const _Timer: FC = () => {
   } = useCountdown({
     maxMilliseconds: settings.longBreak,
     currentMilliseconds: session.longBrakeCurrentTime,
+    onStart: () => playTick(),
+    onPause: () => pauseTick(),
     onComplete: () => {
-      playAlarmSound();
+      alarmAndTickSoundControl();
       resetSession();
       setSession('stage', Stage.Pomodoro);
     },
@@ -205,6 +236,7 @@ const _Timer: FC = () => {
     {
       text: t('pomodoro'),
       onClick: () => {
+        stopTickSound();
         resetPomodoro();
         setSession('pomodoroCurrentTime', 0);
         setSession('stage', Stage.Pomodoro);
@@ -214,6 +246,7 @@ const _Timer: FC = () => {
     {
       text: t('short_break'),
       onClick: () => {
+        stopTickSound();
         resetShortBreak();
         setSession('shortBrakeCurrentTime', 0);
         setSession('stage', Stage.ShortBreak);
@@ -223,6 +256,7 @@ const _Timer: FC = () => {
     {
       text: t('long_break'),
       onClick: () => {
+        stopTickSound();
         resetLongBreak();
         setSession('longBrakeCurrentTime', 0);
         setSession('stage', Stage.LongBreak);
