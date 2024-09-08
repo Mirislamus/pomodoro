@@ -9,6 +9,8 @@ import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
 import Settings from '../components/Settings/Settings';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
+import Head from '../components/Head/Head';
+import { requestNotificationPermission } from '../utils';
 
 const Main: FC = () => {
   const {
@@ -37,10 +39,16 @@ const Main: FC = () => {
 
   const onNotifyClickHandler = () => {
     setSettings('allowNotifications', !settings.allowNotifications);
+
+    if (!settings.allowNotifications) {
+      requestNotificationPermission();
+    }
   };
 
   return (
     <>
+      <Head />
+
       <LangMenu isOpen={isLangMenuOpen} onClose={onLangMenuClose} />
       <MobileMenu
         isOpen={isMobileMenuOpen}

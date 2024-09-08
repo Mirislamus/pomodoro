@@ -2,7 +2,13 @@ import { FormControl, FormLabel, Switch, Text, chakra } from '@chakra-ui/react';
 import { ChangeEvent, FC, useId } from 'react';
 import { SwitchInputProps } from './types';
 
-const _SwitchInput: FC<SwitchInputProps> = ({ title, isChecked, onChange, ...props }) => {
+const _SwitchInput: FC<SwitchInputProps> = ({
+  title,
+  isChecked,
+  isDisabled,
+  onChange,
+  ...props
+}) => {
   const id = useId();
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +22,12 @@ const _SwitchInput: FC<SwitchInputProps> = ({ title, isChecked, onChange, ...pro
           {title}
         </Text>
       </FormLabel>
-      <Switch onChange={onChangeHandler} id={`switch-${id}`} isChecked={isChecked} />
+      <Switch
+        disabled={isDisabled}
+        onChange={onChangeHandler}
+        id={`switch-${id}`}
+        isChecked={isChecked}
+      />
     </FormControl>
   );
 };

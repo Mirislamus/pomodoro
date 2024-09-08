@@ -6,7 +6,7 @@ export const defaultSettings = {
   duration: getMsFromMin(0.1),
   shortBreak: getMsFromMin(0.2),
   longBreak: getMsFromMin(0.3),
-  hasAutoStart: true,
+  hasAutoStart: false,
   alarmSound: AlarmSound.Bell,
   tickSound: TickSound.None,
   allowNotifications: true,
