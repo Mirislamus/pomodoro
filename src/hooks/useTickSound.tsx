@@ -16,7 +16,7 @@ const useTickSound = (): TickSoundReturnType => {
     if (settings.tickSound) {
       setAudio(`/sounds/tick/${settings.tickSound}.mp3`);
     }
-  }, [settings.tickSound]);
+  }, [settings.tickSound, setAudio]);
 
   return {
     play,

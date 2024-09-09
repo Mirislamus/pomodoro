@@ -18,7 +18,7 @@ const ru = {
   close: 'Закрыть',
   stage_select: 'Выбор этапа',
   timer: 'Таймер',
-  notification: 'Уведомление',
+  notifications: 'Уведомления',
   pomodoro_count_settings: 'Количество помодоро',
   pomodoro_duration_settings: 'Длительность помодоро',
   auto_start: 'Автозапуск',

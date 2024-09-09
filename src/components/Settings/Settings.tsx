@@ -138,10 +138,15 @@ const _Settings: FC = ({ ...props }) => {
         base: 'background.settings.mobile',
         md: 'background.settings.desktop',
       }}
+      minH={{ base: '100%', md: '584px' }}
       {...props}
     >
-      <Scroll maxScrollHeight="100%">
-        <Box p={{ base: '16px', md: '40px' }}>
+      <Scroll maxScrollHeight={{ base: '100%', md: 'unset' }}>
+        <Flex
+          flexDirection="column"
+          h={{ base: 'auto', md: '100%' }}
+          p={{ base: '16px', md: '40px' }}
+        >
           <Flex
             display={{ base: 'flex', md: 'none' }}
             alignItems="center"
@@ -274,7 +279,8 @@ const _Settings: FC = ({ ...props }) => {
             justifyContent="space-between"
             gap="20px"
             alignItems="center"
-            marginBlockStart="30px"
+            paddingBlockStart="30px"
+            marginBlockStart="auto"
             pos="relative"
           >
             <Button
@@ -297,7 +303,7 @@ const _Settings: FC = ({ ...props }) => {
               </Box>
             </PomodoroTooltip>
           </Flex>
-        </Box>
+        </Flex>
       </Scroll>
     </Box>
   );

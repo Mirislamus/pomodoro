@@ -14,7 +14,7 @@ const useAlarmSound = (): AlarmSoundReturnType => {
     if (settings.alarmSound) {
       setAudio(`/sounds/alarm/${settings.alarmSound}.mp3`);
     }
-  }, [settings.alarmSound]);
+  }, [settings.alarmSound, setAudio]);
 
   return {
     play,

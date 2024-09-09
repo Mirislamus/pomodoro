@@ -10,8 +10,7 @@ const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight, hasScrollOffset })
       display="contents"
       __css={{
         '[data-simplebar]': {
-          paddingBlockStart: '2px',
-          paddingBlockEnd: '2px',
+          h: '100%',
           maxH: maxScrollHeight ? maxScrollHeight : '100%',
           marginInlineEnd: hasScrollOffset ? { base: '0', md: '-40px' } : '0',
           paddingInlineEnd: hasScrollOffset ? { base: '0', md: '40px' } : '0',
@@ -20,6 +19,9 @@ const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight, hasScrollOffset })
           w: '4px',
           bgColor: 'scroll.track',
           borderRadius: '100px',
+        },
+        '.simplebar-content': {
+          h: '100%',
         },
         '.simplebar-scrollbar': {
           _before: {
