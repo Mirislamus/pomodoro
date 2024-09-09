@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import Header from '../components/Header/Header';
@@ -11,6 +11,7 @@ import Settings from '../components/Settings/Settings';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import Head from '../components/Head/Head';
 import { requestNotificationPermission } from '../utils';
+import useNotificationPermission from '../hooks/useNotificationPermission';
 
 const Main: FC = () => {
   const {
@@ -28,6 +29,7 @@ const Main: FC = () => {
   const location = useLocation();
   const { settings, setSettings } = useSettings();
   const isSettings = location.pathname === '/settings';
+  const notificationPermission = useNotificationPermission();
 
   const onSettingsClickHandler = () => {
     if (isSettings) {
@@ -39,16 +41,11 @@ const Main: FC = () => {
 
   const onNotifyClickHandler = () => {
     setSettings('allowNotifications', !settings.allowNotifications);
-
-    if (!settings.allowNotifications) {
-      requestNotificationPermission();
-    }
   };
 
   return (
     <>
       <Head />
-
       <LangMenu isOpen={isLangMenuOpen} onClose={onLangMenuClose} />
       <MobileMenu
         isOpen={isMobileMenuOpen}
@@ -64,7 +61,10 @@ const Main: FC = () => {
           <Route path="/settings" element={<Settings />} />
         </Routes>
         <Footer
-          allowNotify={settings.allowNotifications}
+          allowNotification={settings.allowNotifications}
+          isNotificationDisabled={
+            notificationPermission === 'denied'
+          }
           isSettings={isSettings}
           colorMode={colorMode}
           onColorModeClick={toggleColorMode}

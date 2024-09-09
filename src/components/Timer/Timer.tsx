@@ -1,9 +1,9 @@
-import { Button, Flex, HStack, Text, chakra, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Text, chakra, useDisclosure } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
 import { t } from 'i18next';
 import useCountdown from '../../hooks/useCountdown';
-import { formatMilliseconds } from '../../utils';
+import { formatMilliseconds, requestNotificationPermission } from '../../utils';
 import ProgressCircle from './ProgressCircle';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconRestart, IconSkip } from '../../theme/foundations/icons';
@@ -17,6 +17,7 @@ import StageSelect from '../StageSelect/StageSelect';
 import StageModal from '../StageModal/StageModal';
 import useAlarmSound from '../../hooks/useAlarmSound';
 import useTickSound from '../../hooks/useTickSound';
+import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
@@ -164,19 +165,14 @@ const _Timer: FC = () => {
   };
 
   const onResetButtonClickHandler = () => {
-    if (session.stage === Stage.Pomodoro) {
-      resetPomodoro();
-      setSession('pomodoroCurrentTime', settings.duration);
-    } else if (session.stage === Stage.ShortBreak) {
-      resetShortBreak();
-      setSession('shortBrakeCurrentTime', settings.shortBreak);
-    } else {
-      resetLongBreak();
-      setSession('longBrakeCurrentTime', settings.longBreak);
-    }
+    resetPomodoro();
+    resetShortBreak();
+    resetLongBreak();
+    resetSession();
   };
 
   const onToggleButtonClickHandler = () => {
+    requestNotificationPermission();
     if (session.stage === Stage.Pomodoro) {
       isPlayingPomodoro ? pausePomodoro() : startPomodoro();
     } else if (session.stage === Stage.ShortBreak) {
@@ -327,7 +323,11 @@ const _Timer: FC = () => {
             bottom="-96px"
             pos={{ base: 'absolute', md: 'static' }}
           >
-            <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
+            <PomodoroTooltip label={t('reset_current_session')}>
+              <Box>
+                <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
+              </Box>
+            </PomodoroTooltip>
             <Button
               variant="circle"
               size="lg"
@@ -336,11 +336,15 @@ const _Timer: FC = () => {
             >
               {getIsCurrentPlaying() ? t('pause') : t('start')}
             </Button>
-            <ActionButton
-              icon={IconSkip}
-              isDisabled={!getIsCurrentPlaying()}
-              onClick={onSkipButtonClickHandler}
-            />
+            <PomodoroTooltip {...(getIsCurrentPlaying() ? { label: t('skip_current_step') } : {})}>
+              <Box>
+                <ActionButton
+                  icon={IconSkip}
+                  isDisabled={!getIsCurrentPlaying()}
+                  onClick={onSkipButtonClickHandler}
+                />
+              </Box>
+            </PomodoroTooltip>
           </HStack>
         </Flex>
       </Flex>

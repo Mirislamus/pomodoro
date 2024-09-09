@@ -31,6 +31,8 @@ const en = {
   settings_copied_toast_info: 'The link with all the settings has been copied to the clipboard',
   finish_sound: 'Finish sound',
   tick_sound: 'Tick sound',
+  reset_current_session: 'Reset current session',
+  skip_current_step: 'Skip current step',
 };
 
 export default en;

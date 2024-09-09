@@ -31,6 +31,8 @@ const ru = {
   settings_copied_info: 'Ссылка со всеми настройками скопирована в буфер обмена',
   finish_sound: 'Звук завершения',
   tick_sound: 'Звук тикания',
+  reset_current_session: 'Сбросить текущую сессию',
+  skip_current_step: 'Пропустить текущий этап',
 };
 
 export default ru;

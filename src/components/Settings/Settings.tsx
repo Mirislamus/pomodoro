@@ -22,7 +22,7 @@ import NumericInput from '../ui-kit/NumericInput/NumericInput';
 import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
 import { useSession } from '../../contexts/SessionContext/SessionContext';
 import FieldWrap from '../FieldWrap/FieldWrap';
-import { getMinFromMs, getMsFromMin, requestNotificationPermission } from '../../utils';
+import { getMinFromMs, getMsFromMin } from '../../utils';
 import { Settings, Sound } from '../../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
 import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
@@ -31,7 +31,7 @@ import { useSettingsLink } from '../../hooks/useSettingsLink';
 import Scroll from '../ui-kit/Scroll/Scroll';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import { AlarmSound, TickSound } from '../../typings/enums';
-import { getNotificationPermission } from '../../utils/getNotificationPermission';
+import useNotificationPermission from '../../hooks/useNotificationPermission';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
@@ -43,10 +43,16 @@ const _Settings: FC = ({ ...props }) => {
     onClose: onAlarmSoundClose,
     onOpen: onAlarmSoundOpen,
   } = useDisclosure();
+  const notificationPermission = useNotificationPermission();
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
     resetSession();
     setSettings(key, value);
+  };
+
+  const onResetSettingsHandler = () => {
+    resetSession();
+    resetSettings();
   };
 
   const alarmSounds: Sound[] = [
@@ -250,11 +256,13 @@ const _Settings: FC = ({ ...props }) => {
                   <SwitchInput
                     title={t('notifications')}
                     isChecked={settings.allowNotifications}
-                    isDisabled={getNotificationPermission() === 'denied'}
+                    isDisabled={notificationPermission === 'denied'}
                     onChange={value => {
-                      onChangeSettingsHandler(value, 'allowNotifications');
-                      if (!settings.allowNotifications) {
-                        requestNotificationPermission();
+                      if (
+                        notificationPermission === 'default' ||
+                        notificationPermission === 'granted'
+                      ) {
+                        onChangeSettingsHandler(value, 'allowNotifications');
                       }
                     }}
                   />
@@ -273,7 +281,7 @@ const _Settings: FC = ({ ...props }) => {
               w="100%"
               variant="secondary"
               size="md"
-              onClick={() => resetSettings()}
+              onClick={onResetSettingsHandler}
               mt="auto"
             >
               {t('reset_settings')}

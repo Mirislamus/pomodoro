@@ -16,10 +16,11 @@ import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
 const _Footer: FC<FooterProps> = ({
   isSettings = false,
   colorMode,
-  allowNotify,
+  allowNotification,
   onSettingsClick,
   onNotifyClick,
   onColorModeClick,
+  isNotificationDisabled,
   ...props
 }) => {
   return (
@@ -33,15 +34,15 @@ const _Footer: FC<FooterProps> = ({
     >
       <PomodoroTooltip
         placement="top-start"
-        label={t(allowNotify ? 'notification_off' : 'notification_on')}
+        label={t(allowNotification ? 'notification_off' : 'notification_on')}
       >
         <Box>
-          <ActionButton variant="fill" onClick={onNotifyClick}>
+          <ActionButton isDisabled={isNotificationDisabled} variant="fill" onClick={onNotifyClick}>
             <IconNotify
               transition={easeIn}
               boxSize="24px"
               color="primary"
-              isActive={!allowNotify}
+              isActive={!allowNotification}
             />
           </ActionButton>
         </Box>

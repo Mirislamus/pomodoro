@@ -10,8 +10,6 @@ const _PomodoroTooltip: FC<PomodoroTooltipProps> = ({ children, ...rest }) => {
       fontStyle="text.md"
       hasArrow
       placement="top"
-      boxShadow="none"
-      arrowShadowColor="none"
       p="10px"
       borderRadius="10px"
       fontWeight={400}
