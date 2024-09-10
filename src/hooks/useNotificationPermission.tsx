@@ -3,7 +3,7 @@ import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { getNotificationPermission } from '../utils';
 
 const useNotificationPermission = () => {
-  const [permission, setPermission] = useState<NotificationPermission>(Notification.permission);
+  const [permission, setPermission] = useState('default');
   const { settings } = useSettings();
 
   useEffect(() => {

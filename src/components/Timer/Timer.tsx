@@ -18,6 +18,7 @@ import StageModal from '../StageModal/StageModal';
 import useAlarmSound from '../../hooks/useAlarmSound';
 import useTickSound from '../../hooks/useTickSound';
 import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
+import sendNotification from '../../utils/sendNotification';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
@@ -70,11 +71,17 @@ const _Timer: FC = () => {
       alarmAndTickSoundControl();
       setSession('pomodoroCurrentTime', 0);
       if (session.sessionCount >= settings.count) {
+        sendNotification({
+          body: t('pomodoro_notification_long'),
+        });
         setSession('stage', Stage.LongBreak);
         if (settings.hasAutoStart) {
           startLongBreak();
         }
       } else {
+        sendNotification({
+          body: t('pomodoro_notification_short'),
+        });
         setSession('stage', Stage.ShortBreak);
         if (settings.hasAutoStart) {
           startShortBreak();
@@ -100,6 +107,9 @@ const _Timer: FC = () => {
       if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
         setSession('stage', Stage.Pomodoro);
+        sendNotification({
+          body: t('short_break_notification'),
+        });
         if (settings.hasAutoStart) {
           startPomodoro();
         }
@@ -122,6 +132,9 @@ const _Timer: FC = () => {
       alarmAndTickSoundControl();
       resetSession();
       setSession('stage', Stage.Pomodoro);
+      sendNotification({
+        body: t('long_break_notification'),
+      });
     },
   });
 
@@ -172,7 +185,9 @@ const _Timer: FC = () => {
   };
 
   const onToggleButtonClickHandler = () => {
-    requestNotificationPermission();
+    if ('Notification' in window && Notification.permission === 'default') {
+      requestNotificationPermission();
+    }
     if (session.stage === Stage.Pomodoro) {
       isPlayingPomodoro ? pausePomodoro() : startPomodoro();
     } else if (session.stage === Stage.ShortBreak) {

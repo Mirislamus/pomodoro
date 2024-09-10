@@ -33,6 +33,10 @@ const en = {
   tick_sound: 'Tick sound',
   reset_current_session: 'Reset current session',
   skip_current_step: 'Skip current step',
+  pomodoro_notification_short: `Pomodoro is over, it's time for a short break`,
+  pomodoro_notification_long: `Pomodoro is over, it's time for a long break`,
+  short_break_notification: `Short break is over, it's time for a new pomodoro`,
+  long_break_notification: `Long break is over, it's time for a new pomodoro`,
 };
 
 export default en;

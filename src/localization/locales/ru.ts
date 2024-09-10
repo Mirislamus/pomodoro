@@ -33,6 +33,10 @@ const ru = {
   tick_sound: 'Звук тикания',
   reset_current_session: 'Сбросить текущую сессию',
   skip_current_step: 'Пропустить текущий этап',
+  pomodoro_notification_short: `Помодоро закончилось, время небольшого перерыва`,
+  pomodoro_notification_long: `Помодоро закончилось, время большого перерыва`,
+  short_break_notification: `Небольшой перерыв закончился, время нового помодоро`,
+  long_break_notification: `Длинный перерыв закончился, время нового помодоро`,
 };
 
 export default ru;

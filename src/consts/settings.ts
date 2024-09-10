@@ -2,10 +2,10 @@ import { AlarmSound, TickSound } from '../typings/enums';
 import { getMsFromMin } from '../utils';
 
 export const defaultSettings = {
-  count: 2,
-  duration: getMsFromMin(0.1),
-  shortBreak: getMsFromMin(0.2),
-  longBreak: getMsFromMin(0.3),
+  count: 5,
+  duration: getMsFromMin(25),
+  shortBreak: getMsFromMin(5),
+  longBreak: getMsFromMin(20),
   hasAutoStart: false,
   alarmSound: AlarmSound.Bell,
   tickSound: TickSound.None,

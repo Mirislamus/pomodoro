@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout/Layout';
 import Header from '../components/Header/Header';
@@ -10,7 +10,6 @@ import Footer from '../components/Footer/Footer';
 import Settings from '../components/Settings/Settings';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import Head from '../components/Head/Head';
-import { requestNotificationPermission } from '../utils';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 
 const Main: FC = () => {
