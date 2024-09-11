@@ -8,8 +8,10 @@ const Head: FC = () => {
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
+
         <link rel="icon" type="image/svg+xml" href="/images/favicons/favicon.svg" />
         <link rel="icon" type="image/x-icon" href="/images/favicons/favicon.ico" />
+        
         <meta name="msapplication-TileColor" content={meta.color} />
         <meta name="theme-color" content={meta.color} />
         <meta property="og:url" content={meta.url} />
