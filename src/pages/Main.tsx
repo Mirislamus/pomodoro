@@ -13,16 +13,8 @@ import Head from '../components/Head/Head';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 
 const Main: FC = () => {
-  const {
-    isOpen: isLangMenuOpen,
-    onClose: onLangMenuClose,
-    onOpen: onLangMenuOpen,
-  } = useDisclosure();
-  const {
-    isOpen: isMobileMenuOpen,
-    onClose: onMobileMenuClose,
-    onOpen: onMobileMenuOpen,
-  } = useDisclosure();
+  const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
+  const { isOpen: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,9 +53,7 @@ const Main: FC = () => {
         </Routes>
         <Footer
           allowNotification={settings.allowNotifications}
-          isNotificationDisabled={
-            notificationPermission === 'denied'
-          }
+          isNotificationDisabled={notificationPermission === 'denied'}
           isSettings={isSettings}
           colorMode={colorMode}
           onColorModeClick={toggleColorMode}

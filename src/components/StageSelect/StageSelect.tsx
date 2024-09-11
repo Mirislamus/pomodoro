@@ -22,11 +22,7 @@ const _StageSelect: FC<StageSelectProps> = ({ stage, isActive = false, onClick, 
       onClick={onClick}
       {...props}
     >
-      <Text
-        textTransform="uppercase"
-        textStyle="text.md"
-        color={getTextColor(stage)}
-      >{`${stage}`}</Text>
+      <Text textTransform="uppercase" textStyle="text.md" color={getTextColor(stage)}>{`${stage}`}</Text>
       <IconChevronDown
         transition={ease}
         transform={isActive ? 'scaleY(-1)' : ''}

@@ -10,4 +10,3 @@ export interface SessionContextType {
 export interface SessionProviderType {
   children: ReactNode;
 }
-

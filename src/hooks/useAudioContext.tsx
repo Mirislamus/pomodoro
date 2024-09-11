@@ -36,14 +36,14 @@ const useAudioContext = (loop: boolean = false): AudioContextReturnType => {
   }, [volume]);
 
   const loadAudio = async (url: string) => {
-    if (!audioContextRef.current || audioContextRef.current.state === "closed") return null;
+    if (!audioContextRef.current || audioContextRef.current.state === 'closed') return null;
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     return audioContextRef.current.decodeAudioData(arrayBuffer);
   };
 
   const playAudio = (buffer: AudioBuffer) => {
-    if (!audioContextRef.current || !gainNodeRef.current || audioContextRef.current.state === "closed") return;
+    if (!audioContextRef.current || !gainNodeRef.current || audioContextRef.current.state === 'closed') return;
 
     if (audioSourceRef.current) {
       audioSourceRef.current.stop();
@@ -61,10 +61,10 @@ const useAudioContext = (loop: boolean = false): AudioContextReturnType => {
   const play = () => {
     if (audio) {
       loadAudio(audio)
-        .then((buffer) => {
+        .then(buffer => {
           if (buffer) playAudio(buffer);
         })
-        .catch((error) => console.error("Error loading audio:", error));
+        .catch(error => console.error('Error loading audio:', error));
     }
   };
 

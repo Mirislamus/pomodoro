@@ -1,14 +1,6 @@
 import { FC } from 'react';
 import { StageModalProps } from './types';
-import {
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from '@chakra-ui/react';
 import { IconClose } from '../../theme/foundations/icons';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { t } from 'i18next';
@@ -40,19 +32,8 @@ const StageModal: FC<StageModalProps> = ({ isOpen, onClose, ...props }) => {
   return (
     <Modal variant="default" isOpen={isOpen} onClose={onClose} {...props}>
       <ModalOverlay />
-      <ModalContent
-        p="24px 24px 30px"
-        borderRadius="20px"
-        bgColor="background.secondary"
-        maxW="328px"
-      >
-        <ModalHeader
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          p="0"
-          paddingBlockEnd="16px"
-        >
+      <ModalContent p="24px 24px 30px" borderRadius="20px" bgColor="background.secondary" maxW="328px">
+        <ModalHeader display="flex" alignItems="center" justifyContent="space-between" p="0" paddingBlockEnd="16px">
           <Text fontWeight="600" textStyle="text.xl">
             {t('stage_select')}
           </Text>

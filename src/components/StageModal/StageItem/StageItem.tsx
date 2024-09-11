@@ -21,12 +21,7 @@ const _StageItem: FC<StateItemProps> = ({ stage, isActive, onClick, ...props }) 
       {...props}
     >
       <Text textStyle="text.md" color={isActive ? 'white' : 'primary'}>{`${stage}`}</Text>
-      <IconTickLg
-        transition={easeIn}
-        boxSize="24px"
-        color="background.stageItem.tick"
-        isActive={isActive}
-      />
+      <IconTickLg transition={easeIn} boxSize="24px" color="background.stageItem.tick" isActive={isActive} />
     </Flex>
   );
 };

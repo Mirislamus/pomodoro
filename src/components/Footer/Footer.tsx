@@ -2,13 +2,7 @@ import { Box, Button, Flex, chakra } from '@chakra-ui/react';
 import { FC } from 'react';
 import { FooterProps } from './types';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
-import {
-  IconClose,
-  IconDark,
-  IconLight,
-  IconNotify,
-  IconSettings,
-} from '../../theme/foundations/icons';
+import { IconClose, IconDark, IconLight, IconNotify, IconSettings } from '../../theme/foundations/icons';
 import { t } from 'i18next';
 import { ease, easeIn } from '../../theme/foundations/transitions';
 import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
@@ -32,28 +26,14 @@ const _Footer: FC<FooterProps> = ({
       justifyContent="space-between"
       {...props}
     >
-      <PomodoroTooltip
-        placement="top-start"
-        label={t(allowNotification ? 'notification_off' : 'notification_on')}
-      >
+      <PomodoroTooltip placement="top-start" label={t(allowNotification ? 'notification_off' : 'notification_on')}>
         <Box>
           <ActionButton isDisabled={isNotificationDisabled} variant="fill" onClick={onNotifyClick}>
-            <IconNotify
-              transition={easeIn}
-              boxSize="24px"
-              color="primary"
-              isActive={!allowNotification}
-            />
+            <IconNotify transition={easeIn} boxSize="24px" color="primary" isActive={!allowNotification} />
           </ActionButton>
         </Box>
       </PomodoroTooltip>
-      <Button
-        minW="150px"
-        role="group"
-        textTransform="uppercase"
-        fontWeight="600"
-        onClick={onSettingsClick}
-      >
+      <Button minW="150px" role="group" textTransform="uppercase" fontWeight="600" onClick={onSettingsClick}>
         {isSettings ? (
           <>
             <IconClose boxSize="24px" mr="gap.4" />
@@ -61,26 +41,14 @@ const _Footer: FC<FooterProps> = ({
           </>
         ) : (
           <>
-            <IconSettings
-              _groupHover={{ transform: 'rotate(90deg)' }}
-              transition={ease}
-              boxSize="24px"
-              mr="gap.4"
-            />
+            <IconSettings _groupHover={{ transform: 'rotate(90deg)' }} transition={ease} boxSize="24px" mr="gap.4" />
             {t('settings')}
           </>
         )}
       </Button>
-      <PomodoroTooltip
-        placement="top-end"
-        label={t(colorMode === 'light' ? 'dark_mode' : 'light_mode')}
-      >
+      <PomodoroTooltip placement="top-end" label={t(colorMode === 'light' ? 'dark_mode' : 'light_mode')}>
         <Box>
-          <ActionButton
-            variant="fill"
-            icon={colorMode === 'light' ? IconDark : IconLight}
-            onClick={onColorModeClick}
-          />
+          <ActionButton variant="fill" icon={colorMode === 'light' ? IconDark : IconLight} onClick={onColorModeClick} />
         </Box>
       </PomodoroTooltip>
     </Flex>

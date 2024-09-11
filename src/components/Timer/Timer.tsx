@@ -50,11 +50,7 @@ const _Timer: FC = () => {
     }
   };
 
-  const {
-    isOpen: isStageModalOpen,
-    onClose: onStageModalClose,
-    onOpen: onStageModalOpen,
-  } = useDisclosure();
+  const { isOpen: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
 
   const {
     countdown: countdownPomodoro,
@@ -343,21 +339,12 @@ const _Timer: FC = () => {
                 <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
               </Box>
             </PomodoroTooltip>
-            <Button
-              variant="circle"
-              size="lg"
-              sx={getToggleButtonStyles()}
-              onClick={onToggleButtonClickHandler}
-            >
+            <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
               {getIsCurrentPlaying() ? t('pause') : t('start')}
             </Button>
             <PomodoroTooltip {...(getIsCurrentPlaying() ? { label: t('skip_current_step') } : {})}>
               <Box>
-                <ActionButton
-                  icon={IconSkip}
-                  isDisabled={!getIsCurrentPlaying()}
-                  onClick={onSkipButtonClickHandler}
-                />
+                <ActionButton icon={IconSkip} isDisabled={!getIsCurrentPlaying()} onClick={onSkipButtonClickHandler} />
               </Box>
             </PomodoroTooltip>
           </HStack>

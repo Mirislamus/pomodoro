@@ -1,4 +1,4 @@
-import { Session } from "../../typings/types";
+import { Session } from '../../typings/types';
 
 export interface StageSelectProps {
   stage: Session['stage'];

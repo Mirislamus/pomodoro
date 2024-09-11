@@ -19,7 +19,7 @@ const Head: FC = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={meta.title} />
         <meta property="og:description" content={meta.description} />
-        <meta property="og:image" content="/images/opengraph.jpg" />
+        <meta property="og:image" content={`${meta.url}/images/opengraph.jpg`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
 
@@ -27,7 +27,7 @@ const Head: FC = () => {
         <meta property="twitter:url" content={meta.url} />
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
-        <meta name="twitter:image" content="/images/opengraph.jpg" />
+        <meta name="twitter:image" content={`${meta.url}/images/opengraph.jpg`} />
       </Helmet>
     </HelmetProvider>
   );

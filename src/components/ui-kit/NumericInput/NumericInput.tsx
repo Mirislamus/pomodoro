@@ -51,13 +51,7 @@ const _NumericInput: FC<NumericInputProps> = ({
         </Text>
       </FormLabel>
       <HStack spacing="gap.8">
-        <ActionButton
-          isDisabled={value <= min}
-          size="sm"
-          variant="fill"
-          icon={IconMinus}
-          onClick={handleDecrease}
-        />
+        <ActionButton isDisabled={value <= min} size="sm" variant="fill" icon={IconMinus} onClick={handleDecrease} />
         <Input
           id={`input-${id}`}
           variant="numeric"
@@ -68,13 +62,7 @@ const _NumericInput: FC<NumericInputProps> = ({
           onChange={handleInputChange}
           onBlur={() => onChangeHandler(value)}
         />
-        <ActionButton
-          isDisabled={value >= max}
-          size="sm"
-          variant="fill"
-          icon={IconPlus}
-          onClick={handleIncrease}
-        />
+        <ActionButton isDisabled={value >= max} size="sm" variant="fill" icon={IconPlus} onClick={handleIncrease} />
       </HStack>
     </FormControl>
   );

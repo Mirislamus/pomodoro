@@ -10,11 +10,7 @@ const SelectMenu: FC<SelectMenuProps> = ({ items, selectedItem, isOpen, ...props
       <Menu {...props}>
         <MenuButton>
           {selectedItem}
-          <IconChevronDown
-            boxSize="12px"
-            transition={easeIn}
-            transform={isOpen ? 'rotate(180deg)' : ''}
-          />
+          <IconChevronDown boxSize="12px" transition={easeIn} transform={isOpen ? 'rotate(180deg)' : ''} />
         </MenuButton>
         <MenuList maxWidth="100%" zIndex={10}>
           <MenuOptionGroup defaultValue={selectedItem} type="radio">
@@ -24,13 +20,7 @@ const SelectMenu: FC<SelectMenuProps> = ({ items, selectedItem, isOpen, ...props
                 value={item.id}
                 iconSpacing="0"
                 bgColor={item.id === selectedItem ? 'select.item.selected' : 'transparent'}
-                icon={
-                  <IconTickLg
-                    isActive={item.id === selectedItem}
-                    boxSize="24px"
-                    color="accent.red"
-                  />
-                }
+                icon={<IconTickLg isActive={item.id === selectedItem} boxSize="24px" color="accent.red" />}
                 onClick={item.onClick}
               >
                 {item.name}

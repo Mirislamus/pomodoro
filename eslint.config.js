@@ -20,7 +20,7 @@ export default [
           trailingComma: 'es5',
           singleQuote: true,
           jsxSingleQuote: false,
-          printWidth: 100,
+          printWidth: 120,
           tabWidth: 2,
           bracketSpacing: true,
           endOfLine: 'lf',

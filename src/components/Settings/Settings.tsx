@@ -38,11 +38,7 @@ const _Settings: FC = ({ ...props }) => {
   const { settings, setSettings, resetSettings } = useSettings();
   const { resetSession } = useSession();
   const { onSettingsLinkCopy } = useSettingsLink();
-  const {
-    isOpen: isAlarmSoundOpen,
-    onClose: onAlarmSoundClose,
-    onOpen: onAlarmSoundOpen,
-  } = useDisclosure();
+  const { isOpen: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
   const notificationPermission = useNotificationPermission();
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
@@ -142,11 +138,7 @@ const _Settings: FC = ({ ...props }) => {
       {...props}
     >
       <Scroll maxScrollHeight={{ base: '100%', md: 'unset' }}>
-        <Flex
-          flexDirection="column"
-          h={{ base: 'auto', md: '100%' }}
-          p={{ base: '16px', md: '40px' }}
-        >
+        <Flex flexDirection="column" h={{ base: 'auto', md: '100%' }} p={{ base: '16px', md: '40px' }}>
           <Flex
             display={{ base: 'flex', md: 'none' }}
             alignItems="center"
@@ -263,10 +255,7 @@ const _Settings: FC = ({ ...props }) => {
                     isChecked={settings.allowNotifications}
                     isDisabled={notificationPermission === 'denied'}
                     onChange={value => {
-                      if (
-                        notificationPermission === 'default' ||
-                        notificationPermission === 'granted'
-                      ) {
+                      if (notificationPermission === 'default' || notificationPermission === 'granted') {
                         onChangeSettingsHandler(value, 'allowNotifications');
                       }
                     }}
@@ -283,23 +272,12 @@ const _Settings: FC = ({ ...props }) => {
             marginBlockStart="auto"
             pos="relative"
           >
-            <Button
-              w="100%"
-              variant="secondary"
-              size="md"
-              onClick={onResetSettingsHandler}
-              mt="auto"
-            >
+            <Button w="100%" variant="secondary" size="md" onClick={onResetSettingsHandler} mt="auto">
               {t('reset_settings')}
             </Button>
             <PomodoroTooltip label={t('copy_settings')}>
               <Box>
-                <ActionButton
-                  size="lg"
-                  variant="fill"
-                  icon={IconCopy}
-                  onClick={onSettingsLinkCopy}
-                />
+                <ActionButton size="lg" variant="fill" icon={IconCopy} onClick={onSettingsLinkCopy} />
               </Box>
             </PomodoroTooltip>
           </Flex>
