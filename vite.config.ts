@@ -9,6 +9,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
+        id: '/',
         name: meta.title,
         short_name: meta.short_name,
         description: meta.description,
@@ -46,26 +47,12 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/pomotomo\.uz\/images\/.*\.(png|jpg|jpeg|svg|gif)$/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'images-cache',
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-              },
-            },
+            urlPattern: /^https:\/\/pomotomo\.uz\/images\/.*$/,
+            handler: 'NetworkOnly',
           },
           {
-            urlPattern: /^https:\/\/pomotomo\.uz\/sounds\/.*\.(mp3|wav|ogg)$/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'sounds-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-              },
-            },
+            urlPattern: /^https:\/\/pomotomo\.uz\/sounds\/.*$/,
+            handler: 'NetworkOnly',
           },
         ],
       },
