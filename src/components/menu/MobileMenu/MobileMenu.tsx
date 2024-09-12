@@ -18,7 +18,7 @@ const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, colorMode, 
   });
 
   return (
-    <Drawer placement="right" onClose={onClose} {...rest}>
+    <Drawer autoFocus={false} placement="right" onClose={onClose} {...rest}>
       <DrawerOverlay />
       <DrawerContent maxW="280px" {...handlers}>
         <DrawerBody
