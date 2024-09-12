@@ -12,6 +12,14 @@ export default defineConfig({
         {
           src: '.htaccess',
           dest: '',
+        },
+        {
+          src: 'robots.txt',
+          dest: ''
+        },
+        {
+          src: 'sitemap.xml',
+          dest: ''
         }
       ]
     }),
