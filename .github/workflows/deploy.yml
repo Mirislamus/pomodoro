@@ -1,4 +1,4 @@
-name: PomoTomo CI/CD
+name: Pomotomo CI/CD
 
 on:
   push:

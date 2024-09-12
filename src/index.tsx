@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './theme/typography/fonts.css';
 import './localization/i18n';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import Main from './pages/Main';
+import App from './app/App';
 import theme from './theme/theme';
 import { SettingsProvider } from './contexts/SettingsContext/SettingsContext';
 import { SessionProvider } from './contexts/SessionContext/SessionContext';
@@ -18,7 +18,7 @@ root.render(
       <SettingsProvider>
         <SessionProvider>
           <BrowserRouter>
-            <Main />
+            <App />
           </BrowserRouter>
         </SessionProvider>
       </SettingsProvider>

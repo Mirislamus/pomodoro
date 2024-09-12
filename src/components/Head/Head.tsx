@@ -11,9 +11,10 @@ const Head: FC = () => {
 
         <link rel="icon" type="image/svg+xml" href="/images/favicons/favicon.svg" />
         <link rel="icon" type="image/x-icon" href="/images/favicons/favicon.ico" />
-        
+
         <meta name="msapplication-TileColor" content={meta.color} />
         <meta name="theme-color" content={meta.color} />
+
         <meta property="og:url" content={meta.url} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={meta.title} />

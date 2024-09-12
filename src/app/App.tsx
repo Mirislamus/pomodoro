@@ -9,10 +9,9 @@ import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
 import Settings from '../components/Settings/Settings';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
-import Head from '../components/Head/Head';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 
-const Main: FC = () => {
+const App: FC = () => {
   const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
   const { isOpen: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -36,7 +35,6 @@ const Main: FC = () => {
 
   return (
     <>
-      <Head />
       <LangMenu isOpen={isLangMenuOpen} onClose={onLangMenuClose} />
       <MobileMenu
         isOpen={isMobileMenuOpen}
@@ -65,4 +63,4 @@ const Main: FC = () => {
   );
 };
 
-export default Main;
+export default App;

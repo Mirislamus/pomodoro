@@ -6,7 +6,7 @@ const formatLanguage = (lang: string) => {
 
 const sendNotification = (options?: NotificationOptions) => {
   if (Notification.permission === 'granted') {
-    new Notification('PomoTomo Focus Timer', {
+    new Notification('Pomotomo Focus Timer', {
       ...options,
       lang: formatLanguage(i18n.language),
       icon: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
