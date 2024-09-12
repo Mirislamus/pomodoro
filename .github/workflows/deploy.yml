@@ -32,7 +32,7 @@ jobs:
     - run: bun install
 
     - name: Build project using Vite
-      run: bun vite build
+      run: bun run build
 
     - name: Clean public_html directory on server (except .well-known)
       run: |
