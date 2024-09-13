@@ -34,7 +34,8 @@ export default defineConfig({
         id: '/',
         start_url: '/',
         scope: '/',
-        display: 'standalone',
+        display: 'fullscreen',
+        display_override: ['fullscreen', 'standalone', 'minimal-ui', 'browser'],
         categories: ['education', 'productivity'],
         orientation: 'portrait',
         launch_handler: {
