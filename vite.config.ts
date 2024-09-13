@@ -61,7 +61,21 @@ export default defineConfig({
           },
         ],
       },
-      workbox: {},
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/images/'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'image-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+              },
+            },
+          },
+        ],
+      },
     }),
   ],
   server: {
