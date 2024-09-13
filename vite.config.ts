@@ -15,25 +15,32 @@ export default defineConfig({
         },
         {
           src: 'robots.txt',
-          dest: ''
+          dest: '',
         },
         {
           src: 'sitemap.xml',
-          dest: ''
-        }
-      ]
+          dest: '',
+        },
+      ],
     }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        id: '/',
         name: meta.title,
         short_name: meta.short_name,
         description: meta.description,
         theme_color: meta.color,
         background_color: meta.color,
+        id: '/',
         start_url: '/',
+        scope: '/',
         display: 'standalone',
+        categories: ['education', 'productivity'],
+        orientation: 'portrait',
+        launch_handler: {
+          client_mode: 'focus-existing',
+        },
+        dir: 'ltr',
         icons: [
           {
             src: '/images/icons/icon-192x192.png',
@@ -91,8 +98,20 @@ export default defineConfig({
           if (id.includes('src/components/')) {
             return 'components';
           }
-        }
-      }
-    }
-  }
+          if (id.includes('src/theme/')) {
+            return 'theme';
+          }
+          if (id.includes('src/hooks/')) {
+            return 'hooks';
+          }
+          if (id.includes('src/contexts/')) {
+            return 'contexts';
+          }
+          if (id.includes('src/utils/')) {
+            return 'utils';
+          }
+        },
+      },
+    },
+  },
 });
