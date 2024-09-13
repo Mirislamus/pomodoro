@@ -31,7 +31,7 @@ const ru = {
   settings_copied_info: 'Ссылка со всеми настройками скопирована в буфер обмена',
   finish_sound: 'Звук завершения',
   tick_sound: 'Звук тикания',
-  reset_current_session: 'Сбросить текущую сессию',
+  reset_current_step: 'Сбросить текущий этап',
   skip_current_step: 'Пропустить текущий этап',
   pomodoro_notification_short: `Помодоро закончилось, время небольшого перерыва`,
   pomodoro_notification_long: `Помодоро закончилось, время большого перерыва`,

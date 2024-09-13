@@ -24,6 +24,7 @@ const _Footer: FC<FooterProps> = ({
       paddingBlockEnd={{ base: 'gap.20', md: 'gap.30' }}
       alignItems="center"
       justifyContent="space-between"
+      pos="relative"
       {...props}
     >
       <PomodoroTooltip placement="top-start" label={t(allowNotification ? 'notification_off' : 'notification_on')}>
@@ -41,7 +42,13 @@ const _Footer: FC<FooterProps> = ({
           </>
         ) : (
           <>
-            <IconSettings _groupHover={{ transform: 'rotate(90deg)' }} transition={ease} boxSize="24px" mr="gap.4" />
+            <IconSettings
+              _groupFocus={{ transform: 'rotate(90deg)' }}
+              _groupHover={{ transform: 'rotate(90deg)' }}
+              transition={ease}
+              boxSize="24px"
+              mr="gap.4"
+            />
             {t('settings')}
           </>
         )}

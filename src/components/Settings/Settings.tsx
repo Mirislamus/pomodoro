@@ -130,10 +130,7 @@ const _Settings: FC = ({ ...props }) => {
       maxW={{ base: '100%', md: '550px' }}
       borderRadius={{ base: '0', md: '30px' }}
       boxShadow="0px 0px 50px rgba(0, 0, 0, 0.1)"
-      bgColor={{
-        base: 'background.settings.mobile',
-        md: 'background.settings.desktop',
-      }}
+      bgColor="background.settings"
       minH={{ base: '100%', md: '584px' }}
       {...props}
     >
