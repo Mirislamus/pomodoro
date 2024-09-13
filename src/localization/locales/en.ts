@@ -31,7 +31,7 @@ const en = {
   settings_copied_toast_info: 'The link with all the settings has been copied to the clipboard',
   finish_sound: 'Finish sound',
   tick_sound: 'Tick sound',
-  reset_current_session: 'Reset current session',
+  reset_current_step: 'Reset current step',
   skip_current_step: 'Skip current step',
   pomodoro_notification_short: `Pomodoro is over, it's time for a short break`,
   pomodoro_notification_long: `Pomodoro is over, it's time for a long break`,

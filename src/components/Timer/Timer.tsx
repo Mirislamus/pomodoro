@@ -19,6 +19,7 @@ import useAlarmSound from '../../hooks/useAlarmSound';
 import useTickSound from '../../hooks/useTickSound';
 import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
 import sendNotification from '../../utils/sendNotification';
+import { ease } from '../../theme/foundations/transitions';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
@@ -174,10 +175,13 @@ const _Timer: FC = () => {
   };
 
   const onResetButtonClickHandler = () => {
-    resetPomodoro();
-    resetShortBreak();
-    resetLongBreak();
-    resetSession();
+    if (session.stage === Stage.Pomodoro) {
+      resetPomodoro();
+    } else if (session.stage === Stage.ShortBreak) {
+      resetShortBreak();
+    } else {
+      resetLongBreak();
+    }
   };
 
   const onToggleButtonClickHandler = () => {
@@ -278,11 +282,11 @@ const _Timer: FC = () => {
         left="0"
         right="0"
         mx="auto"
-        stageColor={stageColor}
         pos={{ md: 'absolute' }}
         top={{ base: '140px', lg: 'gap.30' }}
-        stages={stages}
         display={{ base: 'none', md: 'flex' }}
+        stageColor={stageColor}
+        stages={stages}
       />
       <StageSelect
         display={{ base: 'flex', md: 'none' }}
@@ -334,9 +338,22 @@ const _Timer: FC = () => {
             bottom="-96px"
             pos={{ base: 'absolute', md: 'static' }}
           >
-            <PomodoroTooltip label={t('reset_current_session')}>
+            <PomodoroTooltip label={t('reset_current_step')}>
               <Box>
-                <ActionButton icon={IconRestart} onClick={onResetButtonClickHandler} />
+                <ActionButton
+                  sx={{
+                    svg: {
+                      transition: ease,
+                    },
+                    _hover: {
+                      svg: {
+                        transform: 'rotate(90deg)',
+                      },
+                    },
+                  }}
+                  icon={IconRestart}
+                  onClick={onResetButtonClickHandler}
+                />
               </Box>
             </PomodoroTooltip>
             <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>

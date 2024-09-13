@@ -33,7 +33,7 @@ const theme = {
       '*': {
         _focusVisible: {
           outline: 'none',
-          boxShadow: '0 0 0 2px #ED4455!important',
+          boxShadow: '0 0 0 2px rgba(237, 68, 85, .55) !important',
         },
       },
     },

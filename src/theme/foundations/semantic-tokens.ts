@@ -64,14 +64,8 @@ const semanticTokens = {
         },
       },
       settings: {
-        desktop: {
-          _light: 'white',
-          _dark: 'whiteAlpha.15',
-        },
-        mobile: {
-          _light: 'white',
-          _dark: 'black.1',
-        },
+        _light: 'white',
+        _dark: 'black.1',
       },
       tabs: {
         _light: 'grey.2',
