@@ -102,15 +102,6 @@ export default defineConfig({
           if (id.includes('src/theme/')) {
             return 'theme';
           }
-          if (id.includes('src/hooks/')) {
-            return 'hooks';
-          }
-          if (id.includes('src/contexts/')) {
-            return 'contexts';
-          }
-          if (id.includes('src/utils/')) {
-            return 'utils';
-          }
         },
       },
     },
