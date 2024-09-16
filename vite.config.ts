@@ -99,9 +99,6 @@ export default defineConfig({
           if (id.includes('src/components/')) {
             return 'components';
           }
-          if (id.includes('src/theme/')) {
-            return 'theme';
-          }
         },
       },
     },
