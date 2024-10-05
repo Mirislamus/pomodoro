@@ -7,7 +7,9 @@ export type Settings = {
   longBreak: number;
   hasAutoStart: boolean;
   alarmSound: AlarmSound;
+  alarmSoundVolume: number;
   tickSound: TickSound;
+  tickSoundVolume: number;
   allowNotifications: boolean;
 };
 

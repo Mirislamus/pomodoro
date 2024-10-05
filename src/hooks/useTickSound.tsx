@@ -10,7 +10,7 @@ interface TickSoundReturnType {
 
 const useTickSound = (): TickSoundReturnType => {
   const { settings } = useSettings();
-  const { setAudio, play, stop, pause } = useAudioContext(true);
+  const { setAudio, play, stop, pause, setVolume } = useAudioContext(true);
 
   useEffect(() => {
     if (settings.tickSound) {
@@ -18,10 +18,16 @@ const useTickSound = (): TickSoundReturnType => {
     }
   }, [settings.tickSound, setAudio]);
 
+  useEffect(() => {
+    if (settings.tickSoundVolume) {
+      setVolume(settings.tickSoundVolume);
+    }
+  }, [settings.tickSoundVolume, setVolume]);
+
   return {
     play,
     stop,
-    pause,
+    pause
   };
 };
 

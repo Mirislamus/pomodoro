@@ -8,7 +8,9 @@ export const defaultSettings = {
   longBreak: getMsFromMin(20),
   hasAutoStart: false,
   alarmSound: AlarmSound.Bell,
+  alarmSoundVolume: 0.5,
   tickSound: TickSound.None,
+  tickSoundVolume: 0.5,
   allowNotifications: true,
 };
 

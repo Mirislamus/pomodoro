@@ -2,6 +2,10 @@ import {
   Box,
   Button,
   Flex,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
   Tab,
   TabIndicator,
   TabList,
@@ -32,6 +36,7 @@ import Scroll from '../ui-kit/Scroll/Scroll';
 import SelectMenu from '../SelectMenu/SelectMenu';
 import { AlarmSound, TickSound } from '../../typings/enums';
 import useNotificationPermission from '../../hooks/useNotificationPermission';
+import PercentSlider from '../PercentSlider/PercentSlider';
 
 const _Settings: FC = ({ ...props }) => {
   const navigate = useNavigate();
@@ -131,11 +136,11 @@ const _Settings: FC = ({ ...props }) => {
       borderRadius={{ base: '0', md: '30px' }}
       boxShadow="0px 0px 50px rgba(0, 0, 0, 0.1)"
       bgColor="background.settings"
-      minH={{ base: '100%', md: '584px' }}
+      transition={easeIn}
       {...props}
     >
       <Scroll maxScrollHeight={{ base: '100%', md: 'unset' }}>
-        <Flex flexDirection="column" h={{ base: 'auto', md: '100%' }} p={{ base: '16px', md: '40px' }}>
+        <Flex flexDirection="column" p={{ base: '16px', md: '40px' }}>
           <Flex
             display={{ base: 'flex', md: 'none' }}
             alignItems="center"
@@ -168,64 +173,64 @@ const _Settings: FC = ({ ...props }) => {
               borderColor="border"
             >
               <TabPanel>
-                <Scroll hasScrollOffset maxScrollHeight={{ base: '100%', md: '328px' }}>
-                  <FieldWrap>
-                    <NumericInput
-                      title={t('pomodoro_count_settings')}
-                      value={settings.count}
-                      step={1}
-                      min={minSettingsLimits.count}
-                      max={maxSettingsLimits.count}
-                      onChange={value => onChangeSettingsHandler(value, 'count')}
-                    />
-                  </FieldWrap>
-                  <FieldWrap>
-                    <NumericInput
-                      hasMinutes
-                      title={t('pomodoro_duration_settings')}
-                      value={getMinFromMs(settings.duration)}
-                      step={5}
-                      min={minSettingsLimits.duration}
-                      max={maxSettingsLimits.duration}
-                      onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'duration')}
-                    />
-                  </FieldWrap>
-                  <FieldWrap>
-                    <NumericInput
-                      hasMinutes
-                      title={t('short_break')}
-                      value={getMinFromMs(settings.shortBreak)}
-                      step={5}
-                      min={minSettingsLimits.shortBreak}
-                      max={maxSettingsLimits.shortBreak}
-                      onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'shortBreak')}
-                    />
-                  </FieldWrap>
-                  <FieldWrap>
-                    <NumericInput
-                      hasMinutes
-                      title={t('long_break')}
-                      value={getMinFromMs(settings.longBreak)}
-                      step={5}
-                      min={minSettingsLimits.longBreak}
-                      max={maxSettingsLimits.longBreak}
-                      onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'longBreak')}
-                    />
-                  </FieldWrap>
-                  <FieldWrap hasBorder={false}>
-                    <SwitchInput
-                      title={t('auto_start')}
-                      isChecked={settings.hasAutoStart}
-                      onChange={value => onChangeSettingsHandler(value, 'hasAutoStart')}
-                    />
-                  </FieldWrap>
-                </Scroll>
+                <FieldWrap>
+                  <NumericInput
+                    title={t('pomodoro_count_settings')}
+                    value={settings.count}
+                    step={1}
+                    min={minSettingsLimits.count}
+                    max={maxSettingsLimits.count}
+                    onChange={value => onChangeSettingsHandler(value, 'count')}
+                  />
+                </FieldWrap>
+                <FieldWrap>
+                  <NumericInput
+                    hasMinutes
+                    title={t('pomodoro_duration_settings')}
+                    value={getMinFromMs(settings.duration)}
+                    step={5}
+                    min={minSettingsLimits.duration}
+                    max={maxSettingsLimits.duration}
+                    onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'duration')}
+                  />
+                </FieldWrap>
+                <FieldWrap>
+                  <NumericInput
+                    hasMinutes
+                    title={t('short_break')}
+                    value={getMinFromMs(settings.shortBreak)}
+                    step={5}
+                    min={minSettingsLimits.shortBreak}
+                    max={maxSettingsLimits.shortBreak}
+                    onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'shortBreak')}
+                  />
+                </FieldWrap>
+                <FieldWrap>
+                  <NumericInput
+                    hasMinutes
+                    title={t('long_break')}
+                    value={getMinFromMs(settings.longBreak)}
+                    step={5}
+                    min={minSettingsLimits.longBreak}
+                    max={maxSettingsLimits.longBreak}
+                    onChange={value => onChangeSettingsHandler(getMsFromMin(value), 'longBreak')}
+                  />
+                </FieldWrap>
+                <FieldWrap hasBorder={false}>
+                  <SwitchInput
+                    title={t('auto_start')}
+                    isChecked={settings.hasAutoStart}
+                    onChange={value => onChangeSettingsHandler(value, 'hasAutoStart')}
+                  />
+                </FieldWrap>
               </TabPanel>
               <TabPanel>
                 <FieldWrap hasBorder>
-                  <Text fontSize="16px" fontWeight="500" color="primary" mb="gap.10">
-                    {t('finish_sound')}
-                  </Text>
+                  <PercentSlider
+                    title={t('finish_sound')}
+                    defaultValue={settings.alarmSoundVolume}
+                    onChange={value => onChangeSettingsHandler(value, 'alarmSoundVolume')}
+                  />
                   <SelectMenu
                     isOpen={isAlarmSoundOpen}
                     onClose={onAlarmSoundClose}
@@ -235,9 +240,11 @@ const _Settings: FC = ({ ...props }) => {
                   />
                 </FieldWrap>
                 <FieldWrap hasBorder>
-                  <Text fontSize="16px" fontWeight="500" color="primary" mb="gap.10">
-                    {t('tick_sound')}
-                  </Text>
+                  <PercentSlider
+                    title={t('tick_sound')}
+                    defaultValue={settings.tickSoundVolume}
+                    onChange={value => onChangeSettingsHandler(value, 'tickSoundVolume')}
+                  />
                   <SelectMenu
                     isOpen={isAlarmSoundOpen}
                     onClose={onAlarmSoundClose}
