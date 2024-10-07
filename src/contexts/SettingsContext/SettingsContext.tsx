@@ -23,7 +23,15 @@ export const SettingsProvider: FC<SettingsProviderType> = ({ children }) => {
     longBreak: useGetLocalStorage<number>('longBreak', defaultSettings.longBreak),
     hasAutoStart: useGetLocalStorage<boolean>('hasAutoStart', defaultSettings.hasAutoStart),
     alarmSound: useGetLocalStorage<Settings['alarmSound']>('alarmSound', defaultSettings.alarmSound),
+    alarmSoundVolume: useGetLocalStorage<Settings['alarmSoundVolume']>(
+      'alarmSoundVolume',
+      defaultSettings.alarmSoundVolume
+    ),
     tickSound: useGetLocalStorage<Settings['tickSound']>('tickSound', defaultSettings.tickSound),
+    tickSoundVolume: useGetLocalStorage<Settings['tickSoundVolume']>(
+      'tickSoundVolume',
+      defaultSettings.tickSoundVolume
+    ),
     allowNotifications: useGetLocalStorage<Settings['allowNotifications']>(
       'allowNotifications',
       defaultSettings.allowNotifications

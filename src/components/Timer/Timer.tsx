@@ -361,7 +361,7 @@ const _Timer: FC = () => {
             </Button>
             <PomodoroTooltip {...(getIsCurrentPlaying() ? { label: t('skip_current_step') } : {})}>
               <Box>
-                <ActionButton icon={IconSkip} isDisabled={!getIsCurrentPlaying()} onClick={onSkipButtonClickHandler} />
+                <ActionButton icon={IconSkip} onClick={onSkipButtonClickHandler} />
               </Box>
             </PomodoroTooltip>
           </HStack>
