@@ -4,12 +4,13 @@ import Layout from '../components/Layout/Layout';
 import Header from '../components/Header/Header';
 import LangMenu from '../components/menu/LangMenu/LangMenu';
 import MobileMenu from '../components/menu/MobileMenu/MobileMenu';
-import Timer from '../components/Timer/Timer';
+
 import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
-import Settings from '../components/Settings/Settings';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import useNotificationPermission from '../hooks/useNotificationPermission';
+import Timer from '../pages/Timer';
+import Settings from '../pages/Settings';
 
 const App: FC = () => {
   const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();

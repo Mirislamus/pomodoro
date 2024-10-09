@@ -13,25 +13,25 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { FC } from 'react';
-import { easeIn } from '../../theme/foundations/transitions';
+import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
 import ActionButton from '../ui-kit/ActionButton/ActionButton';
-import { IconClose, IconCopy } from '../../theme/foundations/icons';
+import { IconClose, IconCopy } from '../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
 import NumericInput from '../ui-kit/NumericInput/NumericInput';
-import { useSettings } from '../../contexts/SettingsContext/SettingsContext';
-import { useSession } from '../../contexts/SessionContext/SessionContext';
+import { useSettings } from '../contexts/SettingsContext/SettingsContext';
+import { useSession } from '../contexts/SessionContext/SessionContext';
 import FieldWrap from '../FieldWrap/FieldWrap';
-import { getMinFromMs, getMsFromMin } from '../../utils';
-import { Settings, Sound } from '../../typings/types';
-import { maxSettingsLimits, minSettingsLimits } from '../../consts/settings';
+import { getMinFromMs, getMsFromMin } from '../utils';
+import { Settings, Sound } from '../typings/types';
+import { maxSettingsLimits, minSettingsLimits } from '../consts/settings';
 import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
 import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
-import { useSettingsLink } from '../../hooks/useSettingsLink';
+import { useSettingsLink } from '../hooks/useSettingsLink';
 import Scroll from '../ui-kit/Scroll/Scroll';
 import SelectMenu from '../SelectMenu/SelectMenu';
-import { AlarmSound, TickSound } from '../../typings/enums';
-import useNotificationPermission from '../../hooks/useNotificationPermission';
+import { AlarmSound, TickSound } from '../typings/enums';
+import useNotificationPermission from '../hooks/useNotificationPermission';
 import PercentSlider from '../PercentSlider/PercentSlider';
 
 const _Settings: FC = ({ ...props }) => {
