@@ -1,11 +1,7 @@
 import { FC } from 'react';
 import { Box, chakra, useToken } from '@chakra-ui/react';
 import useGetStageColor from '../../hooks/useGetStageColor';
-
-interface ProgressCircleProps {
-  fillPercentage: number;
-  isActive?: boolean;
-}
+import { ProgressCircleProps } from './types';
 
 const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isActive = false, ...props }) => {
   const radius = 230;
