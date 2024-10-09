@@ -11,11 +11,11 @@ import DrawerStyles from './components/Drawer/Drawer.styles';
 import TooltipStyles from './components/Tooltip/Tooltip.styles';
 import SwitchStyles from './components/Switch/Switch.styles';
 import ActionButtonStyles from '../components/ui-kit/ActionButton/ActionButton.styles';
-import { ease } from './foundations/transitions';
 import TabsStyles from './components/Tabs/Tabs.styles';
 import InputStyles from './components/Input/Input.styles';
 import LinkStyles from './components/Link/Link.styles';
 import MenuStyles from './components/Menu/Menu.styles';
+import global from './foundations/global';
 
 const theme = {
   ...typography,
@@ -24,19 +24,7 @@ const theme = {
   semanticTokens,
   textStyles,
   styles: {
-    global: {
-      body: {
-        bg: 'background.primary',
-        minH: '100vh',
-        transition: ease,
-      },
-      '*': {
-        _focusVisible: {
-          outline: 'none',
-          boxShadow: '0 0 0 2px rgba(237, 68, 85, .55) !important',
-        },
-      },
-    },
+    global,
   },
   components: {
     Container: ContainerStyles,

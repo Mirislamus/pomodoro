@@ -15,26 +15,26 @@ import {
 import { FC } from 'react';
 import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
-import ActionButton from '../ui-kit/ActionButton/ActionButton';
 import { IconClose, IconCopy } from '../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
-import NumericInput from '../ui-kit/NumericInput/NumericInput';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { useSession } from '../contexts/SessionContext/SessionContext';
-import FieldWrap from '../FieldWrap/FieldWrap';
 import { getMinFromMs, getMsFromMin } from '../utils';
 import { Settings, Sound } from '../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../consts/settings';
-import SwitchInput from '../ui-kit/SwitchInput/SwitchInput';
-import PomodoroTooltip from '../ui-kit/PomodoroTooltip/PomodoroTooltip';
 import { useSettingsLink } from '../hooks/useSettingsLink';
-import Scroll from '../ui-kit/Scroll/Scroll';
-import SelectMenu from '../SelectMenu/SelectMenu';
 import { AlarmSound, TickSound } from '../typings/enums';
 import useNotificationPermission from '../hooks/useNotificationPermission';
-import PercentSlider from '../PercentSlider/PercentSlider';
+import Scroll from '../components/ui-kit/Scroll/Scroll';
+import ActionButton from '../components/ui-kit/ActionButton/ActionButton';
+import FieldWrap from '../components/FieldWrap/FieldWrap';
+import NumericInput from '../components/ui-kit/NumericInput/NumericInput';
+import SwitchInput from '../components/ui-kit/SwitchInput/SwitchInput';
+import PercentSlider from '../components/PercentSlider/PercentSlider';
+import SelectMenu from '../components/SelectMenu/SelectMenu';
+import PomodoroTooltip from '../components/ui-kit/PomodoroTooltip/PomodoroTooltip';
 
-const _Settings: FC = ({ ...props }) => {
+const _Settings: FC = () => {
   const navigate = useNavigate();
   const { settings, setSettings, resetSettings } = useSettings();
   const { resetSession } = useSession();
@@ -133,7 +133,6 @@ const _Settings: FC = ({ ...props }) => {
       boxShadow="0px 0px 50px rgba(0, 0, 0, 0.1)"
       bgColor="background.settings"
       transition={easeIn}
-      {...props}
     >
       <Scroll maxScrollHeight={{ base: '100%', md: 'unset' }}>
         <Flex flexDirection="column" p={{ base: '16px', md: '40px' }}>
