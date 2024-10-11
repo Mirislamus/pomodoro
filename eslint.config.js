@@ -1,38 +1,22 @@
 export default [
   {
-    parser: '@typescript-eslint/parser',
-    extends: [
-      'plugin:react/recommended',
-      'plugin:@typescript-eslint/recommended',
-      'prettier',
-      'plugin:prettier/recommended',
-    ],
-    plugins: ['@typescript-eslint', 'react', 'prettier'],
+    files: ['**/*.js', '**/*.jsx'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+    },
     rules: {
       'react/react-in-jsx-scope': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      'prettier/prettier': [
-        'error',
-        {
-          proseWrap: 'never',
-          semi: true,
-          trailingComma: 'es5',
-          singleQuote: true,
-          jsxSingleQuote: false,
-          printWidth: 120,
-          tabWidth: 2,
-          bracketSpacing: true,
-          endOfLine: 'lf',
-          arrowParens: 'avoid',
-          objectCurlySpacing: 'never',
-          spaceInfixOps: false,
-        },
-      ],
     },
     settings: {
       react: {
         version: 'detect',
+      },
+      'import/resolver': {
+        alias: {
+          map: [['@components', './src/components']],
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
       },
     },
     ignores: [
@@ -40,11 +24,8 @@ export default [
       'dist/',
       'build/',
       'public/',
-      '.astro/types/',
       'coverage/',
       '*.config.js',
-      '*.config.cjs',
-      '*.d.ts',
       '.vscode/',
       '.env',
       '.env.*',
@@ -56,7 +37,7 @@ export default [
       '.idea/',
       '*.iml',
       'Thumbs.db',
-      '*.log'
-    ]
+      '*.log',
+    ],
   },
 ];

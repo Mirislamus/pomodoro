@@ -1,4 +1,4 @@
-import { ease } from "./transitions";
+import { ease } from './transitions';
 
 const globals = {
   body: {

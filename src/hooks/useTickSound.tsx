@@ -27,7 +27,7 @@ const useTickSound = (): TickSoundReturnType => {
   return {
     play,
     stop,
-    pause
+    pause,
   };
 };
 

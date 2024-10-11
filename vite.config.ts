@@ -5,6 +5,11 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 import meta from './src/data/meta';
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@components': './src/components',
+    },
+  },
   plugins: [
     react(),
     viteStaticCopy({
