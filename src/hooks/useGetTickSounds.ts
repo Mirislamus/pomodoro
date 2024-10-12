@@ -1,10 +1,10 @@
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
+import useSettingsStore from '../stores/useSettingsStore';
 import { TickSound } from '../typings/enums';
 import { Sound } from '../typings/types';
 import { formatSoundName } from '../utils/formatSoundName';
 
 const useGetTickSounds = () => {
-  const { setSettings } = useSettings();
+  const setSettings = useSettingsStore(state => state.setSettings);
 
   const tickSounds: Sound[] = [
     {

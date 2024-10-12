@@ -5,12 +5,12 @@ import Header from '../components/Header/Header';
 
 import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 import Timer from '../pages/Timer';
 import Settings from '../pages/Settings';
 import MobileMenu from '../components/MobileMenu/MobileMenu';
 import LangMenu from '../components/LangMenu/LangMenu';
+import useSettingsStore from '../stores/useSettingsStore';
 
 const App: FC = () => {
   const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
@@ -18,7 +18,8 @@ const App: FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   const location = useLocation();
-  const { settings, setSettings } = useSettings();
+  const settings = useSettingsStore(state => state.settings);
+  const setSettings = useSettingsStore(state => state.setSettings);
   const isSettings = location.pathname === '/settings';
   const notificationPermission = useNotificationPermission();
 

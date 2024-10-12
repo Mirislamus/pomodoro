@@ -1,8 +1,8 @@
-import { useSession } from '../contexts/SessionContext/SessionContext';
+import useSessionStore from '../stores/useSessionStore';
 import { Stage, StageColor } from '../typings/enums';
 
 const useGetStageColor = (): StageColor => {
-  const { session } = useSession();
+  const session = useSessionStore(state => state.session);
 
   if (session.stage === Stage.ShortBreak) {
     return StageColor.ShortBreak;

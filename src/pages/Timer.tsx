@@ -1,7 +1,6 @@
 import { Box, Button, Flex, HStack, Text, chakra, useDisclosure } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { t } from 'i18next';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import useCountdown from '../hooks/useCountdown';
 import { formatMilliseconds, requestNotificationPermission, getTextColor, getPercent } from '../utils';
 import { ease } from '../theme/foundations/transitions';
@@ -18,10 +17,11 @@ import StageSelect from '../components/StageSelect/StageSelect';
 import useAlarmSound from '../hooks/useAlarmSound';
 import StageModal from '../components/StageModal/StageModal';
 import useSessionStore from '../stores/useSessionStore';
+import useSettingsStore from '../stores/useSettingsStore';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
-  const { settings } = useSettings();
+  const settings = useSettingsStore(state => state.settings);
   const { play: playAlarmSound } = useAlarmSound();
   const { play: playTickSound, stop: stopTickSound, pause: pauseTickSound } = useTickSound();
   const allowNotifications = settings.allowNotifications;

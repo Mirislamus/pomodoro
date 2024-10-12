@@ -17,8 +17,6 @@ import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
 import { IconClose, IconCopy } from '../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
-import { useSession } from '../contexts/SessionContext/SessionContext';
 import { getMinFromMs, getMsFromMin, getSoundName } from '../utils';
 import { Settings as SettingsType } from '../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../consts/settings';
@@ -34,16 +32,22 @@ import SelectMenu from '../components/SelectMenu/SelectMenu';
 import PomodoroTooltip from '../shared/ui/PomodoroTooltip/PomodoroTooltip';
 import useGetAlarmSounds from '../hooks/useGetAlarmSounds';
 import useGetTickSounds from '../hooks/useGetTickSounds';
+import useSettingsStore from '../stores/useSettingsStore';
+import useSessionStore from '../stores/useSessionStore';
 
 const _Settings: FC = () => {
   const navigate = useNavigate();
-  const { settings, setSettings, resetSettings } = useSettings();
-  const { resetSession } = useSession();
+  const settings = useSettingsStore(state => state.settings);
+  const setSettings = useSettingsStore(state => state.setSettings);
+  const resetSettings = useSettingsStore(state => state.resetSettings);
+
+  const resetSession = useSessionStore(state => state.resetSession);
   const onSettingsLinkCopy = useSettingsLink();
   const { isOpen: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
   const notificationPermission = useNotificationPermission();
   const alarmSounds = useGetAlarmSounds();
   const tickSounds = useGetTickSounds();
+
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof SettingsType) => {
     resetSession();

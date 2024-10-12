@@ -4,7 +4,7 @@ import useSetLocalStorage from '../../hooks/useSetLocalStorage';
 import { Stage } from '../../typings/enums';
 import { SessionContextType, SessionProviderType } from './types';
 import { Session } from '../../typings/types';
-import defaultSession from '../../consts/session';
+import { defaultSession } from '../../consts/session';
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 

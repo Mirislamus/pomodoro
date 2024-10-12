@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import useAudioContext from './useAudioContext';
+import useSettingsStore from '../stores/useSettingsStore';
 
 interface TickSoundReturnType {
   play: () => void;
@@ -9,7 +9,7 @@ interface TickSoundReturnType {
 }
 
 const useTickSound = (): TickSoundReturnType => {
-  const { settings } = useSettings();
+  const settings = useSettingsStore(state => state.settings);
   const { setAudio, play, stop, pause, setVolume } = useAudioContext(true);
 
   useEffect(() => {

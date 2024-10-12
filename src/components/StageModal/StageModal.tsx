@@ -6,10 +6,11 @@ import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { t } from 'i18next';
 import StageItem from './StageItem/StageItem';
 import { Stage } from '../../typings/enums';
-import { useSession } from '../../contexts/SessionContext/SessionContext';
+import useSessionStore from '../../stores/useSessionStore';
 
 const StageModal: FC<StageModalProps> = ({ isOpen, onClose, ...props }) => {
-  const { session, setSession } = useSession();
+  const session = useSessionStore(state => state.session);
+  const setSession = useSessionStore(state => state.setSession);
 
   const stages = [
     {

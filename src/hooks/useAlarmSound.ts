@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import useAudioContext from './useAudioContext';
+import useSettingsStore from '../stores/useSettingsStore';
 
 interface AlarmSoundReturnType {
   play: () => void;
 }
 
 const useAlarmSound = (): AlarmSoundReturnType => {
-  const { settings } = useSettings();
+  const settings = useSettingsStore(state => state.settings);
   const { setAudio, play, setVolume } = useAudioContext();
 
   useEffect(() => {

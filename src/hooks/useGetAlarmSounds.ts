@@ -1,10 +1,10 @@
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
+import useSettingsStore from '../stores/useSettingsStore';
 import { AlarmSound } from '../typings/enums';
 import { Sound } from '../typings/types';
 import { formatSoundName } from '../utils/formatSoundName';
 
 const useGetAlarmSounds = () => {
-  const { setSettings } = useSettings();
+  const setSettings = useSettingsStore(state => state.setSettings);
 
   const alarmSounds: Sound[] = [
     {

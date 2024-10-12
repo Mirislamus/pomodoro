@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { Settings } from '../typings/types';
 import { usePomodoroToast } from '../shared/ui/toast/usePomodoroToast';
 import { t } from 'i18next';
+import useSettingsStore from '../stores/useSettingsStore';
 
 export const useSettingsLink = () => {
-  const { settings, setSettings } = useSettings();
+  const settings = useSettingsStore(state => state.settings);
+  const setSettings = useSettingsStore(state => state.setSettings);
   const toast = usePomodoroToast();
 
   const createSettingsLink = (): string => {

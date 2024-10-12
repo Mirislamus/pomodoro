@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Session } from '../typings/types';
-import defaultSession from '../consts/session';
+import { defaultSession } from '../consts/session';
 
 interface SessionStore {
   session: Session;
@@ -11,10 +11,10 @@ interface SessionStore {
 
 const useSessionStore = create<SessionStore>()(
   persist(
-    (set) => ({
+    set => ({
       session: { ...defaultSession },
       setSession: <K extends keyof Session>(key: K, value: Session[K]) =>
-        set((state) => ({
+        set(state => ({
           session: {
             ...state.session,
             [key]: value,
