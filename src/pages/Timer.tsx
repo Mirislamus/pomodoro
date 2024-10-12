@@ -14,19 +14,22 @@ import { Stage, TickSound } from '../typings/enums';
 import useGetStageColor from '../hooks/useGetStageColor';
 import useTickSound from '../hooks/useTickSound';
 import StageSwitcher from '../components/StageSwitcher/StageSwitcher';
-import { useSession } from '../contexts/SessionContext/SessionContext';
 import StageSelect from '../components/StageSelect/StageSelect';
 import useAlarmSound from '../hooks/useAlarmSound';
 import StageModal from '../components/StageModal/StageModal';
+import useSessionStore from '../stores/useSessionStore';
 
 const _Timer: FC = () => {
   const stageColor = useGetStageColor();
   const { settings } = useSettings();
-  const { session, setSession, resetSession } = useSession();
   const { play: playAlarmSound } = useAlarmSound();
   const { play: playTickSound, stop: stopTickSound, pause: pauseTickSound } = useTickSound();
   const allowNotifications = settings.allowNotifications;
   const allowTickSound = settings.tickSound !== TickSound.None;
+
+  const session = useSessionStore(state => state.session);
+  const setSession = useSessionStore(state => state.setSession);
+  const resetSession = useSessionStore(state => state.resetSession);
 
   const playTick = () => {
     if (allowTickSound && allowNotifications) {

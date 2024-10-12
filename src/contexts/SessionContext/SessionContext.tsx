@@ -4,14 +4,7 @@ import useSetLocalStorage from '../../hooks/useSetLocalStorage';
 import { Stage } from '../../typings/enums';
 import { SessionContextType, SessionProviderType } from './types';
 import { Session } from '../../typings/types';
-
-const defaultSession: Session = {
-  sessionCount: 1,
-  stage: Stage.Pomodoro,
-  pomodoroCurrentTime: 0,
-  shortBrakeCurrentTime: 0,
-  longBrakeCurrentTime: 0,
-};
+import defaultSession from '../../consts/session';
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
