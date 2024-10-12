@@ -12,11 +12,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import useGetLocales from '../../../hooks/useGetLocales';
 import LangButton from './LangButton/LangButton';
-import ActionButton from '../../ui-kit/ActionButton/ActionButton';
-import { IconArrow } from '../../../theme/foundations/icons';
 import { useSwipeable } from 'react-swipeable';
+import useGetLocales from '../../hooks/useGetLocales';
+import ActionButton from '../../shared/ui/ActionButton/ActionButton';
+import { IconArrow } from '../../theme/foundations/icons';
 
 const _LangMenu: FC<LangMenuProps> = ({ onClose, ...rest }) => {
   const { t, i18n } = useTranslation();

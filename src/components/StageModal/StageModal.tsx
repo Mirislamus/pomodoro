@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { StageModalProps } from './types';
 import { Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from '@chakra-ui/react';
 import { IconClose } from '../../theme/foundations/icons';
-import ActionButton from '../ui-kit/ActionButton/ActionButton';
+import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { t } from 'i18next';
 import StageItem from './StageItem/StageItem';
 import { Stage } from '../../typings/enums';

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { HeaderProps } from './types';
 import { Flex, Box, useToken, chakra, Button } from '@chakra-ui/react';
 import useGetStageColor from '../../hooks/useGetStageColor';
-import ActionButton from '../ui-kit/ActionButton/ActionButton';
+import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { IconLang, IconLogo, IconMenu } from '../../theme/foundations/icons';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';

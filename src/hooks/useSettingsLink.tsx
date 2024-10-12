@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { Settings } from '../typings/types';
-import { usePomodoroToast } from '../components/ui-kit/toast/usePomodoroToast';
+import { usePomodoroToast } from '../shared/ui/toast/usePomodoroToast';
 import { t } from 'i18next';
 
 export const useSettingsLink = () => {

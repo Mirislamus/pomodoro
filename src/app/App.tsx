@@ -1,9 +1,7 @@
 import { FC } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
+import Layout from '../shared/Layout/Layout';
 import Header from '../components/Header/Header';
-import LangMenu from '../components/menu/LangMenu/LangMenu';
-import MobileMenu from '../components/menu/MobileMenu/MobileMenu';
 
 import { useColorMode, useDisclosure } from '@chakra-ui/react';
 import Footer from '../components/Footer/Footer';
@@ -11,6 +9,8 @@ import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 import Timer from '../pages/Timer';
 import Settings from '../pages/Settings';
+import MobileMenu from '../components/MobileMenu/MobileMenu';
+import LangMenu from '../components/LangMenu/LangMenu';
 
 const App: FC = () => {
   const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();

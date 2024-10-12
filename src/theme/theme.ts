@@ -10,7 +10,7 @@ import ButtonStyles from './components/Button/Button.styles';
 import DrawerStyles from './components/Drawer/Drawer.styles';
 import TooltipStyles from './components/Tooltip/Tooltip.styles';
 import SwitchStyles from './components/Switch/Switch.styles';
-import ActionButtonStyles from '../components/ui-kit/ActionButton/ActionButton.styles';
+import ActionButtonStyles from '../shared/ui/ActionButton/ActionButton.styles';
 import TabsStyles from './components/Tabs/Tabs.styles';
 import InputStyles from './components/Input/Input.styles';
 import LinkStyles from './components/Link/Link.styles';

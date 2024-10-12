@@ -4,9 +4,10 @@ import { Drawer, DrawerBody, DrawerOverlay, DrawerContent, Text } from '@chakra-
 import { useTranslation } from 'react-i18next';
 import { MobileMenuProps } from './types';
 import { useSwipeable } from 'react-swipeable';
-import { IconChevron } from '../../../theme/foundations/icons';
-import CircleButton from '../../ui-kit/CircleButton/CircleButton';
-import ColorModeButton from '../../ui-kit/ColorModeButton/ColorModeButton';
+import CircleButton from '../../shared/ui/CircleButton/CircleButton';
+import { IconChevron } from '../../theme/foundations/icons';
+import ColorModeButton from '../../shared/ui/ColorModeButton/ColorModeButton';
+
 
 const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, colorMode, onColorModeClick, ...rest }) => {
   const { t, i18n } = useTranslation();
