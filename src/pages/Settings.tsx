@@ -19,11 +19,10 @@ import { IconClose, IconCopy } from '../theme/foundations/icons';
 import { useNavigate } from 'react-router-dom';
 import { useSettings } from '../contexts/SettingsContext/SettingsContext';
 import { useSession } from '../contexts/SessionContext/SessionContext';
-import { getMinFromMs, getMsFromMin } from '../utils';
-import { Settings, Sound } from '../typings/types';
+import { getMinFromMs, getMsFromMin, getSoundName } from '../utils';
+import { Settings as SettingsType } from '../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../consts/settings';
 import { useSettingsLink } from '../hooks/useSettingsLink';
-import { AlarmSound, TickSound } from '../typings/enums';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 import Scroll from '../components/ui-kit/Scroll/Scroll';
 import ActionButton from '../components/ui-kit/ActionButton/ActionButton';
@@ -33,16 +32,20 @@ import SwitchInput from '../components/ui-kit/SwitchInput/SwitchInput';
 import PercentSlider from '../components/PercentSlider/PercentSlider';
 import SelectMenu from '../components/SelectMenu/SelectMenu';
 import PomodoroTooltip from '../components/ui-kit/PomodoroTooltip/PomodoroTooltip';
+import useGetAlarmSounds from '../hooks/useGetAlarmSounds';
+import useGetTickSounds from '../hooks/useGetTickSounds';
 
 const _Settings: FC = () => {
   const navigate = useNavigate();
   const { settings, setSettings, resetSettings } = useSettings();
   const { resetSession } = useSession();
-  const { onSettingsLinkCopy } = useSettingsLink();
+  const onSettingsLinkCopy = useSettingsLink();
   const { isOpen: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
   const notificationPermission = useNotificationPermission();
+  const alarmSounds = useGetAlarmSounds();
+  const tickSounds = useGetTickSounds();
 
-  const onChangeSettingsHandler = (value: number | boolean, key: keyof Settings) => {
+  const onChangeSettingsHandler = (value: number | boolean, key: keyof SettingsType) => {
     resetSession();
     setSettings(key, value);
   };
@@ -50,70 +53,6 @@ const _Settings: FC = () => {
   const onResetSettingsHandler = () => {
     resetSession();
     resetSettings();
-  };
-
-  const alarmSounds: Sound[] = [
-    {
-      id: AlarmSound.Bell,
-      name: 'Bell',
-      onClick: () => setSettings('alarmSound', AlarmSound.Bell),
-    },
-    {
-      id: AlarmSound.Bird,
-      name: 'Bird',
-      onClick: () => setSettings('alarmSound', AlarmSound.Bird),
-    },
-    {
-      id: AlarmSound.Wood,
-      name: 'Wood',
-      onClick: () => setSettings('alarmSound', AlarmSound.Wood),
-    },
-    {
-      id: AlarmSound.Digital,
-      name: 'Digital',
-      onClick: () => setSettings('alarmSound', AlarmSound.Digital),
-    },
-    {
-      id: AlarmSound.Kitchen,
-      name: 'Kitchen',
-      onClick: () => setSettings('alarmSound', AlarmSound.Kitchen),
-    },
-  ];
-
-  const tickSounds: Sound[] = [
-    {
-      id: TickSound.None,
-      name: 'None',
-      onClick: () => setSettings('tickSound', TickSound.None),
-    },
-    {
-      id: TickSound.Fast,
-      name: 'Fast',
-      onClick: () => setSettings('tickSound', TickSound.Fast),
-    },
-    {
-      id: TickSound.Slow,
-      name: 'Slow',
-      onClick: () => setSettings('tickSound', TickSound.Slow),
-    },
-    {
-      id: TickSound.BrownNoise,
-      name: 'Brown noise',
-      onClick: () => setSettings('tickSound', TickSound.BrownNoise),
-    },
-    {
-      id: TickSound.WhiteNoise,
-      name: 'White noise',
-      onClick: () => setSettings('tickSound', TickSound.WhiteNoise),
-    },
-  ];
-
-  const getSoundName = (name: AlarmSound | TickSound, sounds: Sound[]): string => {
-    const foundSound = sounds.find(item => item.id === name);
-    if (!foundSound) {
-      throw new Error(`Sound with id '${name}' not found`);
-    }
-    return foundSound.name;
   };
 
   return (
@@ -286,5 +225,5 @@ const _Settings: FC = () => {
   );
 };
 
-const Setting = chakra(_Settings);
-export default Setting;
+const Settings = chakra(_Settings);
+export default Settings;

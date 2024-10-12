@@ -7,3 +7,4 @@ export * from './formatMilliseconds';
 export * from './requestNotificationPermission';
 export * from './getNotificationPermission';
 export * from './sendNotification';
+export * from './getSoundName';

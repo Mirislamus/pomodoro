@@ -4,11 +4,7 @@ import { Settings } from '../typings/types';
 import { usePomodoroToast } from '../components/ui-kit/toast/usePomodoroToast';
 import { t } from 'i18next';
 
-interface SettingsLinkReturnType {
-  onSettingsLinkCopy: () => void;
-}
-
-export const useSettingsLink = (): SettingsLinkReturnType => {
+export const useSettingsLink = () => {
   const { settings, setSettings } = useSettings();
   const toast = usePomodoroToast();
 
@@ -53,5 +49,5 @@ export const useSettingsLink = (): SettingsLinkReturnType => {
     applySettingsFromURL();
   }, []);
 
-  return { onSettingsLinkCopy };
+  return onSettingsLinkCopy;
 };
