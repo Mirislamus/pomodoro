@@ -15,6 +15,9 @@ const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight, hasScrollOffset })
           marginInlineEnd: hasScrollOffset ? { base: '0', md: '-40px' } : '0',
           paddingInlineEnd: hasScrollOffset ? { base: '0', md: '40px' } : '0',
         },
+        '.simplebar-content-wrapper': {
+          h: 'auto!important',
+        },
         '.simplebar-track.simplebar-vertical': {
           w: '4px',
           bgColor: 'scroll.track',
