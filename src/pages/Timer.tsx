@@ -24,31 +24,16 @@ const _Timer: FC = () => {
   const settings = useSettingsStore(state => state.settings);
   const { play: playAlarmSound } = useAlarmSound();
   const { play: playTickSound, stop: stopTickSound, pause: pauseTickSound } = useTickSound();
-  const allowNotifications = settings.allowNotifications;
   const allowTickSound = settings.tickSound !== TickSound.None;
 
   const session = useSessionStore(state => state.session);
   const setSession = useSessionStore(state => state.setSession);
   const resetSession = useSessionStore(state => state.resetSession);
 
-  const playTick = () => {
-    if (allowTickSound && allowNotifications) {
-      playTickSound();
-    }
-  };
-
-  const pauseTick = () => {
-    if (allowTickSound && allowNotifications) {
-      pauseTickSound();
-    }
-  };
-
   const alarmAndTickSoundControl = () => {
-    if (allowNotifications) {
-      playAlarmSound();
-      if (allowTickSound) {
-        stopTickSound();
-      }
+    playAlarmSound();
+    if (allowTickSound) {
+      stopTickSound();
     }
   };
 
@@ -63,8 +48,8 @@ const _Timer: FC = () => {
   } = useCountdown({
     maxMilliseconds: settings.duration,
     currentMilliseconds: session.pomodoroCurrentTime,
-    onStart: () => playTick(),
-    onPause: () => pauseTick(),
+    onStart: () => playTickSound(),
+    onPause: () => pauseTickSound(),
     onComplete: () => {
       alarmAndTickSoundControl();
       setSession('pomodoroCurrentTime', 0);
@@ -97,8 +82,8 @@ const _Timer: FC = () => {
   } = useCountdown({
     maxMilliseconds: settings.shortBreak,
     currentMilliseconds: session.shortBrakeCurrentTime,
-    onStart: () => playTick(),
-    onPause: () => pauseTick(),
+    onStart: () => playTickSound(),
+    onPause: () => pauseTickSound(),
     onComplete: () => {
       alarmAndTickSoundControl();
       setSession('shortBrakeCurrentTime', 0);
@@ -124,8 +109,8 @@ const _Timer: FC = () => {
   } = useCountdown({
     maxMilliseconds: settings.longBreak,
     currentMilliseconds: session.longBrakeCurrentTime,
-    onStart: () => playTick(),
-    onPause: () => pauseTick(),
+    onStart: () => playTickSound(),
+    onPause: () => pauseTickSound(),
     onComplete: () => {
       alarmAndTickSoundControl();
       resetSession();
@@ -155,6 +140,7 @@ const _Timer: FC = () => {
   }, [countdownLongBreak, isPlayingLongBreak]);
 
   const onSkipButtonClickHandler = () => {
+    stopTickSound();
     if (session.stage === Stage.Pomodoro) {
       resetPomodoro();
       if (session.sessionCount >= settings.count) {
@@ -176,6 +162,7 @@ const _Timer: FC = () => {
   };
 
   const onResetButtonClickHandler = () => {
+    stopTickSound();
     if (session.stage === Stage.Pomodoro) {
       resetPomodoro();
     } else if (session.stage === Stage.ShortBreak) {

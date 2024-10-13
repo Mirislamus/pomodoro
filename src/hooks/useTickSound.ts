@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import useAudioContext from './useAudioContext';
 import useSettingsStore from '../stores/useSettingsStore';
+import { TickSound } from '../typings/enums';
 
 interface TickSoundReturnType {
   play: () => void;
@@ -10,6 +11,7 @@ interface TickSoundReturnType {
 
 const useTickSound = (): TickSoundReturnType => {
   const settings = useSettingsStore(state => state.settings);
+  const allowTickSound = settings.tickSound !== TickSound.None;
   const { setAudio, play, stop, pause, setVolume } = useAudioContext(true);
 
   useEffect(() => {
@@ -24,10 +26,23 @@ const useTickSound = (): TickSoundReturnType => {
     }
   }, [settings.tickSoundVolume, setVolume]);
 
+  const playTickSound = () => {
+    if (allowTickSound) {
+      play();
+    }
+  };
+
+  const pauseTickSound = () => {
+    if (allowTickSound) {
+      pause();
+    }
+  };
+
+
   return {
-    play,
+    play: playTickSound,
     stop,
-    pause,
+    pause: pauseTickSound,
   };
 };
 
