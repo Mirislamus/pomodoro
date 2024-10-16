@@ -40,14 +40,12 @@ const _Settings: FC = () => {
   const settings = useSettingsStore(state => state.settings);
   const setSettings = useSettingsStore(state => state.setSettings);
   const resetSettings = useSettingsStore(state => state.resetSettings);
-
   const resetSession = useSessionStore(state => state.resetSession);
   const onSettingsLinkCopy = useSettingsLink();
   const { isOpen: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
   const notificationPermission = useNotificationPermission();
   const alarmSounds = useGetAlarmSounds();
   const tickSounds = useGetTickSounds();
-
 
   const onChangeSettingsHandler = (value: number | boolean, key: keyof SettingsType) => {
     resetSession();
