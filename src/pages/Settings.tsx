@@ -35,7 +35,7 @@ import useGetTickSounds from '../hooks/useGetTickSounds';
 import useSettingsStore from '../stores/useSettingsStore';
 import useSessionStore from '../stores/useSessionStore';
 
-const _Settings: FC = () => {
+const Settings: FC = () => {
   const navigate = useNavigate();
   const settings = useSettingsStore(state => state.settings);
   const setSettings = useSettingsStore(state => state.setSettings);
@@ -227,5 +227,4 @@ const _Settings: FC = () => {
   );
 };
 
-const Settings = chakra(_Settings);
 export default Settings;
