@@ -23,9 +23,7 @@ const theme = {
   colors,
   semanticTokens,
   textStyles,
-  styles: {
-    global,
-  },
+  styles: { global },
   components: {
     Container: ContainerStyles,
     Button: ButtonStyles,

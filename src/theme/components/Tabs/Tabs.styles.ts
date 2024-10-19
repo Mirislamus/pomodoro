@@ -22,6 +22,9 @@ const TabsStyles = defineStyleConfig({
       },
       tabpanel: {
         p: '0',
+        _focusVisible: {
+          boxShadow: 'none!important',
+        },
       },
     },
   },

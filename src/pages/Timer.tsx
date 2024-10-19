@@ -19,7 +19,7 @@ import StageModal from '../components/StageModal/StageModal';
 import useSessionStore from '../stores/useSessionStore';
 import useSettingsStore from '../stores/useSettingsStore';
 
-const _Timer: FC = () => {
+const Timer: FC = () => {
   const stageColor = useGetStageColor();
   const settings = useSettingsStore(state => state.settings);
   const { play: playAlarmSound } = useAlarmSound();
@@ -359,5 +359,4 @@ const _Timer: FC = () => {
   );
 };
 
-const Timer = chakra(_Timer);
 export default Timer;

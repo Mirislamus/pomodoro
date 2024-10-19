@@ -1,12 +1,14 @@
-import { defineConfig } from 'vite';
+import { UserConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
+import ssr from 'vite-plugin-ssr/plugin';
 import meta from './src/data/meta';
 
-export default defineConfig({
+const config: UserConfig = {
   plugins: [
     react(),
+    ssr({ prerender: true }),
     viteStaticCopy({
       targets: [
         {
@@ -103,4 +105,6 @@ export default defineConfig({
       },
     },
   },
-});
+};
+
+export default config;
