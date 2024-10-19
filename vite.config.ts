@@ -1,14 +1,15 @@
 import { UserConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import ssr from 'vite-plugin-ssr/plugin';
+import inspect from 'vite-plugin-inspect'
 import meta from './src/data/meta';
+import path from 'path'
 
 const config: UserConfig = {
   plugins: [
     react(),
-    ssr({ prerender: true }),
+    inspect(),
     viteStaticCopy({
       targets: [
         {
