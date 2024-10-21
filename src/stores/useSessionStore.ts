@@ -13,7 +13,7 @@ const useSessionStore = create<SessionStore>()(
   persist(
     set => ({
       session: { ...defaultSession },
-      setSession: <K extends keyof Session>(key: K, value: Session[K]) =>
+      setSession: (key, value) =>
         set(state => ({
           session: {
             ...state.session,

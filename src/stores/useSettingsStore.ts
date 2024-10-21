@@ -13,7 +13,7 @@ const useSettingsStore = create<SettingsStore>()(
   persist(
     set => ({
       settings: { ...defaultSettings },
-      setSettings: <K extends keyof Settings>(key: K, value: Settings[K]) =>
+      setSettings: (key, value) =>
         set(state => ({
           settings: {
             ...state.settings,
