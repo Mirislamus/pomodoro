@@ -11,8 +11,7 @@
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
     "prettier": "prettier --trailing-comma es5 'src/**/*.{js,jsx,ts,tsx,css,less,json}'",
-    "prettier:fix": "prettier --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css,less,json}'",
-    "prepare": "husky install"
+    "prettier:fix": "prettier --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css,less,json}'"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.10.3",
