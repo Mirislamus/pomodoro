@@ -1,4 +1,4 @@
-import { Box, Button, Flex, HStack, Text, chakra, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Text, useDisclosure } from '@chakra-ui/react';
 import { FC, useEffect } from 'react';
 import { t } from 'i18next';
 import useCountdown from '../hooks/useCountdown';
