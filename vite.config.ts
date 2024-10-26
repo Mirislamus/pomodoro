@@ -4,7 +4,6 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import inspect from 'vite-plugin-inspect'
 import meta from './src/data/meta';
-import path from 'path'
 
 const config: UserConfig = {
   plugins: [

@@ -12,12 +12,6 @@ export default [
       react: {
         version: 'detect',
       },
-      'import/resolver': {
-        alias: {
-          map: [['@components', './src/components']],
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
-      },
     },
     ignores: [
       'node_modules/',
