@@ -7,6 +7,7 @@ export enum Stage {
 export enum Locale {
   En = 'en',
   Ru = 'ru',
+  De = 'de',
 }
 
 export enum StageColor {

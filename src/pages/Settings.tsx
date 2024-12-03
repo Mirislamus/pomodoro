@@ -46,8 +46,19 @@ const Settings: FC = () => {
   const alarmSounds = useGetAlarmSounds();
   const tickSounds = useGetTickSounds();
 
+  const excludedKeys = [
+    'hasAutoStart',
+    'alarmSound',
+    'tickSound',
+    'allowNotifications',
+    'alarmSoundVolume',
+    'tickSoundVolume',
+  ];
+
   const onChangeSettingsHandler = (value: number | boolean, key: keyof SettingsType) => {
-    resetSession();
+    if (!excludedKeys.includes(key)) {
+      resetSession();
+    }
     setSettings(key, value);
   };
 

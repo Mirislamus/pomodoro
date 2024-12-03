@@ -25,6 +25,11 @@ const useGetLocales = (lang?: Locale): LocaleData | UseGetLocalesReturnType => {
       name: t(Locale.Ru),
       onChangeLang: () => i18n.changeLanguage(Locale.Ru),
     },
+    [Locale.De]: {
+      id: Locale.De,
+      name: t(Locale.De),
+      onChangeLang: () => i18n.changeLanguage(Locale.De),
+    },
   };
 
   if (lang) {
