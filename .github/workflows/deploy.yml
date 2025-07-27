@@ -1,43 +1,33 @@
-name: Pomotomo CI/CD
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [master]
+
+permissions:
+  contents: write
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -p 30151 -H server2.ahost.cloud >> ~/.ssh/known_hosts
-        eval $(ssh-agent -s)
-        ssh-add ~/.ssh/id_rsa
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-    - name: Install Bun and dependencies
-      uses: oven-sh/setup-bun@v2
-      with:
-        bun-version: latest
+      - name: Install dependencies
+        run: bun install
 
-    - run: bun install
+      - name: Build project
+        run: bun run build
 
-    - name: Build project using Vite
-      run: bun run build
-
-    - name: Clean public_html directory on server (except .well-known)
-      run: |
-        ssh pomotomo@server2.ahost.cloud -p 30151 "find /home/pomotomo/public_html/* -not -name '.well-known' -delete"
-
-    - name: Deploy via SCP
-      run: |
-        scp -P 30151 -r dist/* pomotomo@server2.ahost.cloud:/home/pomotomo/public_html/
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

@@ -2,10 +2,11 @@ import { UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import inspect from 'vite-plugin-inspect'
+import inspect from 'vite-plugin-inspect';
 import meta from './src/data/meta';
 
 const config: UserConfig = {
+  base: '/pomodoro/',
   plugins: [
     react(),
     inspect(),
@@ -96,7 +97,7 @@ const config: UserConfig = {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            return 'vendor';
+            return 'modules';
           }
           if (id.includes('src/components/')) {
             return 'components';
