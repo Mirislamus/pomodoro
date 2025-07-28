@@ -13,7 +13,7 @@ root.render(
   <StrictMode>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <BrowserRouter>
+      <BrowserRouter basename="pomodoro">
         <App />
       </BrowserRouter>
     </ChakraProvider>
