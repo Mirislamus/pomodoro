@@ -12,7 +12,7 @@ const useAlarmSound = (): AlarmSoundReturnType => {
 
   useEffect(() => {
     if (settings.alarmSound) {
-      setAudio(`/sounds/alarm/${settings.alarmSound}.mp3`);
+      setAudio(`/pomodoro/sounds/alarm/${settings.alarmSound}.mp3`);
     }
   }, [settings.alarmSound, setAudio]);
 

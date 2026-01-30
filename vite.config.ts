@@ -34,9 +34,9 @@ const config: UserConfig = {
         description: meta.description,
         theme_color: meta.color,
         background_color: meta.color,
-        id: '/',
-        start_url: '/',
-        scope: '/',
+        id: '/pomodoro/',
+        start_url: '/pomodoro/',
+        scope: '/pomodoro/',
         display: 'fullscreen',
         display_override: ['fullscreen', 'standalone', 'minimal-ui', 'browser'],
         categories: ['education', 'productivity'],
@@ -47,25 +47,25 @@ const config: UserConfig = {
         dir: 'ltr',
         icons: [
           {
-            src: '/images/icons/icon-192x192.png',
+            src: 'images/icons/icon-192x192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/images/icons/icon-512x512.png',
+            src: 'images/icons/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
         ],
         screenshots: [
           {
-            src: '/images/screenshots/screenshot-1280x720.png',
+            src: 'images/screenshots/screenshot-1280x720.png',
             sizes: '1280x720',
             type: 'image/png',
             form_factor: 'wide',
           },
           {
-            src: '/images/screenshots/screenshot-320x642.png',
+            src: 'images/screenshots/screenshot-320x642.png',
             sizes: '320x642',
             type: 'image/png',
             form_factor: 'narrow',
@@ -75,7 +75,7 @@ const config: UserConfig = {
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.startsWith('/images/'),
+            urlPattern: ({ url }) => url.pathname.startsWith('images/'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'image-cache',
