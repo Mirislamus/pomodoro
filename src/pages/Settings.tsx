@@ -33,6 +33,9 @@ import useGetAlarmSounds from '../hooks/useGetAlarmSounds';
 import useGetTickSounds from '../hooks/useGetTickSounds';
 import useSettingsStore from '../stores/useSettingsStore';
 import useSessionStore from '../stores/useSessionStore';
+import useAlarmSound from '../hooks/useAlarmSound';
+import useTickSound from '../hooks/useTickSound';
+import { TickSound } from '../typings/enums';
 
 const Settings: FC = () => {
   const navigate = useNavigate();
@@ -43,8 +46,23 @@ const Settings: FC = () => {
   const onSettingsLinkCopy = useSettingsLink();
   const { isOpen: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
   const notificationPermission = useNotificationPermission();
-  const alarmSounds = useGetAlarmSounds();
-  const tickSounds = useGetTickSounds();
+  const { play: playAlarm } = useAlarmSound();
+  const { play: playTick, stop: stopTick } = useTickSound();
+
+  const alarmSounds = useGetAlarmSounds({
+    onChange: () => playAlarm(),
+  });
+
+  const tickSounds = useGetTickSounds({
+    onChange: value => {
+      if (value === TickSound.None) {
+        stopTick();
+      } else {
+        playTick();
+        setTimeout(() => stopTick(), 5000);
+      }
+    },
+  });
 
   const excludedKeys = [
     'hasAutoStart',

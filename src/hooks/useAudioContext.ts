@@ -23,16 +23,17 @@ const useAudioContext = (loop: boolean = false): AudioContextReturnType => {
       gainNodeRef.current.connect(audioContextRef.current.destination);
     }
 
+    return () => {
+      audioContextRef.current?.close();
+      audioContextRef.current = null;
+      gainNodeRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
     if (gainNodeRef.current) {
       gainNodeRef.current.gain.value = volume;
     }
-
-    return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
-        audioContextRef.current = null;
-      }
-    };
   }, [volume]);
 
   const loadAudio = async (url: string) => {

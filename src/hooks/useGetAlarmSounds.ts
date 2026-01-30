@@ -3,34 +3,43 @@ import { AlarmSound } from '../typings/enums';
 import { Sound } from '../typings/types';
 import { formatSoundName } from '../utils/formatSoundName';
 
-const useGetAlarmSounds = () => {
+type UseGetAlarmSoundsProps = {
+  onChange?: (value: AlarmSound) => void;
+};
+
+const useGetAlarmSounds = ({ onChange }: UseGetAlarmSoundsProps = {}) => {
   const setSettings = useSettingsStore(state => state.setSettings);
+
+  const handleChange = (value: AlarmSound) => {
+    setSettings('alarmSound', value);
+    onChange?.(value);
+  };
 
   const alarmSounds: Sound[] = [
     {
       id: AlarmSound.Bell,
       name: formatSoundName(AlarmSound.Bell),
-      onClick: () => setSettings('alarmSound', AlarmSound.Bell),
+      onClick: () => handleChange(AlarmSound.Bell),
     },
     {
       id: AlarmSound.Bird,
       name: formatSoundName(AlarmSound.Bird),
-      onClick: () => setSettings('alarmSound', AlarmSound.Bird),
+      onClick: () => handleChange(AlarmSound.Bird),
     },
     {
       id: AlarmSound.Wood,
       name: formatSoundName(AlarmSound.Wood),
-      onClick: () => setSettings('alarmSound', AlarmSound.Wood),
+      onClick: () => handleChange(AlarmSound.Wood),
     },
     {
       id: AlarmSound.Digital,
       name: formatSoundName(AlarmSound.Digital),
-      onClick: () => setSettings('alarmSound', AlarmSound.Digital),
+      onClick: () => handleChange(AlarmSound.Digital),
     },
     {
       id: AlarmSound.Kitchen,
       name: formatSoundName(AlarmSound.Kitchen),
-      onClick: () => setSettings('alarmSound', AlarmSound.Kitchen),
+      onClick: () => handleChange(AlarmSound.Kitchen),
     },
   ];
 
