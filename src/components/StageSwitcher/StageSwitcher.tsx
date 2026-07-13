@@ -1,11 +1,11 @@
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { StageSwitcherProps } from './types';
 import { Button, chakra, Flex, Box } from '@chakra-ui/react';
 import { easeIn } from '../../theme/foundations/transitions';
 import { getTextColor } from '../../utils';
 import useSessionStore from '../../stores/useSessionStore';
 
-const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest }) => {
+const _StageSwitcher = ({ stageColor, stages, ...rest }: StageSwitcherProps) => {
   const session = useSessionStore(state => state.session);
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [boxStyle, setBoxStyle] = useState({ width: 120, transform: '' });
@@ -53,7 +53,7 @@ const _StageSwitcher: FC<StageSwitcherProps> = ({ stageColor, stages, ...rest })
           fontWeight="600"
           color={stage.isActive ? getTextColor(session.stage) : 'primary'}
           onClick={stage.onClick}
-          ref={el => (buttonRefs.current[index] = el)}
+          ref={el => { buttonRefs.current[index] = el; }}
         >
           {stage.text}
         </Button>

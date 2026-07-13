@@ -1,10 +1,9 @@
 import { Flex, Text, chakra } from '@chakra-ui/react';
-import { FC } from 'react';
 import { StateItemProps } from './types';
 import { IconTickLg } from '../../../theme/foundations/icons';
 import { ease, easeIn } from '../../../theme/foundations/transitions';
 
-const _StageItem: FC<StateItemProps> = ({ stage, isActive, onClick, ...props }) => {
+const _StageItem = ({ stage, isActive, onClick, ...props }: StateItemProps) => {
   return (
     <Flex
       as="button"

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { StageSelectProps } from './types';
 import { Flex, Text, chakra } from '@chakra-ui/react';
 import { IconChevronDown } from '../../theme/foundations/icons';
@@ -6,7 +5,7 @@ import { ease } from '../../theme/foundations/transitions';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import { getTextColor } from '../../utils';
 
-const _StageSelect: FC<StageSelectProps> = ({ stage, isActive = false, onClick, ...props }) => {
+const _StageSelect = ({ stage, isActive = false, onClick, ...props }: StageSelectProps) => {
   const stageColor = useGetStageColor();
 
   return (

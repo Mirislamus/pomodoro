@@ -1,11 +1,10 @@
 import { chakra, Flex, Text } from '@chakra-ui/react';
-import { FC } from 'react';
 import { ColorModeButtonProps } from './types';
 import CircleButton from '../CircleButton/CircleButton';
 import { IconDark, IconLight } from '../../../theme/foundations/icons';
 import { t } from 'i18next';
 
-const _ColorModeButton: FC<ColorModeButtonProps> = ({ colorMode, onClick, ...props }) => {
+const _ColorModeButton = ({ colorMode, onClick, ...props }: ColorModeButtonProps) => {
   return (
     <CircleButton onClick={onClick} {...props}>
       <Text>{t(`${colorMode === 'light' ? 'dark_mode' : 'light_mode'}`)}</Text>

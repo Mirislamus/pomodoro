@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { Box, chakra, useToken } from '@chakra-ui/react';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import { ProgressCircleProps } from './types';
 
-const _ProgressCircle: FC<ProgressCircleProps> = ({ fillPercentage, isActive = false, ...props }) => {
+const _ProgressCircle = ({ fillPercentage, isActive = false, ...props }: ProgressCircleProps) => {
   const radius = 230;
   const strokeWidth = 36;
   const circumference = 2 * Math.PI * radius;

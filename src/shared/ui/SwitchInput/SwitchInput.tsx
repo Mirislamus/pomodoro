@@ -1,8 +1,8 @@
 import { FormControl, FormLabel, Switch, Text, chakra } from '@chakra-ui/react';
-import { ChangeEvent, FC, useId } from 'react';
+import { ChangeEvent, useId } from 'react';
 import { SwitchInputProps } from './types';
 
-const _SwitchInput: FC<SwitchInputProps> = ({ title, isChecked, isDisabled, onChange, ...props }) => {
+const _SwitchInput = ({ title, isChecked, isDisabled, onChange, ...props }: SwitchInputProps) => {
   const id = useId();
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {

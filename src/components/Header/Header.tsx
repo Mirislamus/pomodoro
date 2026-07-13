@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { HeaderProps } from './types';
 import { Flex, Box, useToken, chakra, Button } from '@chakra-ui/react';
 import useGetStageColor from '../../hooks/useGetStageColor';
@@ -10,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { getTextColor } from '../../utils';
 import useSessionStore from '../../stores/useSessionStore';
 
-const _Header: FC<HeaderProps> = ({ onLangClick, onMenuClick, ...rest }) => {
+const _Header = ({ onLangClick, onMenuClick, ...rest }: HeaderProps) => {
   const stageColor = useGetStageColor();
   const session = useSessionStore(state => state.session);
   const [currentStageColor] = useToken('colors', [stageColor]);

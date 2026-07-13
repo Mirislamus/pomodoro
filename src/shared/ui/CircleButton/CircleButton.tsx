@@ -1,8 +1,7 @@
 import { Flex, chakra } from '@chakra-ui/react';
-import { FC } from 'react';
 import { CircleButtonProps } from './types';
 
-const _CircleButton: FC<CircleButtonProps> = ({ children, onClick, ...rest }) => {
+const _CircleButton = ({ children, onClick, ...rest }: CircleButtonProps) => {
   return (
     <Flex
       as="button"

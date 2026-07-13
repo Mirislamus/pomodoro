@@ -1,5 +1,4 @@
 import { chakra } from '@chakra-ui/react';
-import { FC } from 'react';
 import { LangMenuProps } from './types';
 import {
   Drawer,
@@ -18,7 +17,7 @@ import useGetLocales from '../../hooks/useGetLocales';
 import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { IconArrow } from '../../theme/foundations/icons';
 
-const _LangMenu: FC<LangMenuProps> = ({ onClose, ...rest }) => {
+const _LangMenu = ({ onClose, ...rest }: LangMenuProps) => {
   const { t, i18n } = useTranslation();
   const locales = useGetLocales();
 

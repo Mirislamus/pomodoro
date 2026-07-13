@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { noop } from '../utils';
 
 interface UseCountdownOptions {
@@ -8,6 +8,7 @@ interface UseCountdownOptions {
   onPause?: () => void;
   onReset?: () => void;
   onComplete?: () => void;
+  onTick?: (remaining: number) => void;
 }
 
 interface CountdownState {
@@ -15,7 +16,8 @@ interface CountdownState {
   isPlaying: boolean;
   startTimer: () => void;
   pauseTimer: () => void;
-  resetTimer: () => void;
+  resetTimer: (newMaxMs?: number) => void;
+  setCountdown: (val: number) => void;
 }
 
 const useCountdown = (options: UseCountdownOptions): CountdownState => {
@@ -26,24 +28,31 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
     onPause = noop,
     onReset = noop,
     onComplete = noop,
+    onTick = noop,
   } = options;
 
   const initialTime = currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds;
-  const [endTime, setEndTime] = useState<number>(Date.now() + initialTime + 100);
-  const [countdown, setCountdown] = useState<number>(initialTime);
+  const [countdown, setCountdownState] = useState<number>(initialTime);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  
+  const endTimeRef = useRef<number>(0);
+  const onCompleteRef = useRef(onComplete);
+  const onTickRef = useRef(onTick);
 
   useEffect(() => {
-    setEndTime(Date.now() + countdown + 100);
-  }, [currentMilliseconds]);
+    onCompleteRef.current = onComplete;
+    onTickRef.current = onTick;
+  }, [onComplete, onTick]);
 
-  const getRemainingTime = (): number => {
-    const now = Date.now();
-    return Math.max(endTime - now, 0);
-  };
+  // Sync internal countdown when currentMilliseconds prop changes externally (e.g. stage change)
+  useEffect(() => {
+    if (!isPlaying) {
+      setCountdownState(currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds);
+    }
+  }, [currentMilliseconds, maxMilliseconds]);
 
   const startTimer = useCallback(() => {
-    setEndTime(Date.now() + countdown);
+    endTimeRef.current = Date.now() + countdown;
     setIsPlaying(true);
     onStart();
   }, [countdown, onStart]);
@@ -53,9 +62,9 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
     onPause();
   }, [onPause]);
 
-  const resetTimer = useCallback(() => {
-    setEndTime(Date.now() + maxMilliseconds + 100);
-    setCountdown(maxMilliseconds);
+  const resetTimer = useCallback((newMaxMs?: number) => {
+    const ms = newMaxMs !== undefined ? newMaxMs : maxMilliseconds;
+    setCountdownState(ms);
     setIsPlaying(false);
     onReset();
   }, [maxMilliseconds, onReset]);
@@ -63,20 +72,32 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
   useEffect(() => {
     if (!isPlaying) return;
 
-    const intervalId = setInterval(() => {
-      const remaining = getRemainingTime();
-      setCountdown(remaining);
+    const tick = () => {
+      const remaining = Math.max(endTimeRef.current - Date.now(), 0);
+      setCountdownState(remaining);
+      onTickRef.current(remaining);
 
       if (remaining <= 0) {
-        clearInterval(intervalId);
         setIsPlaying(false);
-        resetTimer();
-        onComplete();
+        onCompleteRef.current();
       }
-    }, 1000);
+    };
 
-    return () => clearInterval(intervalId);
-  }, [isPlaying, endTime, onComplete]);
+    const intervalId = setInterval(tick, 200);
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        tick();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isPlaying]);
 
   return {
     countdown,
@@ -84,6 +105,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
     startTimer,
     pauseTimer,
     resetTimer,
+    setCountdown: setCountdownState,
   };
 };
 

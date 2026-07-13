@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../shared/Layout/Layout';
 import Header from '../components/Header/Header';
@@ -12,7 +11,7 @@ import MobileMenu from '../components/MobileMenu/MobileMenu';
 import LangMenu from '../components/LangMenu/LangMenu';
 import useSettingsStore from '../stores/useSettingsStore';
 
-const App: FC = () => {
+const App = () => {
   const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
   const { isOpen: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();

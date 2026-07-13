@@ -11,7 +11,6 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FC } from 'react';
 import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
 import { IconClose, IconCopy } from '../theme/foundations/icons';
@@ -34,7 +33,7 @@ import useGetTickSounds from '../hooks/useGetTickSounds';
 import useSettingsStore from '../stores/useSettingsStore';
 import useSessionStore from '../stores/useSessionStore';
 
-const Settings: FC = () => {
+const Settings = () => {
   const navigate = useNavigate();
   const settings = useSettingsStore(state => state.settings);
   const setSettings = useSettingsStore(state => state.setSettings);

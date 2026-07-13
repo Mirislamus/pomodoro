@@ -1,10 +1,9 @@
-import { FC } from 'react';
 import { SelectMenuProps } from './types';
 import { Box, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup } from '@chakra-ui/react';
 import { IconChevronDown, IconTickLg } from '../../theme/foundations/icons';
 import { easeIn } from '../../theme/foundations/transitions';
 
-const SelectMenu: FC<SelectMenuProps> = ({ items, selectedItem, isOpen, ...props }) => {
+const SelectMenu = ({ items, selectedItem, isOpen, ...props }: SelectMenuProps) => {
   return (
     <Box pos="relative">
       <Menu {...props}>

@@ -1,8 +1,7 @@
-import { FC } from 'react';
 import { FieldWrapProps } from './types';
 import { Box, chakra } from '@chakra-ui/react';
 
-const _FieldWrap: FC<FieldWrapProps> = ({ children, hasBorder = true, ...props }) => {
+const _FieldWrap = ({ children, hasBorder = true, ...props }: FieldWrapProps) => {
   return (
     <Box
       paddingBlockEnd={hasBorder ? { base: '20px', md: '15px' } : 'none'}
