@@ -1,10 +1,9 @@
 import { Box } from '@chakra-ui/react';
-import { FC } from 'react';
 import { ScrollProps } from './types';
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
-const Scroll: FC<ScrollProps> = ({ children, maxScrollHeight, hasScrollOffset }) => {
+const Scroll = ({ children, maxScrollHeight, hasScrollOffset }: ScrollProps) => {
   return (
     <Box
       display="contents"

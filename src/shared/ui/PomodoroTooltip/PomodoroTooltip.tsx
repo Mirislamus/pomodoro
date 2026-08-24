@@ -1,8 +1,7 @@
 import { Tooltip, chakra } from '@chakra-ui/react';
-import { FC } from 'react';
 import { PomodoroTooltipProps } from './types';
 
-const _PomodoroTooltip: FC<PomodoroTooltipProps> = ({ children, ...rest }) => {
+const _PomodoroTooltip = ({ children, ...rest }: PomodoroTooltipProps) => {
   return (
     <Tooltip
       bg="background.tooltip"

@@ -1,11 +1,10 @@
-import { FC } from 'react';
 import { LangButtonProps } from './types';
 import { chakra, Fade, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { ease } from '../../../theme/foundations/transitions';
 import { IconTickLg } from '../../../theme/foundations/icons';
 
-const _LangButton: FC<LangButtonProps> = ({ lang, onClick, isActive, ...rest }) => {
+const _LangButton = ({ lang, onClick, isActive, ...rest }: LangButtonProps) => {
   const { t } = useTranslation();
 
   return (

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, HStack, Text, useDisclosure } from '@chakra-ui/react';
-import { FC, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { t } from 'i18next';
 import useCountdown from '../hooks/useCountdown';
 import { formatMilliseconds, requestNotificationPermission, getTextColor, getPercent } from '../utils';
@@ -19,7 +19,7 @@ import StageModal from '../components/StageModal/StageModal';
 import useSessionStore from '../stores/useSessionStore';
 import useSettingsStore from '../stores/useSettingsStore';
 
-const Timer: FC = () => {
+const Timer = () => {
   const stageColor = useGetStageColor();
   const settings = useSettingsStore(state => state.settings);
   const { play: playAlarmSound } = useAlarmSound();
@@ -39,123 +39,125 @@ const Timer: FC = () => {
 
   const { isOpen: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
 
-  const {
-    countdown: countdownPomodoro,
-    startTimer: startPomodoro,
-    isPlaying: isPlayingPomodoro,
-    pauseTimer: pausePomodoro,
-    resetTimer: resetPomodoro,
-  } = useCountdown({
-    maxMilliseconds: settings.duration,
-    currentMilliseconds: session.pomodoroCurrentTime,
+  const getStageMaxTime = () => {
+    if (session.stage === Stage.Pomodoro) return settings.duration;
+    if (session.stage === Stage.ShortBreak) return settings.shortBreak;
+    return settings.longBreak;
+  };
+
+  const getStageCurrentTime = () => {
+    if (session.stage === Stage.Pomodoro) return session.pomodoroCurrentTime;
+    if (session.stage === Stage.ShortBreak) return session.shortBrakeCurrentTime;
+    return session.longBrakeCurrentTime;
+  };
+
+  const setStageCurrentTime = (time: number) => {
+    if (session.stage === Stage.Pomodoro) setSession('pomodoroCurrentTime', time);
+    else if (session.stage === Stage.ShortBreak) setSession('shortBrakeCurrentTime', time);
+    else setSession('longBrakeCurrentTime', time);
+  };
+
+  const { countdown, startTimer, isPlaying, pauseTimer, resetTimer } = useCountdown({
+    maxMilliseconds: getStageMaxTime(),
+    currentMilliseconds: getStageCurrentTime(),
     onStart: () => playTickSound(),
-    onPause: () => pauseTickSound(),
+    onPause: () => {
+      pauseTickSound();
+    },
     onComplete: () => {
       alarmAndTickSoundControl();
-      setSession('pomodoroCurrentTime', 0);
-      if (session.sessionCount >= settings.count) {
-        sendNotification({
-          body: t('pomodoro_notification_long'),
-        });
-        setSession('stage', Stage.LongBreak);
-        if (settings.hasAutoStart) {
-          startLongBreak();
+      setStageCurrentTime(0);
+
+      if (session.stage === Stage.Pomodoro) {
+        if (session.sessionCount >= settings.count) {
+          sendNotification({ body: t('pomodoro_notification_long') });
+          setSession('stage', Stage.LongBreak);
+        } else {
+          sendNotification({ body: t('pomodoro_notification_short') });
+          setSession('stage', Stage.ShortBreak);
+        }
+      } else if (session.stage === Stage.ShortBreak) {
+        if (session.sessionCount <= settings.count) {
+          setSession('sessionCount', session.sessionCount + 1);
+          setSession('stage', Stage.Pomodoro);
+          sendNotification({ body: t('short_break_notification') });
         }
       } else {
-        sendNotification({
-          body: t('pomodoro_notification_short'),
-        });
-        setSession('stage', Stage.ShortBreak);
-        if (settings.hasAutoStart) {
-          startShortBreak();
-        }
-      }
-    },
-  });
-
-  const {
-    countdown: countdownShortBreak,
-    startTimer: startShortBreak,
-    isPlaying: isPlayingShortBreak,
-    pauseTimer: pauseShortBreak,
-    resetTimer: resetShortBreak,
-  } = useCountdown({
-    maxMilliseconds: settings.shortBreak,
-    currentMilliseconds: session.shortBrakeCurrentTime,
-    onStart: () => playTickSound(),
-    onPause: () => pauseTickSound(),
-    onComplete: () => {
-      alarmAndTickSoundControl();
-      setSession('shortBrakeCurrentTime', 0);
-      if (session.sessionCount <= settings.count) {
-        setSession('sessionCount', session.sessionCount + 1);
+        resetSession();
         setSession('stage', Stage.Pomodoro);
-        sendNotification({
-          body: t('short_break_notification'),
-        });
-        if (settings.hasAutoStart) {
-          startPomodoro();
-        }
+        sendNotification({ body: t('long_break_notification') });
       }
+
+      // Auto start handled by watching stage change if setting enabled
     },
   });
 
-  const {
-    countdown: countdownLongBreak,
-    startTimer: startLongBreak,
-    isPlaying: isPlayingLongBreak,
-    pauseTimer: pauseLongBreak,
-    resetTimer: resetLongBreak,
-  } = useCountdown({
-    maxMilliseconds: settings.longBreak,
-    currentMilliseconds: session.longBrakeCurrentTime,
-    onStart: () => playTickSound(),
-    onPause: () => pauseTickSound(),
-    onComplete: () => {
-      alarmAndTickSoundControl();
-      resetSession();
-      setSession('stage', Stage.Pomodoro);
-      sendNotification({
-        body: t('long_break_notification'),
-      });
-    },
-  });
+  // Handle auto-start when stage changes
+  const prevStageRef = useRef(session.stage);
+  useEffect(() => {
+    if (prevStageRef.current !== session.stage) {
+      prevStageRef.current = session.stage;
+      if (settings.hasAutoStart && getStageCurrentTime() === 0) {
+        // Auto start on stage change
+        setTimeout(() => startTimer(), 100);
+      }
+    }
+  }, [session.stage, settings.hasAutoStart, startTimer]);
+
+  // Persist current time to Zustand only on unmount or visibility hidden
+  // This drastically reduces LocalStorage writes compared to ticking every second
+  const countdownRef = useRef(countdown);
+  useEffect(() => {
+    countdownRef.current = countdown;
+  }, [countdown]);
 
   useEffect(() => {
-    if (countdownPomodoro > 0 && isPlayingPomodoro) {
-      setSession('pomodoroCurrentTime', countdownPomodoro);
-    }
-  }, [countdownPomodoro, isPlayingPomodoro]);
+    const handleBeforeUnload = () => {
+      if (isPlaying) {
+        setStageCurrentTime(countdownRef.current);
+      }
+    };
 
-  useEffect(() => {
-    if (countdownShortBreak > 0 && isPlayingShortBreak) {
-      setSession('shortBrakeCurrentTime', countdownShortBreak);
-    }
-  }, [countdownShortBreak, isPlayingShortBreak]);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && isPlaying) {
+        setStageCurrentTime(countdownRef.current);
+      }
+    };
 
-  useEffect(() => {
-    if (countdownLongBreak > 0 && isPlayingLongBreak) {
-      setSession('longBrakeCurrentTime', countdownLongBreak);
-    }
-  }, [countdownLongBreak, isPlayingLongBreak]);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      // Also save on unmount just in case
+      if (isPlaying) {
+        setStageCurrentTime(countdownRef.current);
+      }
+    };
+  }, [isPlaying, session.stage]); // Re-bind if stage changes
+
+  // Also persist on manual pause
+  const handlePause = () => {
+    setStageCurrentTime(countdownRef.current);
+    pauseTimer();
+  };
 
   const onSkipButtonClickHandler = () => {
     stopTickSound();
+    resetTimer(0);
     if (session.stage === Stage.Pomodoro) {
-      resetPomodoro();
       if (session.sessionCount >= settings.count) {
         setSession('stage', Stage.LongBreak);
       } else {
         setSession('stage', Stage.ShortBreak);
       }
     } else if (session.stage === Stage.ShortBreak) {
-      resetShortBreak();
       if (session.sessionCount <= settings.count) {
         setSession('sessionCount', session.sessionCount + 1);
         setSession('stage', Stage.Pomodoro);
       }
     } else {
-      resetLongBreak();
+      resetSession();
       setSession('sessionCount', 1);
       setSession('stage', Stage.Pomodoro);
     }
@@ -163,60 +165,23 @@ const Timer: FC = () => {
 
   const onResetButtonClickHandler = () => {
     stopTickSound();
-    if (session.stage === Stage.Pomodoro) {
-      resetPomodoro();
-    } else if (session.stage === Stage.ShortBreak) {
-      resetShortBreak();
-    } else {
-      resetLongBreak();
-    }
+    setStageCurrentTime(0);
+    resetTimer(getStageMaxTime());
   };
 
   const onToggleButtonClickHandler = () => {
     if ('Notification' in window && Notification.permission === 'default') {
       requestNotificationPermission();
     }
-    if (session.stage === Stage.Pomodoro) {
-      isPlayingPomodoro ? pausePomodoro() : startPomodoro();
-    } else if (session.stage === Stage.ShortBreak) {
-      isPlayingShortBreak ? pauseShortBreak() : startShortBreak();
-    } else {
-      isPlayingLongBreak ? pauseLongBreak() : startLongBreak();
-    }
-  };
-
-  const getCurrentCountdown = () => {
-    if (session.stage === Stage.Pomodoro) {
-      return countdownPomodoro;
-    } else if (session.stage === Stage.ShortBreak) {
-      return countdownShortBreak;
-    } else {
-      return countdownLongBreak;
-    }
+    if (isPlaying) { handlePause(); } else { startTimer(); }
   };
 
   const getCurrentPercent = () => {
-    if (session.stage === Stage.Pomodoro) {
-      return getPercent(session.pomodoroCurrentTime, settings.duration);
-    } else if (session.stage === Stage.ShortBreak) {
-      return getPercent(session.shortBrakeCurrentTime, settings.shortBreak);
-    } else {
-      return getPercent(session.longBrakeCurrentTime, settings.longBreak);
-    }
-  };
-
-  const getIsCurrentPlaying = () => {
-    if (session.stage === Stage.Pomodoro) {
-      return isPlayingPomodoro;
-    } else if (session.stage === Stage.ShortBreak) {
-      return isPlayingShortBreak;
-    } else {
-      return isPlayingLongBreak;
-    }
+    return getPercent(countdown, getStageMaxTime());
   };
 
   const getToggleButtonStyles = () => {
-    if (getIsCurrentPlaying()) {
+    if (isPlaying) {
       return {
         bgColor: stageColor,
         color: getTextColor(session.stage),
@@ -225,7 +190,7 @@ const Timer: FC = () => {
   };
 
   const getTitleStyle = () => {
-    if (getCurrentCountdown() > 60 * 60 * 1000) {
+    if (countdown > 60 * 60 * 1000) {
       return 'title.md';
     }
     return 'title.lg';
@@ -236,7 +201,7 @@ const Timer: FC = () => {
       text: t('pomodoro'),
       onClick: () => {
         stopTickSound();
-        resetPomodoro();
+        resetTimer(settings.duration);
         setSession('pomodoroCurrentTime', 0);
         setSession('stage', Stage.Pomodoro);
       },
@@ -246,7 +211,7 @@ const Timer: FC = () => {
       text: t('short_break'),
       onClick: () => {
         stopTickSound();
-        resetShortBreak();
+        resetTimer(settings.shortBreak);
         setSession('shortBrakeCurrentTime', 0);
         setSession('stage', Stage.ShortBreak);
       },
@@ -256,7 +221,7 @@ const Timer: FC = () => {
       text: t('long_break'),
       onClick: () => {
         stopTickSound();
-        resetLongBreak();
+        resetTimer(settings.longBreak);
         setSession('longBrakeCurrentTime', 0);
         setSession('stage', Stage.LongBreak);
       },
@@ -295,7 +260,7 @@ const Timer: FC = () => {
         m="auto"
         paddingBlockEnd={{ base: '96px', md: '0' }}
       >
-        <ProgressCircle isActive={getIsCurrentPlaying()} fillPercentage={getCurrentPercent()} />
+        <ProgressCircle isActive={isPlaying} fillPercentage={getCurrentPercent()} />
         <Flex
           pos="absolute"
           w="fit-content"
@@ -316,7 +281,7 @@ const Timer: FC = () => {
             minW={{ base: '200px', md: '340px' }}
             marginBlockEnd={{ base: '65px', md: '35px' }}
           >
-            {formatMilliseconds(getCurrentCountdown())}
+            {formatMilliseconds(countdown)}
           </Text>
           <HStack
             spacing="20px"
@@ -345,9 +310,9 @@ const Timer: FC = () => {
               </Box>
             </PomodoroTooltip>
             <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
-              {getIsCurrentPlaying() ? t('pause') : t('start')}
+              {isPlaying ? t('pause') : t('start')}
             </Button>
-            <PomodoroTooltip {...(getIsCurrentPlaying() ? { label: t('skip_current_step') } : {})}>
+            <PomodoroTooltip {...(isPlaying ? { label: t('skip_current_step') } : {})}>
               <Box>
                 <ActionButton icon={IconSkip} onClick={onSkipButtonClickHandler} />
               </Box>

@@ -1,5 +1,4 @@
 import { Box, chakra } from '@chakra-ui/react';
-import { FC } from 'react';
 import { Drawer, DrawerBody, DrawerOverlay, DrawerContent, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { MobileMenuProps } from './types';
@@ -9,7 +8,7 @@ import { IconChevron } from '../../theme/foundations/icons';
 import ColorModeButton from '../../shared/ui/ColorModeButton/ColorModeButton';
 
 
-const _MobileMenu: FC<MobileMenuProps> = ({ onClose, onLangMenuOpen, colorMode, onColorModeClick, ...rest }) => {
+const _MobileMenu = ({ onClose, onLangMenuOpen, colorMode, onColorModeClick, ...rest }: MobileMenuProps) => {
   const { t, i18n } = useTranslation();
 
   const handlers = useSwipeable({

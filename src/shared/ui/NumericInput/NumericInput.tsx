@@ -1,11 +1,11 @@
 import { FormControl, FormLabel, HStack, Input, Text, chakra } from '@chakra-ui/react';
-import { ChangeEvent, FC, useId } from 'react';
+import { ChangeEvent, useId } from 'react';
 import { NumericInputProps } from './types';
 import ActionButton from '../ActionButton/ActionButton';
 import { IconMinus, IconPlus } from '../../../theme/foundations/icons';
 import { t } from 'i18next';
 
-const _NumericInput: FC<NumericInputProps> = ({
+const _NumericInput = ({
   value,
   step = 1,
   min = Number.MIN_SAFE_INTEGER,
@@ -14,7 +14,7 @@ const _NumericInput: FC<NumericInputProps> = ({
   hasMinutes,
   onChange,
   ...props
-}) => {
+}: NumericInputProps) => {
   const id = useId();
 
   const clampValue = (value: number) => Math.min(Math.max(value, min), max);

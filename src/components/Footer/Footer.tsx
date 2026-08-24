@@ -1,5 +1,4 @@
 import { Box, Button, Flex, chakra } from '@chakra-ui/react';
-import { FC } from 'react';
 import { FooterProps } from './types';
 import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { IconClose, IconDark, IconLight, IconNotify, IconSettings } from '../../theme/foundations/icons';
@@ -7,7 +6,7 @@ import { t } from 'i18next';
 import { ease, easeIn } from '../../theme/foundations/transitions';
 import PomodoroTooltip from '../../shared/ui/PomodoroTooltip/PomodoroTooltip';
 
-const _Footer: FC<FooterProps> = ({
+const _Footer = ({
   isSettings = false,
   colorMode,
   allowNotification,
@@ -16,7 +15,7 @@ const _Footer: FC<FooterProps> = ({
   onColorModeClick,
   isNotificationDisabled,
   ...props
-}) => {
+}: FooterProps) => {
   return (
     <Flex
       as="footer"

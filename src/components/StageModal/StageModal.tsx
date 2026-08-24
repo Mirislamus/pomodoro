@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { StageModalProps } from './types';
 import { Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from '@chakra-ui/react';
 import { IconClose } from '../../theme/foundations/icons';
@@ -8,7 +7,7 @@ import StageItem from './StageItem/StageItem';
 import { Stage } from '../../typings/enums';
 import useSessionStore from '../../stores/useSessionStore';
 
-const StageModal: FC<StageModalProps> = ({ isOpen, onClose, ...props }) => {
+const StageModal = ({ isOpen, onClose, ...props }: StageModalProps) => {
   const session = useSessionStore(state => state.session);
   const setSession = useSessionStore(state => state.setSession);
 

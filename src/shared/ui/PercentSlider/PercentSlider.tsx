@@ -1,8 +1,7 @@
-import { FC } from 'react';
 import { PercentSliderProps } from './types';
 import { Flex, Text, Slider, SliderTrack, SliderFilledTrack, SliderThumb } from '@chakra-ui/react';
 
-const PercentSlider: FC<PercentSliderProps> = ({ onChange, title, defaultValue }) => {
+const PercentSlider = ({ onChange, title, defaultValue }: PercentSliderProps) => {
   const convertToNumber = (value: number) => {
     return Number((value * 100).toFixed(0));
   };

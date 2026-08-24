@@ -11,7 +11,6 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FC } from 'react';
 import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
 import { IconClose, IconCopy } from '../theme/foundations/icons';
@@ -37,7 +36,7 @@ import useAlarmSound from '../hooks/useAlarmSound';
 import useTickSound from '../hooks/useTickSound';
 import { TickSound } from '../typings/enums';
 
-const Settings: FC = () => {
+const Settings = () => {
   const navigate = useNavigate();
   const settings = useSettingsStore(state => state.settings);
   const setSettings = useSettingsStore(state => state.setSettings);

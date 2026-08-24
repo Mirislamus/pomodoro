@@ -1,4 +1,7 @@
-export default [
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+  ...tseslint.configs.recommended,
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     languageOptions: {
@@ -14,6 +17,8 @@ export default [
         version: 'detect',
       },
     },
+  },
+  {
     ignores: [
       'node_modules/',
       'dist/',
@@ -34,5 +39,5 @@ export default [
       'Thumbs.db',
       '*.log',
     ],
-  },
-];
+  }
+);

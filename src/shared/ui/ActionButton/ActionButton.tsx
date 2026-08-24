@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import { ActionButtonProps } from './types';
 import { Flex, Icon, chakra, useStyleConfig } from '@chakra-ui/react';
 import { ease } from '../../../theme/foundations/transitions';
 
-const _ActionButton: FC<ActionButtonProps> = ({
+const _ActionButton = ({
   icon,
   onClick,
   variant,
@@ -11,7 +10,7 @@ const _ActionButton: FC<ActionButtonProps> = ({
   isDisabled = false,
   children,
   ...rest
-}) => {
+}: ActionButtonProps) => {
   const styles = useStyleConfig('ActionButtonStyles', { variant, size, isDisabled });
 
   const iconSize = size === 'sm' ? '24px' : '28px';
