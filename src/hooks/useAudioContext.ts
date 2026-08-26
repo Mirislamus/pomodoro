@@ -17,8 +17,14 @@ const useAudioContext = (loop: boolean = false): AudioContextReturnType => {
   const audioSourceRef = useRef<AudioBufferSourceNode | null>(null);
 
   useEffect(() => {
+    const AudioContextConstructor =
+      window.AudioContext ??
+      (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+
+    if (!AudioContextConstructor) return;
+
     if (!audioContextRef.current) {
-      audioContextRef.current = new AudioContext();
+      audioContextRef.current = new AudioContextConstructor();
       gainNodeRef.current = audioContextRef.current.createGain();
       gainNodeRef.current.connect(audioContextRef.current.destination);
     }

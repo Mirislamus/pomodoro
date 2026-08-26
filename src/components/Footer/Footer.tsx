@@ -54,7 +54,12 @@ const _Footer = ({
       </Button>
       <PomodoroTooltip placement="top-end" label={t(colorMode === 'light' ? 'dark_mode' : 'light_mode')}>
         <Box>
-          <ActionButton variant="fill" icon={colorMode === 'light' ? IconDark : IconLight} onClick={onColorModeClick} />
+          <ActionButton
+            aria-label={t(colorMode === 'light' ? 'dark_mode' : 'light_mode')}
+            variant="fill"
+            icon={colorMode === 'light' ? IconDark : IconLight}
+            onClick={onColorModeClick}
+          />
         </Box>
       </PomodoroTooltip>
     </Flex>

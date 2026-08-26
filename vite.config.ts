@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import inspect from 'vite-plugin-inspect';
-import meta from './src/data/meta';
+import meta from './src/data/meta.ts';
 
 const config: UserConfig = {
   base: '/pomodoro/',
