@@ -1,35 +1,19 @@
-import { useToast } from '@chakra-ui/react';
+import { toaster } from '../../../components/ui/toaster';
 import { UseToastCustomOptions } from './types';
-import { RenderToast } from './RenderToast';
-import { toastStyles } from './toast.styles';
+
+const toToastOptions = ({ status, isClosable, onUserClose, ...options }: UseToastCustomOptions) => ({
+  ...options,
+  type: status,
+  closable: isClosable,
+  meta: { isClosable, onUserClose },
+});
 
 export const usePomodoroToast = () => {
-  const toast = useToast();
-
   const customToast = (options: UseToastCustomOptions) => {
-    const { ...rest } = options;
-
-    toast({
-      ...rest,
-      containerStyle: {
-        ...toastStyles,
-      },
-      position: 'top-left',
-      render: () => RenderToast(toast, options),
-    });
+    toaster.create(toToastOptions(options));
   };
 
-  const updateToast = (id: string, options: UseToastCustomOptions) => {
-    const { ...rest } = options;
-
-    toast.update(id, {
-      ...rest,
-      containerStyle: {
-        ...toastStyles,
-      },
-      render: () => RenderToast(toast, options),
-    });
-  };
-
-  return Object.assign(customToast, toast, { update: updateToast });
+  return Object.assign(customToast, {
+    update: (id: string, options: UseToastCustomOptions) => toaster.update(id, toToastOptions(options)),
+  });
 };

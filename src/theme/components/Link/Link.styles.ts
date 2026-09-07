@@ -1,7 +1,7 @@
-import { defineStyleConfig } from '@chakra-ui/react';
+import { defineRecipe } from '@chakra-ui/react';
 
-const LinkStyles = defineStyleConfig({
-  baseStyle: {
+const LinkStyles = defineRecipe({
+  base: {
     color: 'accent.red',
     textStyle: 'text.md',
     fontWeight: 400,

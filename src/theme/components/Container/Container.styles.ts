@@ -1,7 +1,7 @@
-import { defineStyleConfig } from '@chakra-ui/react';
+import { defineRecipe } from '@chakra-ui/react';
 
-const ContainerStyles = defineStyleConfig({
-  baseStyle: {
+const ContainerStyles = defineRecipe({
+  base: {
     maxW: {
       base: '100%',
       md: 'container.md',
@@ -11,6 +11,8 @@ const ContainerStyles = defineStyleConfig({
     px: {
       base: 'gap.16',
       md: 'gap.30',
+      lg: 'gap.30',
+      xl: 'gap.30',
     },
   },
 });

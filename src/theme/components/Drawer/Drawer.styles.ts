@@ -1,22 +1,24 @@
-import { defineStyleConfig } from '@chakra-ui/react';
+import { defineSlotRecipe } from '@chakra-ui/react';
 
 const styles = {
   p: 0,
   bgColor: 'background.secondary',
 };
 
-const DrawerStyles = defineStyleConfig({
-  baseStyle: {
-    dialogContainer: {
+const DrawerStyles = defineSlotRecipe({
+  slots: ['backdrop', 'positioner', 'content', 'header', 'body', 'footer', 'closeTrigger'],
+  base: {
+    positioner: {
       p: 0,
     },
-    overlay: {
+    backdrop: {
       bgColor: 'background.overlay',
     },
+    content: styles,
     header: styles,
     body: styles,
     footer: styles,
-    closeButton: {
+    closeTrigger: {
       borderRadius: '50%',
       boxSize: '40px',
       position: 'static',

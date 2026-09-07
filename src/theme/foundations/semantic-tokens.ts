@@ -1,10 +1,12 @@
-import { ChakraTheme } from '@chakra-ui/react';
-
 const semanticTokens = {
   colors: {
     primary: {
       _light: 'black.1',
       _dark: 'white',
+    },
+    bodyText: {
+      _light: 'blackAlpha.92',
+      _dark: 'whiteAlpha.92',
     },
     secondary: {
       _light: 'grey.1',
@@ -24,7 +26,7 @@ const semanticTokens = {
     background: {
       primary: {
         _light: 'white',
-        _dark: 'black',
+        _dark: 'blackBase',
       },
       secondary: {
         _light: 'white',
@@ -132,6 +134,12 @@ const semanticTokens = {
         _dark: 'whiteAlpha.10',
       },
     },
+    slider: {
+      track: {
+        _light: 'blackAlpha.8',
+        _dark: 'whiteAlpha.8',
+      },
+    },
     select: {
       button: {
         primary: {
@@ -159,6 +167,6 @@ const semanticTokens = {
       },
     },
   },
-} as ChakraTheme['semanticTokens'];
+};
 
 export default semanticTokens;

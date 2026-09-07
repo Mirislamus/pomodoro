@@ -7,25 +7,26 @@ const Scroll = ({ children, maxScrollHeight, hasScrollOffset }: ScrollProps) => 
   return (
     <Box
       display="contents"
-      __css={{
-        '[data-simplebar]': {
+      css={{
+        '& [data-simplebar]': {
           h: '100%',
           maxH: maxScrollHeight ? maxScrollHeight : '100%',
           marginInlineEnd: hasScrollOffset ? { base: '0', md: '-40px' } : '0',
           paddingInlineEnd: hasScrollOffset ? { base: '0', md: '40px' } : '0',
         },
-        '.simplebar-content-wrapper': {
+        '& .simplebar-content-wrapper': {
           h: 'auto!important',
+          overflowX: 'hidden!important',
         },
-        '.simplebar-track.simplebar-vertical': {
+        '& .simplebar-track.simplebar-vertical': {
           w: '4px',
           bgColor: 'scroll.track',
           borderRadius: '100px',
         },
-        '.simplebar-content': {
+        '& .simplebar-content': {
           h: '100%',
         },
-        '.simplebar-scrollbar': {
+        '& .simplebar-scrollbar': {
           _before: {
             bgColor: 'scroll.thumb',
             top: 0,

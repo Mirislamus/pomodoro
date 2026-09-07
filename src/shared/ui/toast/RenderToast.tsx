@@ -1,29 +1,23 @@
-import { Box, Flex, Text, useToast } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { ease } from '../../../theme/foundations/transitions';
 import { UseToastCustomOptions } from './types';
 import { noop } from '../../../utils';
 import { IconClose, IconInfo } from '../../../theme/foundations/icons';
 
+interface RenderToastProps extends UseToastCustomOptions {
+  onClose: () => void;
+}
+
 const getIconColor = (status: UseToastCustomOptions['status']) => {
-  if (status === 'success') {
-    return 'accent.green';
-  }
-  if (status === 'error') {
-    return 'accent.red';
-  }
-  if (status === 'warning') {
-    return 'accent.yellow';
-  }
+  if (status === 'success') return 'accent.green';
+  if (status === 'error') return 'accent.red';
+  if (status === 'warning') return 'accent.yellow';
   return 'accent.blue';
 };
 
-export const RenderToast = (toast: ReturnType<typeof useToast>, options: UseToastCustomOptions) => {
-  const { title, id, isClosable, status = 'info', onUserClose = noop } = options;
-
+export const RenderToast = ({ title, isClosable, status = 'info', onUserClose = noop, onClose }: RenderToastProps) => {
   const handleToastClose = () => {
-    if (id) {
-      toast.close(id);
-    }
+    onClose();
     onUserClose();
   };
 
@@ -43,8 +37,6 @@ export const RenderToast = (toast: ReturnType<typeof useToast>, options: UseToas
       {isClosable && (
         <Box
           role="group"
-          as="button"
-          onClick={handleToastClose}
           aria-label="Close toast"
           position="absolute"
           top="4px"
@@ -52,15 +44,11 @@ export const RenderToast = (toast: ReturnType<typeof useToast>, options: UseToas
           display="flex"
           alignItems="center"
           justifyContent="center"
+          asChild
         >
-          <IconClose
-            _groupHover={{
-              opacity: 0.8,
-            }}
-            transition={ease}
-            color="gray.3"
-            boxSize="16px"
-          />
+          <button onClick={handleToastClose}>
+            <IconClose _groupHover={{ opacity: 0.8 }} transition={ease} color="gray.3" boxSize="16px" />
+          </button>
         </Box>
       )}
     </Flex>

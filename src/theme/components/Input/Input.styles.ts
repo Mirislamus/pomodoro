@@ -1,18 +1,16 @@
-import { defineStyleConfig } from '@chakra-ui/react';
+import { defineRecipe } from '@chakra-ui/react';
 import { ease } from '../../foundations/transitions';
 
-const InputStyles = defineStyleConfig({
-  baseStyle: {
-    field: {
-      transition: ease,
-      h: '42px',
-      borderRadius: '100px',
-      textAlign: 'center',
-    },
+const InputStyles = defineRecipe({
+  base: {
+    transition: ease,
+    h: '42px',
+    borderRadius: '100px',
+    textAlign: 'center',
   },
   variants: {
-    numeric: {
-      field: {
+    variant: {
+      numeric: {
         bgColor: 'button.fill.default',
         _hover: {
           bgColor: 'button.fill.hover',
@@ -23,9 +21,6 @@ const InputStyles = defineStyleConfig({
         w: '82px',
       },
     },
-  },
-  defaultProps: {
-    size: 'md',
   },
 });
 

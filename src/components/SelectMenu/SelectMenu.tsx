@@ -1,33 +1,44 @@
+import { Box, Menu, Portal } from '@chakra-ui/react';
 import { SelectMenuProps } from './types';
-import { Box, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup } from '@chakra-ui/react';
 import { IconChevronDown, IconTickLg } from '../../theme/foundations/icons';
 import { easeIn } from '../../theme/foundations/transitions';
 
-const SelectMenu = ({ items, selectedItem, isOpen, ...props }: SelectMenuProps) => {
+const SelectMenu = ({ items, selectedItem, isOpen, onOpen, onClose }: SelectMenuProps) => {
+  const selectedValue = items.find(item => item.name === selectedItem)?.id ?? selectedItem;
+
   return (
     <Box pos="relative">
-      <Menu {...props}>
-        <MenuButton>
+      <Menu.Root
+        open={isOpen}
+        onOpenChange={({ open }) => (open ? onOpen() : onClose())}
+        positioning={{ sameWidth: true }}
+      >
+        <Menu.Trigger>
           {selectedItem}
           <IconChevronDown boxSize="12px" transition={easeIn} transform={isOpen ? 'rotate(180deg)' : ''} />
-        </MenuButton>
-        <MenuList maxWidth="100%" zIndex={10}>
-          <MenuOptionGroup defaultValue={selectedItem} type="radio">
-            {items.map(item => (
-              <MenuItemOption
-                key={item.id}
-                value={item.id}
-                iconSpacing="0"
-                bgColor={item.id === selectedItem ? 'select.item.selected' : 'transparent'}
-                icon={<IconTickLg isActive={item.id === selectedItem} boxSize="24px" color="accent.red" />}
-                onClick={item.onClick}
-              >
-                {item.name}
-              </MenuItemOption>
-            ))}
-          </MenuOptionGroup>
-        </MenuList>
-      </Menu>
+        </Menu.Trigger>
+        <Portal>
+          <Menu.Positioner>
+            <Menu.Content zIndex={30}>
+              <Menu.RadioItemGroup value={selectedValue}>
+                {items.map(item => (
+                  <Menu.RadioItem
+                    key={item.id}
+                    value={item.id}
+                    bgColor={item.id === selectedValue ? 'select.item.selected' : 'transparent'}
+                    onClick={item.onClick}
+                  >
+                    <Menu.ItemIndicator>
+                      <IconTickLg boxSize="24px" color="accent.red" />
+                    </Menu.ItemIndicator>
+                    <Menu.ItemText>{item.name}</Menu.ItemText>
+                  </Menu.RadioItem>
+                ))}
+              </Menu.RadioItemGroup>
+            </Menu.Content>
+          </Menu.Positioner>
+        </Portal>
+      </Menu.Root>
     </Box>
   );
 };

@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Tab,
-  TabIndicator,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Tabs, Text, useDisclosure } from '@chakra-ui/react';
 import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
 import { IconClose, IconCopy } from '../theme/foundations/icons';
@@ -43,7 +31,8 @@ const Settings = () => {
   const resetSettings = useSettingsStore(state => state.resetSettings);
   const resetSession = useSessionStore(state => state.resetSession);
   const onSettingsLinkCopy = useSettingsLink();
-  const { isOpen: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
+  const { open: isAlarmSoundOpen, onClose: onAlarmSoundClose, onOpen: onAlarmSoundOpen } = useDisclosure();
+  const { open: isTickSoundOpen, onClose: onTickSoundClose, onOpen: onTickSoundOpen } = useDisclosure();
   const notificationPermission = useNotificationPermission();
   const { play: playAlarm } = useAlarmSound();
   const { play: playTick, stop: stopTick } = useTickSound();
@@ -117,25 +106,25 @@ const Settings = () => {
               <IconClose mt="-2px" boxSize="20px" />
             </ActionButton>
           </Flex>
-          <Tabs variant="soft-rounded">
-            <TabList>
-              <Tab>{t('timer')}</Tab>
-              <Tab>{t('sounds')}</Tab>
-            </TabList>
-            <TabIndicator
-              top="3px"
-              height={{ base: '44px', md: '50px' }}
-              bgColor="background.primary"
-              borderRadius="100px"
-              transition={easeIn}
-            />
-            <TabPanels
+          <Tabs.Root variant="soft-rounded" defaultValue="timer">
+            <Tabs.List>
+              <Tabs.Trigger value="timer">{t('timer')}</Tabs.Trigger>
+              <Tabs.Trigger value="sounds">{t('sounds')}</Tabs.Trigger>
+              <Tabs.Indicator
+                top="3px"
+                height={{ base: '44px', md: '50px' }}
+                bgColor="background.primary"
+                borderRadius="100px"
+                transition={easeIn}
+              />
+            </Tabs.List>
+            <Box
               paddingBlockStart={{ base: '20px', md: '30px' }}
               marginBlockStart={{ base: '20px', md: '0' }}
               borderBlockStart={{ base: '1px solid', md: '0' }}
               borderColor="border"
             >
-              <TabPanel>
+              <Tabs.Content value="timer">
                 <FieldWrap>
                   <NumericInput
                     title={t('pomodoro_count_settings')}
@@ -186,8 +175,8 @@ const Settings = () => {
                     onChange={value => onChangeSettingsHandler(value, 'hasAutoStart')}
                   />
                 </FieldWrap>
-              </TabPanel>
-              <TabPanel>
+              </Tabs.Content>
+              <Tabs.Content value="sounds">
                 <FieldWrap hasBorder>
                   <PercentSlider
                     title={t('finish_sound')}
@@ -209,9 +198,9 @@ const Settings = () => {
                     onChange={value => onChangeSettingsHandler(value, 'tickSoundVolume')}
                   />
                   <SelectMenu
-                    isOpen={isAlarmSoundOpen}
-                    onClose={onAlarmSoundClose}
-                    onOpen={onAlarmSoundOpen}
+                    isOpen={isTickSoundOpen}
+                    onClose={onTickSoundClose}
+                    onOpen={onTickSoundOpen}
                     selectedItem={getSoundName(settings.tickSound, tickSounds)}
                     items={tickSounds}
                   />
@@ -228,10 +217,11 @@ const Settings = () => {
                     }}
                   />
                 </FieldWrap>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+              </Tabs.Content>
+            </Box>
+          </Tabs.Root>
           <Flex
+            w="100%"
             justifyContent="space-between"
             gap="20px"
             alignItems="center"
@@ -239,7 +229,7 @@ const Settings = () => {
             marginBlockStart="auto"
             pos="relative"
           >
-            <Button w="100%" variant="secondary" size="md" onClick={onResetSettingsHandler} mt="auto">
+            <Button flex="1" minW="0" variant="secondary" size="md" onClick={onResetSettingsHandler} mt="auto">
               {t('reset_settings')}
             </Button>
             <PomodoroTooltip label={t('copy_settings')}>

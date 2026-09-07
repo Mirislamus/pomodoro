@@ -16,7 +16,7 @@ const _ProgressCircle = ({ fillPercentage, isActive = false, ...props }: Progres
   ]);
 
   return (
-    <Box boxSize={{ base: '300px', md: '500px' }} __css={{ svg: { maxW: '100%', h: 'auto' } }} {...props}>
+    <Box boxSize={{ base: '300px', md: '500px' }} css={{ '& svg': { maxW: '100%', h: 'auto' } }} {...props}>
       <svg width="500" height="500" viewBox="0 0 500 500" fill="none">
         <circle
           cx="250"

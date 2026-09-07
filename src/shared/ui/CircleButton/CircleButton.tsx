@@ -4,16 +4,15 @@ import { CircleButtonProps } from './types';
 const _CircleButton = ({ children, onClick, ...rest }: CircleButtonProps) => {
   return (
     <Flex
-      as="button"
       alignItems="center"
       justifyContent="space-between"
       textAlign="left"
       textStyle="text.sm"
       w="100%"
-      onClick={onClick}
       {...rest}
+      asChild
     >
-      {children}
+      <button onClick={onClick}>{children}</button>
     </Flex>
   );
 };

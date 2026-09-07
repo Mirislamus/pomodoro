@@ -14,7 +14,7 @@ interface UseCountdownOptions {
 interface CountdownState {
   countdown: number;
   isPlaying: boolean;
-  startTimer: () => void;
+  startTimer: (newMilliseconds?: number) => void;
   pauseTimer: () => void;
   resetTimer: (newMaxMs?: number) => void;
   setCountdown: (val: number) => void;
@@ -51,8 +51,12 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
     }
   }, [currentMilliseconds, maxMilliseconds]);
 
-  const startTimer = useCallback(() => {
-    endTimeRef.current = Date.now() + countdown;
+  const startTimer = useCallback((newMilliseconds?: number) => {
+    const milliseconds = newMilliseconds ?? countdown;
+    if (newMilliseconds !== undefined) {
+      setCountdownState(newMilliseconds);
+    }
+    endTimeRef.current = Date.now() + milliseconds;
     setIsPlaying(true);
     onStart();
   }, [countdown, onStart]);

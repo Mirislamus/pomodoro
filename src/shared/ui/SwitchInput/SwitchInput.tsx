@@ -1,25 +1,32 @@
-import { FormControl, FormLabel, Switch, Text, chakra } from '@chakra-ui/react';
-import { ChangeEvent, useId } from 'react';
+import { Switch, Text } from '@chakra-ui/react';
 import { SwitchInputProps } from './types';
 
-const _SwitchInput = ({ title, isChecked, isDisabled, onChange, ...props }: SwitchInputProps) => {
-  const id = useId();
-
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.checked);
-  };
-
+const SwitchInput = ({ title, isChecked, isDisabled, onChange, ...props }: SwitchInputProps) => {
   return (
-    <FormControl display="flex" alignItems="center" justifyContent="space-between" {...props}>
-      <FormLabel m="0" htmlFor={`switch-${id}`}>
+    <Switch.Root
+      w="100%"
+      display="flex"
+      flexDirection="row"
+      alignItems="center"
+      justifyContent="space-between"
+      cursor="pointer"
+      checked={isChecked}
+      disabled={isDisabled}
+      onCheckedChange={({ checked }) => onChange(checked)}
+      _disabled={{ cursor: 'not-allowed' }}
+      {...props}
+    >
+      <Switch.HiddenInput />
+      <Switch.Label m="0">
         <Text fontSize="16px" fontWeight="500" color="primary">
           {title}
         </Text>
-      </FormLabel>
-      <Switch disabled={isDisabled} onChange={onChangeHandler} id={`switch-${id}`} isChecked={isChecked} />
-    </FormControl>
+      </Switch.Label>
+      <Switch.Control>
+        <Switch.Thumb />
+      </Switch.Control>
+    </Switch.Root>
   );
 };
 
-const SwitchInput = chakra(_SwitchInput);
 export default SwitchInput;

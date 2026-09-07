@@ -1,6 +1,6 @@
 # ТЗ: обновление зависимостей и миграция Chakra UI v2 → v3
 
-Статус: задачи 1–2 завершены; задача 3 не начата.  
+Статус: задачи 1–3 завершены; задача 4 не начата.
 Дата проверки версий: 2026-08-26.  
 Рабочая ветка: `dev`.
 
@@ -112,7 +112,7 @@ Workflow использует major tags, а не плавающие ветки.
 |---|---|---|---|
 | 1. Baseline и test harness | Восстановлена текущая сборка; добавлены Playwright, axe, smoke-сценарии, screenshots и JS baseline | — | Завершена |
 | 2. Остальные зависимости | Все пакеты, кроме Chakra-стека, обновлены до stable; лишние удалены | 1 | Завершена |
-| 3. Chakra UI v3 | Атомарно мигрированы provider, theme, color mode и все components; UI 1:1 | 2 | Ожидает |
+| 3. Chakra UI v3 | Атомарно мигрированы provider, theme, color mode и все components; UI 1:1 | 2 | Завершена |
 | 4. CI/deploy и README | PR выполняет verify; push в `master` публикует только проверенный artifact; команды описаны | 3 | Ожидает |
 | 5. Итоговая приёмка | Cross-browser, PWA, security, persistence и JS budget пройдены; исправлены только миграционные дефекты | 4 | Ожидает |
 
@@ -142,6 +142,15 @@ Workflow использует major tags, а не плавающие ветки.
 - `bun audit fix` без `--latest` обновил только уязвимые транзитивные версии внутри разрешённых ranges. Итог: `No vulnerabilities found`, проверено 618 packages.
 - `bun run typecheck`, `bun run eslint .`, Prettier check и `bun run build` проходят; Playwright: 19 passed, 6 ожидаемо skipped.
 - Production JS после задачи 2: `768802` bytes, что на `3062` bytes (`0.40%`) меньше исходного baseline `771864`.
+
+### Результат задачи 3
+
+- Chakra-стек атомарно обновлён до `@chakra-ui/react@3.36.1`; добавлены `next-themes@0.4.6` и `@chakra-ui/cli@3.36.1`, удалены `@emotion/styled` и `framer-motion`.
+- Provider, color mode, theme tokens, semantic tokens, recipes и slot recipes перенесены на Chakra v3. Старый ключ темы `chakra-ui-color-mode` и атрибут `data-theme` сохранены.
+- На compound API v3 перенесены Drawer, Dialog, Menu, Tabs, Slider, Switch, Field, Tooltip и Toast. Custom SVG исправлены под новый `Icon asChild` contract.
+- `chakra typegen`, typecheck, ESLint, production build и `bun audit --audit-level=high` проходят. Audit: `No vulnerabilities found`, проверено 742 packages.
+- Playwright: 19 проверок прошли, 6 ожидаемо пропущены. В свежей production-сессии вручную проверены desktop/mobile light/dark, stage dialog, mobile/language drawers, settings tabs, sliders, menus и switch.
+- Production JS: `848082` bytes в `dist/assets/**/*.js`; лимит `849050` соблюдён, запас `968` bytes.
 
 ### Этап 0. Baseline до обновления
 

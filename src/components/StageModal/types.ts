@@ -1,6 +1,4 @@
-import { ModalProps } from '@chakra-ui/react';
-
-export interface StageModalProps extends Omit<ModalProps, 'children'> {
+export interface StageModalProps {
   isOpen: boolean;
   onClose: () => void;
 }

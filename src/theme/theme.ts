@@ -1,4 +1,4 @@
-import { extendTheme } from '@chakra-ui/react';
+import { createSystem, defaultConfig, defineConfig } from '@chakra-ui/react';
 import breakpoints from './breakpoints';
 import typography from './typography';
 import textStyles from './typography/text-styles';
@@ -10,37 +10,49 @@ import ButtonStyles from './components/Button/Button.styles';
 import DrawerStyles from './components/Drawer/Drawer.styles';
 import TooltipStyles from './components/Tooltip/Tooltip.styles';
 import SwitchStyles from './components/Switch/Switch.styles';
-import ActionButtonStyles from '../shared/ui/ActionButton/ActionButton.styles';
 import TabsStyles from './components/Tabs/Tabs.styles';
 import InputStyles from './components/Input/Input.styles';
 import LinkStyles from './components/Link/Link.styles';
 import MenuStyles from './components/Menu/Menu.styles';
 import global from './foundations/global';
+import sizes from './foundations/sizes';
+import { createColorSemanticTokens, createTokens } from './utils';
 
-const theme = {
-  ...typography,
-  ...spacing,
-  colors,
-  semanticTokens,
-  textStyles,
-  styles: { global },
-  components: {
-    Container: ContainerStyles,
-    Button: ButtonStyles,
-    Drawer: DrawerStyles,
-    Tooltip: TooltipStyles,
-    Switch: SwitchStyles,
-    Tabs: TabsStyles,
-    Input: InputStyles,
-    Link: LinkStyles,
-    Menu: MenuStyles,
-    ActionButtonStyles,
+const config = defineConfig({
+  globalCss: global,
+  theme: {
+    breakpoints,
+    tokens: {
+      ...createTokens({
+        ...typography,
+        spacing: spacing.space,
+        sizes,
+        colors,
+      }),
+    },
+    semanticTokens: {
+      colors: createColorSemanticTokens(semanticTokens.colors),
+    },
+    textStyles: Object.fromEntries(
+      Object.entries(textStyles).map(([group, styles]) => [
+        group,
+        Object.fromEntries(Object.entries(styles).map(([name, value]) => [name, { value }])),
+      ])
+    ),
+    recipes: {
+      button: ButtonStyles,
+      container: ContainerStyles,
+      input: InputStyles,
+      link: LinkStyles,
+    },
+    slotRecipes: {
+      drawer: DrawerStyles,
+      tooltip: TooltipStyles,
+      switch: SwitchStyles,
+      tabs: TabsStyles,
+      menu: MenuStyles,
+    },
   },
-  config: {
-    useSystemColorMode: false,
-    initialColorMode: 'system',
-  },
-  breakpoints,
-};
+});
 
-export default extendTheme(theme);
+export const system = createSystem(defaultConfig, config);

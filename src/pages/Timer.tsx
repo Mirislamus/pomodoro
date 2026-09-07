@@ -37,7 +37,7 @@ const Timer = () => {
     }
   };
 
-  const { isOpen: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
+  const { open: isStageModalOpen, onClose: onStageModalClose, onOpen: onStageModalOpen } = useDisclosure();
 
   const getStageMaxTime = () => {
     if (session.stage === Stage.Pomodoro) return settings.duration;
@@ -98,8 +98,7 @@ const Timer = () => {
     if (prevStageRef.current !== session.stage) {
       prevStageRef.current = session.stage;
       if (settings.hasAutoStart && getStageCurrentTime() === 0) {
-        // Auto start on stage change
-        setTimeout(() => startTimer(), 100);
+        startTimer(getStageMaxTime());
       }
     }
   }, [session.stage, settings.hasAutoStart, startTimer]);
@@ -173,7 +172,11 @@ const Timer = () => {
     if ('Notification' in window && Notification.permission === 'default') {
       requestNotificationPermission();
     }
-    if (isPlaying) { handlePause(); } else { startTimer(); }
+    if (isPlaying) {
+      handlePause();
+    } else {
+      startTimer();
+    }
   };
 
   const getCurrentPercent = () => {
@@ -284,7 +287,7 @@ const Timer = () => {
             {formatMilliseconds(countdown)}
           </Text>
           <HStack
-            spacing="20px"
+            gap="20px"
             justifyContent="center"
             left="0"
             right="0"
@@ -294,12 +297,12 @@ const Timer = () => {
             <PomodoroTooltip label={t('reset_current_step')}>
               <Box>
                 <ActionButton
-                  sx={{
-                    svg: {
+                  css={{
+                    '& svg': {
                       transition: ease,
                     },
                     _hover: {
-                      svg: {
+                      '& svg': {
                         transform: 'rotate(90deg)',
                       },
                     },
@@ -309,7 +312,7 @@ const Timer = () => {
                 />
               </Box>
             </PomodoroTooltip>
-            <Button variant="circle" size="lg" sx={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
+            <Button variant="circle" size="lg" css={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
               {isPlaying ? t('pause') : t('start')}
             </Button>
             <PomodoroTooltip {...(isPlaying ? { label: t('skip_current_step') } : {})}>

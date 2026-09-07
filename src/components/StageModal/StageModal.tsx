@@ -1,55 +1,67 @@
+import { Dialog, Portal, Text, VStack } from '@chakra-ui/react';
+import { t } from 'i18next';
 import { StageModalProps } from './types';
-import { Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text, VStack } from '@chakra-ui/react';
 import { IconClose } from '../../theme/foundations/icons';
 import ActionButton from '../../shared/ui/ActionButton/ActionButton';
-import { t } from 'i18next';
 import StageItem from './StageItem/StageItem';
 import { Stage } from '../../typings/enums';
 import useSessionStore from '../../stores/useSessionStore';
 
-const StageModal = ({ isOpen, onClose, ...props }: StageModalProps) => {
+const StageModal = ({ isOpen, onClose }: StageModalProps) => {
   const session = useSessionStore(state => state.session);
   const setSession = useSessionStore(state => state.setSession);
-
-  const stages = [
-    {
-      stage: Stage.Pomodoro,
-      isActive: session.stage === Stage.Pomodoro,
-      onClick: () => setSession('stage', Stage.Pomodoro),
-    },
-    {
-      stage: Stage.ShortBreak,
-      isActive: session.stage === Stage.ShortBreak,
-      onClick: () => setSession('stage', Stage.ShortBreak),
-    },
-    {
-      stage: Stage.LongBreak,
-      isActive: session.stage === Stage.LongBreak,
-      onClick: () => setSession('stage', Stage.LongBreak),
-    },
-  ];
+  const stages = [Stage.Pomodoro, Stage.ShortBreak, Stage.LongBreak];
 
   return (
-    <Modal variant="default" isOpen={isOpen} onClose={onClose} {...props}>
-      <ModalOverlay />
-      <ModalContent p="24px 24px 30px" borderRadius="20px" bgColor="background.secondary" maxW="328px">
-        <ModalHeader display="flex" alignItems="center" justifyContent="space-between" p="0" paddingBlockEnd="16px">
-          <Text fontWeight="600" textStyle="text.xl">
-            {t('stage_select')}
-          </Text>
-          <ActionButton boxSize="40px" variant="fill" onClick={onClose}>
-            <IconClose mt="-2px" boxSize="20px" />
-          </ActionButton>
-        </ModalHeader>
-        <ModalBody p="0">
-          <VStack spacing="gap.10">
-            {stages.map(stage => (
-              <StageItem key={stage.stage} {...stage} />
-            ))}
-          </VStack>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+    <Dialog.Root
+      open={isOpen}
+      placement="center"
+      lazyMount
+      unmountOnExit
+      onOpenChange={({ open }) => !open && onClose()}
+    >
+      <Portal>
+        <Dialog.Backdrop bgColor="rgba(0, 0, 0, 0.48)" />
+        <Dialog.Positioner alignItems="flex-start">
+          <Dialog.Content
+            my="64px"
+            p="24px 24px 30px"
+            borderRadius="20px"
+            bgColor="background.secondary"
+            maxW="328px"
+          >
+            <Dialog.Header
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+              p="0"
+              paddingBlockEnd="16px"
+            >
+              <Dialog.Title asChild>
+                <Text fontWeight="600" textStyle="text.xl">
+                  {t('stage_select')}
+                </Text>
+              </Dialog.Title>
+              <ActionButton boxSize="40px" variant="fill" onClick={onClose}>
+                <IconClose mt="-2px" boxSize="20px" />
+              </ActionButton>
+            </Dialog.Header>
+            <Dialog.Body p="0">
+              <VStack gap="gap.10">
+                {stages.map(stage => (
+                  <StageItem
+                    key={stage}
+                    stage={stage}
+                    isActive={session.stage === stage}
+                    onClick={() => setSession('stage', stage)}
+                  />
+                ))}
+              </VStack>
+            </Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
   );
 };
 

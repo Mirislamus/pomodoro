@@ -1,4 +1,4 @@
-import { ColorMode } from '@chakra-ui/react';
+import type { ColorMode } from '../ui/color-mode';
 
 export interface FooterProps {
   isSettings?: boolean;

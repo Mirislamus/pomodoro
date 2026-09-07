@@ -18,21 +18,18 @@ const _Header = ({ onLangClick, onMenuClick, ...rest }: HeaderProps) => {
   return (
     <Flex as="header" alignItems="center" justifyContent="space-between" {...rest}>
       <Box
-        as={Link}
-        to="/"
         display="inline-flex"
         color="primary"
-        sx={{ svg: { maxW: '100%', h: 'auto' } }}
+        css={{ '& svg': { maxW: '100%', h: 'auto' } }}
         w={{ base: '100px', md: '116px' }}
+        asChild
       >
-        <IconLogo w="116px" h="50px" pathColor={getTextColor(session.stage)} stageColor={currentStageColor} />
+        <Link to="/">
+          <IconLogo w="116px" h="50px" pathColor={getTextColor(session.stage)} stageColor={currentStageColor} />
+        </Link>
       </Box>
-      <Button
-        leftIcon={<IconLang />}
-        textTransform="uppercase"
-        display={{ base: 'none', md: 'inline-flex' }}
-        onClick={onLangClick}
-      >
+      <Button textTransform="uppercase" display={{ base: 'none', md: 'inline-flex' }} onClick={onLangClick}>
+        <IconLang />
         {t(`${i18n.resolvedLanguage}`)}
       </Button>
       <ActionButton icon={IconMenu} onClick={onMenuClick} display={{ base: 'flex', md: 'none' }} />

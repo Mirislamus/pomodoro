@@ -1,11 +1,11 @@
-import { FormControl, FormLabel, HStack, Input, Text, chakra } from '@chakra-ui/react';
+import { Field, HStack, Input, Text } from '@chakra-ui/react';
 import { ChangeEvent, useId } from 'react';
 import { NumericInputProps } from './types';
 import ActionButton from '../ActionButton/ActionButton';
 import { IconMinus, IconPlus } from '../../../theme/foundations/icons';
 import { t } from 'i18next';
 
-const _NumericInput = ({
+const NumericInput = ({
   value,
   step = 1,
   min = Number.MIN_SAFE_INTEGER,
@@ -41,16 +41,16 @@ const _NumericInput = ({
   };
 
   return (
-    <FormControl display="flex" alignItems="center" justifyContent="space-between" {...props}>
-      <FormLabel m="0" htmlFor={`input-${id}`}>
+    <Field.Root display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" {...props}>
+      <Field.Label display="block" m="0" htmlFor={`input-${id}`}>
         <Text fontSize="16px" fontWeight="500" color="primary">
           {title}
         </Text>
         <Text textStyle="text.md" fontWeight="400" color="grey.3">
           {t('up_to')} {max} {hasMinutes && t('minutes')}
         </Text>
-      </FormLabel>
-      <HStack spacing="gap.8">
+      </Field.Label>
+      <HStack gap="gap.8">
         <ActionButton isDisabled={value <= min} size="sm" variant="fill" icon={IconMinus} onClick={handleDecrease} />
         <Input
           id={`input-${id}`}
@@ -64,9 +64,8 @@ const _NumericInput = ({
         />
         <ActionButton isDisabled={value >= max} size="sm" variant="fill" icon={IconPlus} onClick={handleIncrease} />
       </HStack>
-    </FormControl>
+    </Field.Root>
   );
 };
 
-const NumericInput = chakra(_NumericInput);
 export default NumericInput;

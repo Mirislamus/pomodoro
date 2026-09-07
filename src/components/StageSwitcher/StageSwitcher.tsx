@@ -53,7 +53,9 @@ const _StageSwitcher = ({ stageColor, stages, ...rest }: StageSwitcherProps) => 
           fontWeight="600"
           color={stage.isActive ? getTextColor(session.stage) : 'primary'}
           onClick={stage.onClick}
-          ref={el => { buttonRefs.current[index] = el; }}
+          ref={el => {
+            buttonRefs.current[index] = el;
+          }}
         >
           {stage.text}
         </Button>

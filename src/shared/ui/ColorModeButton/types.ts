@@ -1,4 +1,4 @@
-import { ColorMode } from '@chakra-ui/react';
+import type { ColorMode } from '../../../components/ui/color-mode';
 
 export interface ColorModeButtonProps {
   colorMode: ColorMode;

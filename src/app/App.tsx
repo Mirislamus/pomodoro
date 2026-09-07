@@ -2,7 +2,8 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../shared/Layout/Layout';
 import Header from '../components/Header/Header';
 
-import { useColorMode, useDisclosure } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+import { useColorMode } from '../components/ui/color-mode';
 import Footer from '../components/Footer/Footer';
 import useNotificationPermission from '../hooks/useNotificationPermission';
 import Timer from '../pages/Timer';
@@ -12,9 +13,9 @@ import LangMenu from '../components/LangMenu/LangMenu';
 import useSettingsStore from '../stores/useSettingsStore';
 
 const App = () => {
-  const { isOpen: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
-  const { isOpen: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
-  
+  const { open: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
+  const { open: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
+
   const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   const location = useLocation();

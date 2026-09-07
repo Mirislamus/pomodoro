@@ -5,6 +5,8 @@ const formatLanguage = (lang: string) => {
 };
 
 const sendNotification = (options?: NotificationOptions) => {
+  if (!('Notification' in window)) return;
+
   if (Notification.permission === 'granted') {
     new Notification('Pomotomo Focus Timer', {
       ...options,

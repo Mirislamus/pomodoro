@@ -17,18 +17,19 @@ const _StageSelect = ({ stage, isActive = false, onClick, ...props }: StageSelec
       justifyContent="space-between"
       bgColor={stageColor}
       borderRadius="100px"
-      as="button"
-      onClick={onClick}
       {...props}
+      asChild
     >
-      <Text textTransform="uppercase" textStyle="text.md" color={getTextColor(stage)}>{`${stage}`}</Text>
-      <IconChevronDown
-        transition={ease}
-        transform={isActive ? 'scaleY(-1)' : ''}
-        w="14px"
-        h="8px"
-        color={getTextColor(stage)}
-      />
+      <button onClick={onClick}>
+        <Text textTransform="uppercase" textStyle="text.md" color={getTextColor(stage)}>{`${stage}`}</Text>
+        <IconChevronDown
+          transition={ease}
+          transform={isActive ? 'scaleY(-1)' : ''}
+          w="14px"
+          h="8px"
+          color={getTextColor(stage)}
+        />
+      </button>
     </Flex>
   );
 };

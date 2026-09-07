@@ -2,20 +2,20 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './theme/typography/fonts.css';
 import './localization/i18n';
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import App from './app/App';
-import theme from './theme/theme';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from './components/ui/provider';
+import { Toaster } from './components/ui/toaster';
 
 const root = createRoot(document.getElementById('root') as Element);
 
 root.render(
   <StrictMode>
-    <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <Provider storageKey="chakra-ui-color-mode" defaultTheme="system" enableSystem>
       <BrowserRouter basename="pomodoro">
         <App />
       </BrowserRouter>
-    </ChakraProvider>
+      <Toaster />
+    </Provider>
   </StrictMode>
 );

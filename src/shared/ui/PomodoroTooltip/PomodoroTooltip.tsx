@@ -1,26 +1,23 @@
-import { Tooltip, chakra } from '@chakra-ui/react';
+import { Tooltip } from '../../../components/ui/tooltip';
 import { PomodoroTooltipProps } from './types';
 
-const _PomodoroTooltip = ({ children, ...rest }: PomodoroTooltipProps) => {
-  return (
-    <Tooltip
-      bg="background.tooltip"
-      color="primary"
-      fontStyle="text.md"
-      hasArrow
-      placement="top"
-      p="10px"
-      borderRadius="10px"
-      fontWeight={400}
-      arrowSize={8}
-      arrowPadding={8}
-      gutter={10}
-      {...rest}
-    >
-      {children}
-    </Tooltip>
-  );
-};
+const PomodoroTooltip = ({ children, label, placement = 'top' }: PomodoroTooltipProps) => (
+  <Tooltip
+    content={label}
+    disabled={!label}
+    showArrow
+    positioning={{ placement, gutter: 10 }}
+    contentProps={{
+      bg: 'background.tooltip',
+      color: 'primary',
+      textStyle: 'text.md',
+      p: '10px',
+      borderRadius: '10px',
+      fontWeight: 400,
+    }}
+  >
+    {children}
+  </Tooltip>
+);
 
-const PomodoroTooltip = chakra(_PomodoroTooltip);
 export default PomodoroTooltip;
