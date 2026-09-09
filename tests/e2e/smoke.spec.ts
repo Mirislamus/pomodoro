@@ -326,7 +326,7 @@ test('skip advances to the next stage and clears the skipped stage time', async 
             sessionCount: 1,
             stage: 'pomodoro',
             pomodoroCurrentTime: 15000,
-            shortBrakeCurrentTime: 0,
+            shortBrakeCurrentTime: 2500,
             longBrakeCurrentTime: 0,
           },
         },
@@ -341,7 +341,7 @@ test('skip advances to the next stage and clears the skipped stage time', async 
 
   await expect
     .poll(async () => page.evaluate(() => JSON.parse(localStorage.getItem('session-storage')!).state.session))
-    .toMatchObject({ stage: 'short-break', pomodoroCurrentTime: 0 });
+    .toMatchObject({ stage: 'short-break', pomodoroCurrentTime: 0, shortBrakeCurrentTime: 0 });
 
   await skipButton.click();
   await expect

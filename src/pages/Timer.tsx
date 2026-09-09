@@ -28,7 +28,6 @@ const Timer = () => {
 
   const session = useSessionStore(state => state.session);
   const setSession = useSessionStore(state => state.setSession);
-  const resetSession = useSessionStore(state => state.resetSession);
 
   const alarmAndTickSoundControl = () => {
     playAlarmSound();
@@ -66,31 +65,52 @@ const Timer = () => {
     },
     onComplete: () => {
       alarmAndTickSoundControl();
-      setStageCurrentTime(0);
 
       if (session.stage === Stage.Pomodoro) {
         if (session.sessionCount >= settings.count) {
           sendNotification({ body: t('pomodoro_notification_long') });
-          setSession('stage', Stage.LongBreak);
+          transitionToStage(Stage.LongBreak);
         } else {
           sendNotification({ body: t('pomodoro_notification_short') });
-          setSession('stage', Stage.ShortBreak);
+          transitionToStage(Stage.ShortBreak);
         }
       } else if (session.stage === Stage.ShortBreak) {
-        if (session.sessionCount <= settings.count) {
-          setSession('sessionCount', session.sessionCount + 1);
-          setSession('stage', Stage.Pomodoro);
-          sendNotification({ body: t('short_break_notification') });
-        }
+        transitionToStage(Stage.Pomodoro, session.sessionCount + 1);
+        sendNotification({ body: t('short_break_notification') });
       } else {
-        resetSession();
-        setSession('stage', Stage.Pomodoro);
+        transitionToStage(Stage.Pomodoro, 1);
         sendNotification({ body: t('long_break_notification') });
       }
 
       // Auto start handled by watching stage change if setting enabled
     },
   });
+
+  function transitionToStage(nextStage: Stage, nextSessionCount = session.sessionCount) {
+    stopTickSound();
+    setStageCurrentTime(0);
+
+    const nextStageTime =
+      nextStage === Stage.Pomodoro
+        ? settings.duration
+        : nextStage === Stage.ShortBreak
+          ? settings.shortBreak
+          : settings.longBreak;
+
+    if (nextStage === Stage.Pomodoro) {
+      setSession('pomodoroCurrentTime', 0);
+    } else if (nextStage === Stage.ShortBreak) {
+      setSession('shortBrakeCurrentTime', 0);
+    } else {
+      setSession('longBrakeCurrentTime', 0);
+    }
+
+    if (nextSessionCount !== session.sessionCount) {
+      setSession('sessionCount', nextSessionCount);
+    }
+    resetTimer(nextStageTime);
+    setSession('stage', nextStage);
+  }
 
   // Handle auto-start when stage changes
   const prevStageRef = useRef(session.stage);
@@ -142,24 +162,16 @@ const Timer = () => {
   };
 
   const onSkipButtonClickHandler = () => {
-    stopTickSound();
-    setStageCurrentTime(0);
-    resetTimer();
     if (session.stage === Stage.Pomodoro) {
       if (session.sessionCount >= settings.count) {
-        setSession('stage', Stage.LongBreak);
+        transitionToStage(Stage.LongBreak);
       } else {
-        setSession('stage', Stage.ShortBreak);
+        transitionToStage(Stage.ShortBreak);
       }
     } else if (session.stage === Stage.ShortBreak) {
-      if (session.sessionCount <= settings.count) {
-        setSession('sessionCount', session.sessionCount + 1);
-        setSession('stage', Stage.Pomodoro);
-      }
+      transitionToStage(Stage.Pomodoro, session.sessionCount + 1);
     } else {
-      resetSession();
-      setSession('sessionCount', 1);
-      setSession('stage', Stage.Pomodoro);
+      transitionToStage(Stage.Pomodoro, 1);
     }
   };
 
@@ -203,32 +215,17 @@ const Timer = () => {
   const stages = [
     {
       text: t('pomodoro'),
-      onClick: () => {
-        stopTickSound();
-        resetTimer(settings.duration);
-        setSession('pomodoroCurrentTime', 0);
-        setSession('stage', Stage.Pomodoro);
-      },
+      onClick: () => transitionToStage(Stage.Pomodoro),
       isActive: session.stage === Stage.Pomodoro,
     },
     {
       text: t('short_break'),
-      onClick: () => {
-        stopTickSound();
-        resetTimer(settings.shortBreak);
-        setSession('shortBrakeCurrentTime', 0);
-        setSession('stage', Stage.ShortBreak);
-      },
+      onClick: () => transitionToStage(Stage.ShortBreak),
       isActive: session.stage === Stage.ShortBreak,
     },
     {
       text: t('long_break'),
-      onClick: () => {
-        stopTickSound();
-        resetTimer(settings.longBreak);
-        setSession('longBrakeCurrentTime', 0);
-        setSession('stage', Stage.LongBreak);
-      },
+      onClick: () => transitionToStage(Stage.LongBreak),
       isActive: session.stage === Stage.LongBreak,
     },
   ];
