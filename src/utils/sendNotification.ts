@@ -1,22 +1,14 @@
 import i18n from 'i18next';
 
-const formatLanguage = (lang: string) => {
-  return lang === 'en' ? 'en-US' : 'ru-RU';
-};
-
 const sendNotification = (options?: NotificationOptions) => {
-  if (!('Notification' in window)) return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
-  if (Notification.permission === 'granted') {
-    new Notification('Pomotomo Focus Timer', {
-      ...options,
-      lang: formatLanguage(i18n.language),
-      icon: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
-      badge: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
-    });
-  } else {
-    console.log('Notifications are not allowed');
-  }
+  new Notification('Pomotomo Focus Timer', {
+    ...options,
+    lang: i18n.language === 'en' ? 'en-US' : 'ru-RU',
+    icon: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
+    badge: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
+  });
 };
 
 export default sendNotification;

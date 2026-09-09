@@ -96,6 +96,30 @@ test('settings tabs and actions keep the intended desktop layout', async ({ page
   expect(cssWarnings).toEqual([]);
 });
 
+test('mobile settings fit the viewport and keep both actions aligned', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 642 });
+  await page.goto('./');
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
+
+  const scrollArea = page.locator('.simplebar-content-wrapper');
+  const resetButton = page.getByRole('button', { name: /сбросить настройки|reset settings/i });
+  const copyButton = page.getByRole('button', { name: /скопировать настройки|copy settings/i });
+  const [overflow, resetBox, copyBox] = await Promise.all([
+    scrollArea.evaluate(element => element.scrollHeight - element.clientHeight),
+    resetButton.boundingBox(),
+    copyButton.boundingBox(),
+  ]);
+
+  expect(overflow).toBeLessThanOrEqual(0);
+  expect(resetBox).not.toBeNull();
+  expect(copyBox).not.toBeNull();
+  const resetCenterY = resetBox!.y + resetBox!.height / 2;
+  const copyCenterY = copyBox!.y + copyBox!.height / 2;
+  expect(Math.abs(resetCenterY - copyCenterY)).toBeLessThanOrEqual(1);
+  expect(resetBox!.y + resetBox!.height).toBeLessThanOrEqual(642);
+  expect(copyBox!.y + copyBox!.height).toBeLessThanOrEqual(642);
+});
+
 test('core layout keeps its published geometry across responsive widths', async ({ page }) => {
   const viewports = [
     { width: 1440, height: 900, contentInset: 110, circleSize: 500 },
@@ -203,11 +227,14 @@ test('sound ranges match the published track fill and thumb geometry', async ({ 
   await page.getByRole('tab', { name: /звуки|sounds/i }).click();
 
   const slider = page.locator('[data-scope="slider"][data-part="root"]:visible').first();
-  const parts = await Promise.all(
-    ['control', 'track', 'range', 'thumb'].map(part =>
-      slider.locator(`[data-part="${part}"]`).evaluate(element => {
-        const styles = getComputedStyle(element);
-        const rect = element.getBoundingClientRect();
+  const parts = await slider.evaluate(
+    (element, partNames) =>
+      partNames.map(part => {
+        const partElement = element.querySelector(`[data-part="${part}"]`);
+        if (!partElement) throw new Error(`Missing slider part: ${part}`);
+
+        const styles = getComputedStyle(partElement);
+        const rect = partElement.getBoundingClientRect();
         return {
           background: styles.backgroundColor,
           border: styles.border,
@@ -215,8 +242,8 @@ test('sound ranges match the published track fill and thumb geometry', async ({ 
           height: rect.height,
           centerY: rect.y + rect.height / 2,
         };
-      })
-    )
+      }),
+    ['control', 'track', 'range', 'thumb']
   );
 
   expect(parts[0].height).toBe(24);

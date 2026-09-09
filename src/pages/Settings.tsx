@@ -234,7 +234,13 @@ const Settings = () => {
             </Button>
             <PomodoroTooltip label={t('copy_settings')}>
               <Box>
-                <ActionButton size="lg" variant="fill" icon={IconCopy} onClick={onSettingsLinkCopy} />
+                <ActionButton
+                  aria-label={t('copy_settings')}
+                  size="lg"
+                  variant="fill"
+                  icon={IconCopy}
+                  onClick={onSettingsLinkCopy}
+                />
               </Box>
             </PomodoroTooltip>
           </Flex>

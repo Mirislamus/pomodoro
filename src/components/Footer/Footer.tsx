@@ -33,7 +33,7 @@ const _Footer = ({
           </ActionButton>
         </Box>
       </PomodoroTooltip>
-      <Button minW="150px" role="group" textTransform="uppercase" fontWeight="600" onClick={onSettingsClick}>
+      <Button minW="150px" className="group" textTransform="uppercase" fontWeight="600" onClick={onSettingsClick}>
         {isSettings ? (
           <>
             <IconClose boxSize="24px" mr="gap.4" />

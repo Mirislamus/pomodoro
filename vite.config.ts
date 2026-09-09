@@ -1,7 +1,6 @@
 import { UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 import inspect from 'vite-plugin-inspect';
 import meta from './src/data/meta.ts';
 
@@ -10,22 +9,6 @@ const config: UserConfig = {
   plugins: [
     react(),
     inspect(),
-    viteStaticCopy({
-      targets: [
-        {
-          src: '.htaccess',
-          dest: '',
-        },
-        {
-          src: 'robots.txt',
-          dest: '',
-        },
-        {
-          src: 'sitemap.xml',
-          dest: '',
-        },
-      ],
-    }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {

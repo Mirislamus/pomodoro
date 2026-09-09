@@ -1,6 +1,6 @@
 # ТЗ: обновление зависимостей и миграция Chakra UI v2 → v3
 
-Статус: задачи 1–3 завершены; задача 4 не начата.
+Статус: задачи 1–5 завершены локально; физическая проверка audio/notifications и Safari/iOS остаётся ручной.
 Дата проверки версий: 2026-08-26.  
 Рабочая ветка: `dev`.
 
@@ -78,7 +78,7 @@
 | [`vite`](https://www.npmjs.com/package/vite) | `^8.1.4` | `^8.2.2` | обновить |
 | [`vite-plugin-inspect`](https://www.npmjs.com/package/vite-plugin-inspect) | `^11.4.1` | `^12.0.2` | обновить major и проверить config |
 | [`vite-plugin-pwa`](https://www.npmjs.com/package/vite-plugin-pwa) | `^1.3.0` | `^1.3.0` | оставить |
-| [`vite-plugin-static-copy`](https://www.npmjs.com/package/vite-plugin-static-copy) | `^4.1.1` | `^4.1.1` | оставить |
+| [`vite-plugin-static-copy`](https://www.npmjs.com/package/vite-plugin-static-copy) | `^4.1.1` | — | удалить; статические файлы перенести в `public/` |
 
 Исключение: latest `typescript@7.0.2` несовместим с peer range `typescript >=4.8.4 <6.1.0` у `typescript-eslint@8.68.0`; поэтому целевая версия — новейшая подходящая stable `6.0.3`. Использовать `--force` запрещено.
 
@@ -113,8 +113,8 @@ Workflow использует major tags, а не плавающие ветки.
 | 1. Baseline и test harness | Восстановлена текущая сборка; добавлены Playwright, axe, smoke-сценарии, screenshots и JS baseline | — | Завершена |
 | 2. Остальные зависимости | Все пакеты, кроме Chakra-стека, обновлены до stable; лишние удалены | 1 | Завершена |
 | 3. Chakra UI v3 | Атомарно мигрированы provider, theme, color mode и все components; UI 1:1 | 2 | Завершена |
-| 4. CI/deploy и README | PR выполняет verify; push в `master` публикует только проверенный artifact; команды описаны | 3 | Ожидает |
-| 5. Итоговая приёмка | Cross-browser, PWA, security, persistence и JS budget пройдены; исправлены только миграционные дефекты | 4 | Ожидает |
+| 4. CI/deploy и README | PR выполняет verify; push в `master` публикует только проверенный artifact; команды описаны | 3 | Завершена |
+| 5. Итоговая приёмка | Cross-browser, PWA, security, persistence и JS budget пройдены; исправлены только миграционные дефекты | 4 | Завершена локально |
 
 Каждая задача заканчивается рабочими typecheck, lint, build и всеми тестами, актуальными на её этапе. Chakra мигрируется атомарно в задаче 3: временные две версии Chakra или два Provider не вводятся.
 
@@ -151,6 +151,26 @@ Workflow использует major tags, а не плавающие ветки.
 - `chakra typegen`, typecheck, ESLint, production build и `bun audit --audit-level=high` проходят. Audit: `No vulnerabilities found`, проверено 742 packages.
 - Playwright: 19 проверок прошли, 6 ожидаемо пропущены. В свежей production-сессии вручную проверены desktop/mobile light/dark, stage dialog, mobile/language drawers, settings tabs, sliders, menus и switch.
 - Production JS: `848082` bytes в `dist/assets/**/*.js`; лимит `849050` соблюдён, запас `968` bytes.
+
+### Результат задачи 4
+
+- Workflow разделён на `verify` и `deploy`: pull request выполняет только проверки, а push в `master` публикует уже проверенный `dist` без повторной сборки.
+- В `verify` добавлены typegen, typecheck, ESLint, production build, JS budget, audit и Playwright; отчёт Playwright и проверенный `dist` передаются через artifacts.
+- Actions обновлены до major tags `actions/checkout@v7`, `actions/upload-artifact@v7`, `actions/download-artifact@v8`; `oven-sh/setup-bun@v2` и `peaceiris/actions-gh-pages@v4` сохранены.
+- Добавлены отдельные scripts для production build, JS budget, audit и обновления Playwright screenshots; команды разработки, проверок и CI описаны в README.
+- `vite-plugin-static-copy` удалён. `.htaccess`, `robots.txt` и `sitemap.xml` перенесены в `public/` и попадают в корень `dist` штатным механизмом Vite.
+- Production JS: `848957` bytes при лимите `849050`, запас `93` bytes.
+- Локальный Playwright: `69 passed`, `6 skipped`, падений нет. Audit: `No vulnerabilities found`, проверено 736 пакетов.
+
+### Результат задачи 5
+
+- Исправлено мобильное переполнение settings на `320×642`: внутренний overflow стал `0px`, Reset и Copy остаются на одной центральной линии и полностью видимы.
+- Кнопка настроек больше не подменяет семантическую роль `<button>` на `group`; hover/focus-анимация и внешний вид сохранены. Кнопка Copy получила доступное имя.
+- Проверены production preview, RU/EN/DE, light/dark, сохранение `settings-storage` и `session-storage`, autostart, PWA manifest/service worker и offline app shell.
+- Проверка slider сделана атомарной в одном DOM-снимке; после исправления полный прогон стабилен: `74 passed`, `6 skipped` во всех пяти Playwright projects. Axe не добавил serious/critical нарушений.
+- `bun run audit`: `No vulnerabilities found`, проверено 736 пакетов. JS budget: `848994 / 849050` bytes; запас `56` bytes.
+- `git diff --check` проходит. Коммит, push и deploy не выполнялись.
+- Ограничение приёмки: headless/Playwright WebKit не подтверждает физический звук, системные notifications и реальный Safari/iOS; эти проверки остаются ручными.
 
 ### Этап 0. Baseline до обновления
 

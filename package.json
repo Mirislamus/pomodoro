@@ -8,12 +8,17 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "typegen": "chakra typegen ./src/theme/theme.ts",
-    "build": "tsc && vite build",
+    "build": "bun run typegen && bun run typecheck && bun run build:app",
+    "build:app": "vite build",
+    "check:js-budget": "node scripts/check-js-budget.mjs",
     "preview": "vite preview",
+    "lint": "eslint",
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
     "test:e2e": "playwright test",
+    "test:e2e:update": "playwright test --update-snapshots",
     "test:a11y": "playwright test --grep @a11y",
+    "audit": "bun audit --audit-level=high",
     "prettier": "prettier --trailing-comma es5 'src/**/*.{js,jsx,ts,tsx,css,less,json}'",
     "prettier:fix": "prettier --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css,less,json}'"
   },
@@ -45,7 +50,6 @@
     "typescript-eslint": "^8.68.0",
     "vite": "^8.2.2",
     "vite-plugin-inspect": "^12.0.2",
-    "vite-plugin-pwa": "^1.3.0",
-    "vite-plugin-static-copy": "^4.1.1"
+    "vite-plugin-pwa": "^1.3.0"
   }
 }

@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { noop } from '../utils/noop';
 
 interface AudioContextReturnType {
   setAudio: Dispatch<SetStateAction<string>>;
@@ -71,7 +72,7 @@ const useAudioContext = (loop: boolean = false): AudioContextReturnType => {
         .then(buffer => {
           if (buffer) playAudio(buffer);
         })
-        .catch(error => console.error('Error loading audio:', error));
+        .catch(noop);
     }
   };
 
