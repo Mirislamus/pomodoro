@@ -296,6 +296,59 @@ test('autostart begins the next stage with its full duration', async ({ page }) 
   await expect(page.getByText(/00:0[1-5]/)).toBeVisible();
 });
 
+test('skip advances to the next stage and clears the skipped stage time', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'settings-storage',
+      JSON.stringify({
+        state: {
+          settings: {
+            count: 5,
+            duration: 30000,
+            shortBreak: 5000,
+            longBreak: 10000,
+            hasAutoStart: false,
+            alarmSound: 'alarm-bell',
+            alarmSoundVolume: 0,
+            tickSound: 'none',
+            tickSoundVolume: 0,
+            allowNotifications: false,
+          },
+        },
+        version: 0,
+      })
+    );
+    localStorage.setItem(
+      'session-storage',
+      JSON.stringify({
+        state: {
+          session: {
+            sessionCount: 1,
+            stage: 'pomodoro',
+            pomodoroCurrentTime: 15000,
+            shortBrakeCurrentTime: 0,
+            longBrakeCurrentTime: 0,
+          },
+        },
+        version: 0,
+      })
+    );
+  });
+
+  await page.goto('./');
+  const skipButton = page.locator('button:has(svg polygon)');
+  await skipButton.click();
+
+  await expect
+    .poll(async () => page.evaluate(() => JSON.parse(localStorage.getItem('session-storage')!).state.session))
+    .toMatchObject({ stage: 'short-break', pomodoroCurrentTime: 0 });
+
+  await skipButton.click();
+  await expect
+    .poll(async () => page.evaluate(() => JSON.parse(localStorage.getItem('session-storage')!).state.session))
+    .toMatchObject({ stage: 'pomodoro', sessionCount: 2, shortBrakeCurrentTime: 0 });
+});
+
 test('tooltip arrow uses the same background as its content', async ({ page }) => {
   await page.goto('./');
 

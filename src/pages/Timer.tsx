@@ -143,7 +143,8 @@ const Timer = () => {
 
   const onSkipButtonClickHandler = () => {
     stopTickSound();
-    resetTimer(0);
+    setStageCurrentTime(0);
+    resetTimer();
     if (session.stage === Stage.Pomodoro) {
       if (session.sessionCount >= settings.count) {
         setSession('stage', Stage.LongBreak);
