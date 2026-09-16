@@ -2,7 +2,7 @@ import { Box, Button, Flex, Tabs, Text, useDisclosure } from '@chakra-ui/react';
 import { easeIn } from '../theme/foundations/transitions';
 import { t } from 'i18next';
 import { IconClose, IconCopy } from '../theme/foundations/icons';
-import { useNavigate } from 'react-router-dom';
+import useAppNavigate from '../hooks/useAppNavigate';
 import { getMinFromMs, getMsFromMin, getSoundName } from '../utils';
 import { Settings as SettingsType } from '../typings/types';
 import { maxSettingsLimits, minSettingsLimits } from '../consts/settings';
@@ -24,8 +24,11 @@ import useAlarmSound from '../hooks/useAlarmSound';
 import useTickSound from '../hooks/useTickSound';
 import { TickSound } from '../typings/enums';
 
-const Settings = () => {
-  const navigate = useNavigate();
+interface SettingsViewProps {
+  onClose?: () => void;
+}
+
+const SettingsView = ({ onClose }: SettingsViewProps) => {
   const settings = useSettingsStore(state => state.settings);
   const setSettings = useSettingsStore(state => state.setSettings);
   const resetSettings = useSettingsStore(state => state.resetSettings);
@@ -36,6 +39,15 @@ const Settings = () => {
   const notificationPermission = useNotificationPermission();
   const { play: playAlarm } = useAlarmSound();
   const { play: playTick, stop: stopTick } = useTickSound();
+  const appNavigate = useAppNavigate();
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      appNavigate('/');
+    }
+  };
 
   const alarmSounds = useGetAlarmSounds({
     onChange: () => playAlarm(),
@@ -102,7 +114,7 @@ const Settings = () => {
             <Text textStyle="text.xl" textTransform="uppercase" color="primary">
               {t('settings')}
             </Text>
-            <ActionButton boxSize="40px" variant="fill" onClick={() => navigate('/')}>
+            <ActionButton aria-label={t('close')} boxSize="40px" variant="fill" onClick={handleClose}>
               <IconClose mt="-2px" boxSize="20px" />
             </ActionButton>
           </Flex>
@@ -250,4 +262,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default SettingsView;

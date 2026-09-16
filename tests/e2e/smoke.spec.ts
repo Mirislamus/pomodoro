@@ -352,7 +352,9 @@ test('skip advances to the next stage and clears the skipped stage time', async 
 test('tooltip arrow uses the same background as its content', async ({ page }) => {
   await page.goto('./');
 
-  await page.locator('[data-scope="tooltip"][data-part="trigger"]').first().hover();
+  const trigger = page.locator('[data-scope="tooltip"][data-part="trigger"]').first();
+  await expect(trigger).toBeVisible();
+  await trigger.hover();
   const tooltip = page.locator('[data-scope="tooltip"][data-part="content"]:visible');
   await expect(tooltip).toBeVisible();
 
@@ -390,7 +392,58 @@ test('user can switch the language and keep it after reload', async ({ page }, t
   await expect(page.getByText('Language selection', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Russian' }).click();
 
+  await expect(page).toHaveURL(/.*\/ru\//);
   await expect(page.getByRole('button', { name: 'Русский' })).toBeVisible();
   await page.reload();
   await expect(page.getByRole('button', { name: 'Русский' })).toBeVisible();
 });
+
+test('localized routes open with correct language content', async ({ page }) => {
+  await page.goto('./ru/');
+  await expect(page.getByText('25:00', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /старт/i })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
+
+  await page.goto('./de/');
+  await expect(page.getByText('25:00', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /start/i })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+});
+
+test('sitemap index and sitemap are accessible', async ({ request }) => {
+  const sitemapIndexResponse = await request.get('./sitemap-index.xml');
+  expect(sitemapIndexResponse.ok()).toBe(true);
+  const sitemapIndexText = await sitemapIndexResponse.text();
+  expect(sitemapIndexText).toContain('sitemap-0.xml');
+
+  const sitemap0Response = await request.get('./sitemap-0.xml');
+  expect(sitemap0Response.ok()).toBe(true);
+  const sitemap0Text = await sitemap0Response.text();
+  expect(sitemap0Text).toContain('/pomodoro/');
+  expect(sitemap0Text).toContain('/pomodoro/ru/');
+  expect(sitemap0Text).toContain('/pomodoro/de/');
+  expect(sitemap0Text).toContain('/pomodoro/settings');
+});
+
+test('timer persists countdown when navigating between timer and settings', async ({ page }) => {
+  await page.goto('./');
+  await expect(page.getByText('25:00', { exact: true })).toBeVisible();
+
+  const startButton = page.getByRole('button', { name: /старт|start/i });
+  await startButton.click();
+  await expect(page.getByRole('button', { name: /пауза|pause/i })).toBeVisible();
+
+  await page.waitForTimeout(1100);
+
+  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await expect(page.getByRole('tab', { name: /звуки|sounds/i })).toBeVisible();
+
+  await page.waitForTimeout(1100);
+
+  await page.getByRole('button', { name: /закрыть|close/i }).click();
+
+  await expect(page.getByRole('button', { name: /пауза|pause/i })).toBeVisible();
+  await expect(page.getByText('25:00', { exact: true })).not.toBeVisible();
+  await expect(page.getByText(/24:5[0-9]/)).toBeVisible();
+});
+

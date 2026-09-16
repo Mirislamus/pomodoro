@@ -22,7 +22,6 @@ bun run typegen
 bun run typecheck
 bun run lint
 bun run build
-bun run check:js-budget
 bun run audit
 bun run test:e2e
 bun run test:a11y

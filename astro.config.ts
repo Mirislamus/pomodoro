@@ -1,15 +1,26 @@
-import { UserConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
-import { VitePWA } from 'vite-plugin-pwa';
-import inspect from 'vite-plugin-inspect';
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
+import AstroPWA from '@vite-pwa/astro';
 import meta from './src/data/meta.ts';
 
-const config: UserConfig = {
-  base: '/pomodoro/',
-  plugins: [
+export default defineConfig({
+  site: 'https://mirislamus.github.io',
+  base: '/pomodoro',
+  trailingSlash: 'ignore',
+  integrations: [
     react(),
-    inspect(),
-    VitePWA({
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en-US',
+          ru: 'ru-RU',
+          de: 'de-DE',
+        },
+      },
+    }),
+    AstroPWA({
       registerType: 'autoUpdate',
       manifest: {
         name: meta.title,
@@ -58,7 +69,7 @@ const config: UserConfig = {
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.startsWith('images/'),
+            urlPattern: ({ url }) => url.pathname.startsWith('/pomodoro/images/'),
             handler: 'CacheFirst',
             options: {
               cacheName: 'image-cache',
@@ -75,20 +86,4 @@ const config: UserConfig = {
   server: {
     port: 3000,
   },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'modules';
-          }
-          if (id.includes('src/components/')) {
-            return 'components';
-          }
-        },
-      },
-    },
-  },
-};
-
-export default config;
+});

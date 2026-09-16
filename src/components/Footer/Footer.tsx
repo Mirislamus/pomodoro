@@ -19,6 +19,7 @@ const _Footer = ({
   return (
     <Flex
       as="footer"
+      display={{ base: isSettings ? 'none' : 'flex', md: 'flex' }}
       paddingBlockStart="30px"
       paddingBlockEnd={{ base: 'gap.20', md: 'gap.30' }}
       alignItems="center"

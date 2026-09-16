@@ -1,0 +1,172 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../theme/typography/fonts.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+  isSettings?: boolean;
+}
+
+const { title, description, lang = 'en', isSettings = false } = Astro.props;
+
+const siteUrl = 'https://mirislamus.github.io';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const baseUrl = base || '/pomodoro';
+
+// Construct canonical and hreflang URLs
+const currentPath = isSettings ? 'settings/' : '';
+const enUrl = `${siteUrl}${baseUrl}/${currentPath}`;
+const ruUrl = `${siteUrl}${baseUrl}/ru/${currentPath}`;
+const deUrl = `${siteUrl}${baseUrl}/de/${currentPath}`;
+
+const canonicalUrl = lang === 'ru' ? ruUrl : lang === 'de' ? deUrl : enUrl;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- No-FOUC theme initializer placed at top of head -->
+    <script is:inline>
+      (function () {
+        try {
+          var storageKey = 'chakra-ui-color-mode';
+          var savedTheme = localStorage.getItem(storageKey);
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = savedTheme === 'system' || !savedTheme ? (systemDark ? 'dark' : 'light') : savedTheme;
+          var root = document.documentElement;
+          root.classList.remove('light', 'dark');
+          root.classList.add(theme);
+          root.setAttribute('data-theme', theme);
+          root.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}/images/favicons/favicon.svg`} />
+    <link rel="icon" type="image/x-icon" href={`${baseUrl}/images/favicons/favicon.ico`} />
+    <link rel="manifest" href={`${baseUrl}/manifest.webmanifest`} />
+
+    <meta name="msapplication-TileColor" content="#ED4455" />
+    <meta name="theme-color" content="#ED4455" />
+
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="ru" href={ruUrl} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteUrl}${baseUrl}/images/opengraph.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${baseUrl}/images/opengraph.jpg`} />
+
+    <script is:inline>
+      (function () {
+        if (
+          typeof navigator !== 'undefined' &&
+          /WebKit/i.test(navigator.userAgent) &&
+          !/Chrome/i.test(navigator.userAgent) &&
+          /Windows/i.test(navigator.userAgent)
+        ) {
+          try {
+            Object.defineProperty(document, 'startViewTransition', {
+              value: undefined,
+              writable: true,
+              configurable: true,
+            });
+          } catch (e) {}
+        }
+      })();
+    </script>
+    <ClientRouter />
+
+    <script is:inline>
+      (function () {
+        var earlyClicks = [];
+        var isHydrated = function () {
+          return document.documentElement.hasAttribute('data-app-hydrated');
+        };
+
+        document.addEventListener(
+          'click',
+          function (e) {
+            if (!isHydrated()) {
+              earlyClicks.push(e.target);
+            }
+          },
+          true
+        );
+
+        function replayEarlyClicks() {
+          if (earlyClicks.length > 0) {
+            var targets = earlyClicks.slice();
+            earlyClicks = [];
+            setTimeout(function () {
+              targets.forEach(function (target) {
+                var clickable = (target.closest && target.closest('button, a, [role="button"], [role="tab"], input, label')) || target;
+                if (clickable && (!('isConnected' in clickable) || clickable.isConnected) && typeof clickable.click === 'function') {
+                  clickable.click();
+                }
+              });
+            }, 0);
+          }
+        }
+
+        window.addEventListener('app:hydrated', replayEarlyClicks);
+      })();
+
+      document.addEventListener('astro:after-swap', function () {
+        document.documentElement.setAttribute('data-app-hydrated', 'true');
+        try {
+          var storageKey = 'chakra-ui-color-mode';
+          var savedTheme = localStorage.getItem(storageKey);
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = savedTheme === 'system' || !savedTheme ? (systemDark ? 'dark' : 'light') : savedTheme;
+          var root = document.documentElement;
+          root.classList.remove('light', 'dark');
+          root.classList.add(theme);
+          root.setAttribute('data-theme', theme);
+          root.style.colorScheme = theme;
+        } catch (e) {}
+      });
+
+      document.addEventListener('astro:before-swap', function (event) {
+        var existingNewStyles = new Set();
+        event.newDocument.head.querySelectorAll('style[data-emotion]').forEach(function (s) {
+          existingNewStyles.add((s.getAttribute('data-emotion') || '') + ':' + s.textContent);
+        });
+        document.querySelectorAll('style[data-emotion]').forEach(function (s) {
+          var key = (s.getAttribute('data-emotion') || '') + ':' + s.textContent;
+          if (!existingNewStyles.has(key)) {
+            event.newDocument.head.appendChild(s.cloneNode(true));
+            existingNewStyles.add(key);
+          }
+        });
+        var newBodyStyles = event.newDocument.body.querySelectorAll('style[data-emotion]');
+        for (var j = 0; j < newBodyStyles.length; j++) {
+          event.newDocument.head.appendChild(newBodyStyles[j]);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

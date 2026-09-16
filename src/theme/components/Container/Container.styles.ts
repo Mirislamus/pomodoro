@@ -2,6 +2,7 @@ import { defineRecipe } from '@chakra-ui/react';
 
 const ContainerStyles = defineRecipe({
   base: {
+    position: 'static',
     maxW: {
       base: '100%',
       md: 'container.md',
