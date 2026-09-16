@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AppShell from '../app/AppShell';
+import locales from '../data/locales';
+
+const locale = 'en';
+const { settingsTitle, settingsDescription } = locales[locale];
+---
+
+<BaseLayout title={settingsTitle} description={settingsDescription} lang={locale} isSettings>
+  <AppShell client:load transition:persist="pomotomo-app" locale={locale} currentView="settings" />
+</BaseLayout>

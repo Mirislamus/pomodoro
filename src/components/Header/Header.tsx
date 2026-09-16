@@ -5,7 +5,6 @@ import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { IconLang, IconLogo, IconMenu } from '../../theme/foundations/icons';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { getTextColor } from '../../utils';
 import useSessionStore from '../../stores/useSessionStore';
 
@@ -14,6 +13,10 @@ const _Header = ({ onLangClick, onMenuClick, ...rest }: HeaderProps) => {
   const session = useSessionStore(state => state.session);
   const [currentStageColor] = useToken('colors', [stageColor]);
   const { t } = useTranslation();
+
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const currentLang = i18n.resolvedLanguage || 'en';
+  const homeUrl = currentLang === 'en' ? `${baseUrl}/` : `${baseUrl}/${currentLang}/`;
 
   return (
     <Flex as="header" alignItems="center" justifyContent="space-between" {...rest}>
@@ -24,9 +27,9 @@ const _Header = ({ onLangClick, onMenuClick, ...rest }: HeaderProps) => {
         w={{ base: '100px', md: '116px' }}
         asChild
       >
-        <Link to="/">
+        <a href={homeUrl} aria-label="Pomotomo">
           <IconLogo w="116px" h="50px" pathColor={getTextColor(session.stage)} stageColor={currentStageColor} />
-        </Link>
+        </a>
       </Box>
       <Button textTransform="uppercase" display={{ base: 'none', md: 'inline-flex' }} onClick={onLangClick}>
         <IconLang />

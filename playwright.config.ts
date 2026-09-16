@@ -15,6 +15,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
+  snapshotPathTemplate: '{testDir}/baseline/{arg}{ext}',
   projects: [
     {
       name: 'chromium',
@@ -26,7 +27,7 @@ export default defineConfig({
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { ...devices['Desktop Safari'], viewport: { width: 1280, height: 800 } },
     },
     {
       name: 'mobile-chrome',
@@ -43,5 +44,8 @@ export default defineConfig({
       : 'bun run build && bun run preview -- --host 127.0.0.1 --port 4173',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
+    env: {
+      ASTRO_PREVIEW_BACKGROUND: 'true',
+    },
   },
 });

@@ -19,7 +19,11 @@ import StageModal from '../components/StageModal/StageModal';
 import useSessionStore from '../stores/useSessionStore';
 import useSettingsStore from '../stores/useSettingsStore';
 
-const Timer = () => {
+interface TimerViewProps {
+  hidden?: boolean;
+}
+
+const TimerView = ({ hidden }: TimerViewProps) => {
   const stageColor = useGetStageColor();
   const settings = useSettingsStore(state => state.settings);
   const { play: playAlarmSound } = useAlarmSound();
@@ -231,7 +235,7 @@ const Timer = () => {
   ];
 
   return (
-    <Flex flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
+    <Flex display={hidden ? 'none' : 'flex'} flexDirection="column" paddingBlockStart={{ md: '170px', lg: 'gap.30' }}>
       <StageSwitcher
         left="0"
         right="0"
@@ -325,4 +329,5 @@ const Timer = () => {
   );
 };
 
-export default Timer;
+export default TimerView;
+

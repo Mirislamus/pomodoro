@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .vite
+.astro
 playwright-report
 test-results
 blob-report
