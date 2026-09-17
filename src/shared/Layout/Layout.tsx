@@ -3,7 +3,7 @@ import { Box, Container } from '@chakra-ui/react';
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box minHeight="100vh" paddingBlockStart={{ base: 'gap.16', md: 'gap.30' }}>
+    <Box as="main" id="main-content" minHeight="100vh" paddingBlockStart={{ base: 'gap.16', md: 'gap.30' }}>
       <Container
         display="flex"
         flexDirection="column"

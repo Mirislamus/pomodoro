@@ -1,0 +1,95 @@
+---
+import { seoContent } from '../../data/seoContent';
+
+interface Props {
+  siteUrl: string;
+  baseUrl: string;
+  canonicalUrl: string;
+  lang?: string;
+  isSettings?: boolean;
+}
+
+const { siteUrl, baseUrl, canonicalUrl, lang = 'en', isSettings = false } = Astro.props;
+
+const seo = seoContent[lang] || seoContent.en;
+
+const graph: Record<string, unknown>[] = [
+  {
+    '@type': 'Organization',
+    '@id': `${siteUrl}/#organization`,
+    name: 'Pomotomo',
+    url: siteUrl,
+    logo: {
+      '@type': 'ImageObject',
+      '@id': `${siteUrl}/#logo`,
+      url: `${siteUrl}${baseUrl}/images/icons/icon-512x512.png`,
+      contentUrl: `${siteUrl}${baseUrl}/images/icons/icon-512x512.png`,
+      width: 512,
+      height: 512,
+      caption: 'Pomotomo',
+    },
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: siteUrl,
+    name: 'Pomotomo',
+    publisher: {
+      '@id': `${siteUrl}/#organization`,
+    },
+    inLanguage: lang,
+  },
+  {
+    '@type': 'WebApplication',
+    '@id': `${canonicalUrl}#webapp`,
+    url: canonicalUrl,
+    name: seo.title,
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'All',
+    browserRequirements: 'Requires JavaScript. Requires HTML5.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: seo.description,
+    inLanguage: lang,
+  },
+];
+
+if (!isSettings) {
+  graph.push({
+    '@type': 'HowTo',
+    '@id': `${canonicalUrl}#howto`,
+    name: seo.howToTitle,
+    description: seo.howToDescription,
+    step: seo.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      url: `${canonicalUrl}#step-${index + 1}`,
+    })),
+  });
+
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${canonicalUrl}#faq`,
+    mainEntity: seo.faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  });
+}
+
+const schemaJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': graph,
+});
+---
+
+<script is:inline type="application/ld+json" set:html={schemaJson} />

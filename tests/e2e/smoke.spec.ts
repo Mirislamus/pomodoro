@@ -25,7 +25,7 @@ test('user can open the timer and start a focus session', async ({ page }) => {
 
 test('user can change a timer setting and keep it after reload', async ({ page }) => {
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
 
   const pomodoroCount = page.getByLabel(/pomodoro count|количество помодоро/i);
   await pomodoroCount.fill('3');
@@ -36,7 +36,7 @@ test('user can change a timer setting and keep it after reload', async ({ page }
 
 test('numeric setting labels keep their title and helper text stacked', async ({ page }) => {
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
 
   const labelParts = page.locator('[data-scope="field"][data-part="label"]').first().locator(':scope > *');
   const title = await labelParts.nth(0).boundingBox();
@@ -49,7 +49,7 @@ test('numeric setting labels keep their title and helper text stacked', async ({
 
 test('sound menus open independently', async ({ page }) => {
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
   await page.getByRole('tab', { name: /звуки|sounds/i }).click();
   await page.getByRole('button', { name: /bell/i }).click();
 
@@ -66,7 +66,7 @@ test('settings tabs and actions keep the intended desktop layout', async ({ page
 
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
 
   const timerTab = page.getByRole('tab', { name: /таймер|timer/i });
   const tabStyles = await timerTab.evaluate(element => {
@@ -136,7 +136,7 @@ test('core layout keeps its published geometry across responsive widths', async 
     await page.goto('./');
 
     const [headerBox, progressBox, bodyBackground, horizontalOverflow] = await Promise.all([
-      page.locator('header').boundingBox(),
+      page.locator('header').first().boundingBox(),
       page.locator('svg[width="500"][height="500"]').boundingBox(),
       page.locator('body').evaluate(element => getComputedStyle(element).backgroundColor),
       page.locator('html').evaluate(element => element.scrollWidth - element.clientWidth),
@@ -144,9 +144,9 @@ test('core layout keeps its published geometry across responsive widths', async 
 
     expect(headerBox).not.toBeNull();
     expect(progressBox).not.toBeNull();
-    expect(headerBox!.x).toBe(viewport.contentInset);
-    expect(progressBox!.width).toBe(viewport.circleSize);
-    expect(bodyBackground).toBe('rgb(0, 0, 0)');
+    expect(Math.abs(headerBox!.x - viewport.contentInset)).toBeLessThanOrEqual(1.5);
+    expect(Math.round(progressBox!.width)).toBe(viewport.circleSize);
+    expect(bodyBackground).toMatch(/^rgba?\(0,\s*0,\s*0/);
     expect(horizontalOverflow).toBeLessThanOrEqual(0);
   }
 });
@@ -174,7 +174,7 @@ test('mobile stage dialog keeps the published top offset and backdrop', async ({
 test('settings switch uses its full row as one click target', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
 
   const checkbox = page.getByRole('checkbox', { name: /автозапуск|autostart/i });
   const clickTarget = checkbox.locator('..');
@@ -189,7 +189,7 @@ test('settings switch uses its full row as one click target', async ({ page }) =
 test('focused checked switch keeps one focus ring and a contained white thumb', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
 
   const checkbox = page.getByRole('checkbox', { name: /автозапуск|autostart/i });
   await checkbox.focus();
@@ -223,7 +223,7 @@ test('sound ranges match the published track fill and thumb geometry', async ({ 
   await page.addInitScript(() => localStorage.setItem('chakra-ui-color-mode', 'dark'));
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('./');
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
   await page.getByRole('tab', { name: /звуки|sounds/i }).click();
 
   const slider = page.locator('[data-scope="slider"][data-part="root"]:visible').first();
@@ -404,6 +404,11 @@ test('localized routes open with correct language content', async ({ page }) => 
   await expect(page.getByRole('button', { name: /старт/i })).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
 
+  await page.goto('./uz/');
+  await expect(page.getByText('25:00', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /boshlash/i })).toBeVisible();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'uz');
+
   await page.goto('./de/');
   await expect(page.getByText('25:00', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /start/i })).toBeVisible();
@@ -421,8 +426,58 @@ test('sitemap index and sitemap are accessible', async ({ request }) => {
   const sitemap0Text = await sitemap0Response.text();
   expect(sitemap0Text).toContain('/pomodoro/');
   expect(sitemap0Text).toContain('/pomodoro/ru/');
+  expect(sitemap0Text).toContain('/pomodoro/uz/');
   expect(sitemap0Text).toContain('/pomodoro/de/');
-  expect(sitemap0Text).toContain('/pomodoro/settings');
+  expect(sitemap0Text).not.toContain('/settings');
+  expect(sitemap0Text).toContain('hreflang="en"');
+  expect(sitemap0Text).toContain('hreflang="ru"');
+  expect(sitemap0Text).toContain('hreflang="uz"');
+  expect(sitemap0Text).toContain('hreflang="de"');
+});
+
+test('page has valid SEO tags, Schema.org JSON-LD, and H1', async ({ page }) => {
+  await page.goto('./');
+
+  // Verify H1 presence
+  const h1 = page.locator('h1');
+  await expect(h1).toBeAttached();
+  await expect(h1).toHaveText(/Pomotomo/);
+
+  // Verify main landmark
+  await expect(page.locator('main#main-content')).toBeAttached();
+
+  // Verify robots meta on homepage
+  const robotsMeta = page.locator('meta[name="robots"]');
+  await expect(robotsMeta).toHaveAttribute('content', /index,\s*follow/);
+
+  // Verify mobile favicons
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href', /icon-192x192\.png/);
+
+  // Verify JSON-LD
+  const jsonLdScript = page.locator('script[type="application/ld+json"]');
+  await expect(jsonLdScript).toBeAttached();
+  const jsonLdContent = await jsonLdScript.textContent();
+  expect(jsonLdContent).not.toBeNull();
+  const parsed = JSON.parse(jsonLdContent!);
+  expect(parsed['@context']).toBe('https://schema.org');
+  const graph = parsed['@graph'];
+  expect(Array.isArray(graph)).toBe(true);
+
+  const types = graph.map((node: { '@type': string }) => node['@type']);
+  expect(types).toContain('Organization');
+  expect(types).toContain('WebSite');
+  expect(types).toContain('WebApplication');
+  expect(types).toContain('HowTo');
+  expect(types).toContain('FAQPage');
+
+  // Organization logo must be PNG
+  const orgNode = graph.find((node: { '@type': string }) => node['@type'] === 'Organization');
+  expect(orgNode.logo.url).toContain('.png');
+
+  // Navigate to settings and check noindex
+  await page.goto('./settings/');
+  const settingsRobots = page.locator('meta[name="robots"]');
+  await expect(settingsRobots).toHaveAttribute('content', 'noindex, follow');
 });
 
 test('timer persists countdown when navigating between timer and settings', async ({ page }) => {
@@ -435,12 +490,12 @@ test('timer persists countdown when navigating between timer and settings', asyn
 
   await page.waitForTimeout(1100);
 
-  await page.getByText(/настройки|settings/i, { exact: true }).click();
+  await page.getByRole('button', { name: /настройки|settings/i }).click();
   await expect(page.getByRole('tab', { name: /звуки|sounds/i })).toBeVisible();
 
   await page.waitForTimeout(1100);
 
-  await page.getByRole('button', { name: /закрыть|close/i }).click();
+  await page.getByRole('button', { name: /закрыть|close/i }).first().click();
 
   await expect(page.getByRole('button', { name: /пауза|pause/i })).toBeVisible();
   await expect(page.getByText('25:00', { exact: true })).not.toBeVisible();

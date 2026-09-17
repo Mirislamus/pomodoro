@@ -68,8 +68,10 @@ const AppShellContent = ({ currentView = 'timer', children }: AppShellProps) => 
 
   const onSettingsClickHandler = () => {
     if (isSettings) {
+      setActiveView('timer');
       appNavigate('/');
     } else {
+      setActiveView('settings');
       appNavigate('/settings/');
     }
   };

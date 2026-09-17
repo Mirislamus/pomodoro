@@ -33,6 +33,17 @@ export const locales: Record<string, LocaleMeta> = {
     settingsDescription:
       'Настройте таймер Pomotomo под себя: длительность сессий, короткие и длинные перерывы, звуки и уведомления.',
   },
+  uz: {
+    code: 'uz-UZ',
+    lang: 'uz',
+    name: "O'zbekcha",
+    title: 'Pomotomo — Diqqatni Jamlash Pomodoro Taymeri',
+    description:
+      'Pomotomo — unumdorlikni oshirish uchun shaxsiy pomodoro taymeri. Vazifalarni tanaffuslar bilan qisqa seanslarga boʻlib, samarali ishlang.',
+    settingsTitle: 'Sozlamalar — Pomotomo',
+    settingsDescription:
+      'Pomotomo taymerini oʻzingizga moslang: seanslar davomiyligi, qisqa va uzun tanaffuslar, ovozlar va bildirishnomalar.',
+  },
   de: {
     code: 'de-DE',
     lang: 'de',

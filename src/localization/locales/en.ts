@@ -4,6 +4,7 @@ const en = {
   lang: 'Language',
   en: 'English',
   ru: 'Russian',
+  uz: 'Uzbek',
   de: 'German',
   light_mode: 'Light mode',
   dark_mode: 'Dark mode',

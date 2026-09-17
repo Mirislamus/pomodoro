@@ -53,6 +53,11 @@ const useGetLocales = (lang?: Locale): LocaleData | UseGetLocalesReturnType => {
       name: t(Locale.Ru),
       onChangeLang: () => handleLanguageChange(Locale.Ru),
     },
+    [Locale.Uz]: {
+      id: Locale.Uz,
+      name: t(Locale.Uz),
+      onChangeLang: () => handleLanguageChange(Locale.Uz),
+    },
     [Locale.De]: {
       id: Locale.De,
       name: t(Locale.De),

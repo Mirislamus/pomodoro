@@ -16,7 +16,8 @@ const useTickSound = (): TickSoundReturnType => {
 
   useEffect(() => {
     if (settings.tickSound) {
-      setAudio(`/pomodoro/sounds/tick/${settings.tickSound}.mp3`);
+      const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+      setAudio(`${baseUrl}/sounds/tick/${settings.tickSound}.mp3`);
     }
   }, [settings.tickSound, setAudio]);
 

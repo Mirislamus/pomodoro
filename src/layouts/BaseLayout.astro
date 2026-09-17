@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import '../theme/typography/fonts.css';
+import SchemaOrg from '../components/SEO/SchemaOrg.astro';
 
 interface Props {
   title: string;
@@ -11,17 +12,18 @@ interface Props {
 
 const { title, description, lang = 'en', isSettings = false } = Astro.props;
 
-const siteUrl = 'https://mirislamus.github.io';
+const siteUrl = Astro.site ? Astro.site.origin : 'https://mirislamus.github.io';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const baseUrl = base || '/pomodoro';
+const baseUrl = typeof base === 'string' ? base : '';
 
 // Construct canonical and hreflang URLs
 const currentPath = isSettings ? 'settings/' : '';
 const enUrl = `${siteUrl}${baseUrl}/${currentPath}`;
 const ruUrl = `${siteUrl}${baseUrl}/ru/${currentPath}`;
+const uzUrl = `${siteUrl}${baseUrl}/uz/${currentPath}`;
 const deUrl = `${siteUrl}${baseUrl}/de/${currentPath}`;
 
-const canonicalUrl = lang === 'ru' ? ruUrl : lang === 'de' ? deUrl : enUrl;
+const canonicalUrl = lang === 'ru' ? ruUrl : lang === 'uz' ? uzUrl : lang === 'de' ? deUrl : enUrl;
 ---
 
 <!doctype html>
@@ -50,16 +52,34 @@ const canonicalUrl = lang === 'ru' ? ruUrl : lang === 'de' ? deUrl : enUrl;
     <title>{title}</title>
     <meta name="description" content={description} />
 
+    {isSettings ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    )}
+
     <link rel="icon" type="image/svg+xml" href={`${baseUrl}/images/favicons/favicon.svg`} />
     <link rel="icon" type="image/x-icon" href={`${baseUrl}/images/favicons/favicon.ico`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${baseUrl}/images/icons/icon-192x192.png`} />
+    <link rel="icon" type="image/png" sizes="192x192" href={`${baseUrl}/images/icons/icon-192x192.png`} />
+    <link rel="icon" type="image/png" sizes="512x512" href={`${baseUrl}/images/icons/icon-512x512.png`} />
     <link rel="manifest" href={`${baseUrl}/manifest.webmanifest`} />
 
     <meta name="msapplication-TileColor" content="#ED4455" />
     <meta name="theme-color" content="#ED4455" />
 
+    <SchemaOrg
+      siteUrl={siteUrl}
+      baseUrl={baseUrl}
+      canonicalUrl={canonicalUrl}
+      lang={lang}
+      isSettings={isSettings}
+    />
+
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="ru" href={ruUrl} />
+    <link rel="alternate" hreflang="uz" href={uzUrl} />
     <link rel="alternate" hreflang="de" href={deUrl} />
     <link rel="alternate" hreflang="x-default" href={enUrl} />
 

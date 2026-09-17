@@ -3,6 +3,7 @@ const de = {
   lang_selection: 'Sprachauswahl',
   lang: 'Sprache',
   ru: 'Russisch',
+  uz: 'Usbekisch',
   en: 'Englisch',
   de: 'Deutsch',
   light_mode: 'Heller Modus',

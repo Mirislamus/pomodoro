@@ -4,19 +4,26 @@ import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
 import meta from './src/data/meta.ts';
 
+const site = 'https://mirislamus.github.io';
+const base = '/pomodoro';
+const normalizedBase = base.replace(/\/$/, '');
+const pwaBase = normalizedBase ? `${normalizedBase}/` : '/';
+
 export default defineConfig({
-  site: 'https://mirislamus.github.io',
-  base: '/pomodoro',
+  site,
+  base,
   trailingSlash: 'ignore',
   integrations: [
     react(),
     sitemap({
+      filter: (page) => !page.includes('/settings'),
       i18n: {
         defaultLocale: 'en',
         locales: {
-          en: 'en-US',
-          ru: 'ru-RU',
-          de: 'de-DE',
+          en: 'en',
+          ru: 'ru',
+          uz: 'uz',
+          de: 'de',
         },
       },
     }),
@@ -28,9 +35,9 @@ export default defineConfig({
         description: meta.description,
         theme_color: meta.color,
         background_color: meta.color,
-        id: '/pomodoro/',
-        start_url: '/pomodoro/',
-        scope: '/pomodoro/',
+        id: pwaBase,
+        start_url: pwaBase,
+        scope: pwaBase,
         display: 'fullscreen',
         display_override: ['fullscreen', 'standalone', 'minimal-ui', 'browser'],
         categories: ['education', 'productivity'],
@@ -67,9 +74,10 @@ export default defineConfig({
         ],
       },
       workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.startsWith('/pomodoro/images/'),
+            urlPattern: ({ url }) => url.pathname.startsWith(`${pwaBase}images/`),
             handler: 'CacheFirst',
             options: {
               cacheName: 'image-cache',

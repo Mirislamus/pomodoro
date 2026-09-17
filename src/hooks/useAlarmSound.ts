@@ -12,7 +12,8 @@ const useAlarmSound = (): AlarmSoundReturnType => {
 
   useEffect(() => {
     if (settings.alarmSound) {
-      setAudio(`/pomodoro/sounds/alarm/${settings.alarmSound}.mp3`);
+      const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
+      setAudio(`${baseUrl}/sounds/alarm/${settings.alarmSound}.mp3`);
     }
   }, [settings.alarmSound, setAudio]);
 

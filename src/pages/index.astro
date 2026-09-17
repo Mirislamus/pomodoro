@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AppShell from '../app/AppShell';
+import SEOContent from '../components/SEO/SEOContent.astro';
 import locales from '../data/locales';
 
 const locale = 'en';
@@ -9,4 +10,5 @@ const { title, description } = locales[locale];
 
 <BaseLayout title={title} description={description} lang={locale}>
   <AppShell client:load transition:persist="pomotomo-app" locale={locale} currentView="timer" />
+  <SEOContent lang={locale} />
 </BaseLayout>
