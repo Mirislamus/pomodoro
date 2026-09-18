@@ -27,7 +27,7 @@ i18n
       },
       de: {
         translation: de,
-      }
+      },
     },
     fallbackLng: Locale.En,
     interpolation: {

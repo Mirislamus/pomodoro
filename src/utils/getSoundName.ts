@@ -1,5 +1,5 @@
-import { AlarmSound, TickSound } from "../typings/enums";
-import { Sound } from "../typings/types";
+import { AlarmSound, TickSound } from '../typings/enums';
+import { Sound } from '../typings/types';
 
 export const getSoundName = (name: AlarmSound | TickSound, sounds: Sound[]): string => {
   const foundSound = sounds.find(item => item.id === name);

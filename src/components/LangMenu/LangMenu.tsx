@@ -13,21 +13,11 @@ const LangMenu = ({ isOpen, onClose }: LangMenuProps) => {
   const handlers = useSwipeable({ onSwipedRight: onClose, delta: 50, trackMouse: true });
 
   return (
-    <Drawer.Root
-      open={isOpen}
-      placement="end"
-      lazyMount
-      unmountOnExit
-      onOpenChange={({ open }) => !open && onClose()}
-    >
+    <Drawer.Root open={isOpen} placement="end" lazyMount unmountOnExit onOpenChange={({ open }) => !open && onClose()}>
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
-          <Drawer.Content
-            aria-hidden={!isOpen}
-            maxW={{ base: '100%', md: '300px' }}
-            {...handlers}
-          >
+          <Drawer.Content aria-hidden={!isOpen} maxW={{ base: '100%', md: '300px' }} {...handlers}>
             <Drawer.Header
               display="flex"
               justifyContent="space-between"
@@ -48,13 +38,8 @@ const LangMenu = ({ isOpen, onClose }: LangMenuProps) => {
                 </Text>
               </Drawer.Title>
               <Drawer.CloseTrigger asChild>
-                <ActionButton
-                  boxSize="40px"
-                  display={{ base: 'none', md: 'flex' }}
-                  variant="fill"
-                  onClick={onClose}
-                >
-                  <IconClose boxSize="12px" />
+                <ActionButton boxSize="40px" display={{ base: 'none', md: 'flex' }} variant="fill" onClick={onClose}>
+                  <IconClose boxSize="24px" />
                 </ActionButton>
               </Drawer.CloseTrigger>
               <ActionButton boxSize="40px" display={{ base: 'flex', md: 'none' }} icon={IconArrow} onClick={onClose} />

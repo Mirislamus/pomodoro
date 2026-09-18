@@ -36,7 +36,7 @@ const semanticTokens = {
         _default: 'blackAlpha.50',
       },
       tooltip: {
-        _light: 'grey.7',
+        _light: 'black.1',
         _dark: 'black.3',
       },
       toast: {

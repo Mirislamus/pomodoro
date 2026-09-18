@@ -10,6 +10,8 @@ const textStyles = {
         md: '145px',
       },
       fontWeight: 'medium',
+      fontVariantNumeric: 'tabular-nums',
+      textAlign: 'center',
     },
     md: {
       fontSize: {
@@ -21,6 +23,8 @@ const textStyles = {
         md: '125px',
       },
       fontWeight: 'medium',
+      fontVariantNumeric: 'tabular-nums',
+      textAlign: 'center',
     },
     sm: {
       fontSize: '14px',

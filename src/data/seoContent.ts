@@ -103,7 +103,7 @@ export const seoContent: Record<string, SEOData> = {
       {
         question: 'How does Pomotomo protect my privacy?',
         answer:
-          'Pomotomo does not collect analytics or personal data. Your settings, sound selections, and theme preferences are stored strictly in your browser\'s local storage.',
+          "Pomotomo does not collect analytics or personal data. Your settings, sound selections, and theme preferences are stored strictly in your browser's local storage.",
       },
     ],
   },
@@ -180,8 +180,7 @@ export const seoContent: Record<string, SEOData> = {
       },
       {
         question: 'Приложение бесплатно?',
-        answer:
-          'Да, Pomotomo полностью бесплатно, не содержит платных функций, подписок и встроенной рекламы.',
+        answer: 'Да, Pomotomo полностью бесплатно, не содержит платных функций, подписок и встроенной рекламы.',
       },
       {
         question: 'Куда сохраняются мои настройки?',
@@ -220,8 +219,7 @@ export const seoContent: Record<string, SEOData> = {
       },
     ],
     howToTitle: 'Pomotomo Bilan Ishlashning 5 Oson Qadami',
-    howToDescription:
-      'Pomotomo yordamida kuningizni maksimal unumli o‘tkazish uchun ushbu 5 qadamga amal qiling.',
+    howToDescription: 'Pomotomo yordamida kuningizni maksimal unumli o‘tkazish uchun ushbu 5 qadamga amal qiling.',
     steps: [
       {
         name: 'Bitta aniq vazifani tanlang',
@@ -263,8 +261,7 @@ export const seoContent: Record<string, SEOData> = {
       },
       {
         question: 'Pomotomo bepulmi?',
-        answer:
-          'Ha, dastur mutlaqo bepul, unda obuna, pullik cheklovlar yoki reklamalar mavjud emas.',
+        answer: 'Ha, dastur mutlaqo bepul, unda obuna, pullik cheklovlar yoki reklamalar mavjud emas.',
       },
       {
         question: 'Mening sozlamalarim qayerda saqlanadi?',
@@ -346,8 +343,7 @@ export const seoContent: Record<string, SEOData> = {
       },
       {
         question: 'Ist Pomotomo kostenlos?',
-        answer:
-          'Pomotomo ist vollkommen kostenlos, werbefrei und erfordert weder ein Konto noch ein Abonnement.',
+        answer: 'Pomotomo ist vollkommen kostenlos, werbefrei und erfordert weder ein Konto noch ein Abonnement.',
       },
       {
         question: 'Werden meine Einstellungen gespeichert?',

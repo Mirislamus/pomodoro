@@ -34,7 +34,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
   const initialTime = currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds;
   const [countdown, setCountdownState] = useState<number>(initialTime);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  
+
   const endTimeRef = useRef<number>(0);
   const onCompleteRef = useRef(onComplete);
   const onTickRef = useRef(onTick);
@@ -51,27 +51,33 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
     }
   }, [currentMilliseconds, maxMilliseconds]);
 
-  const startTimer = useCallback((newMilliseconds?: number) => {
-    const milliseconds = newMilliseconds ?? countdown;
-    if (newMilliseconds !== undefined) {
-      setCountdownState(newMilliseconds);
-    }
-    endTimeRef.current = Date.now() + milliseconds;
-    setIsPlaying(true);
-    onStart();
-  }, [countdown, onStart]);
+  const startTimer = useCallback(
+    (newMilliseconds?: number) => {
+      const milliseconds = newMilliseconds ?? countdown;
+      if (newMilliseconds !== undefined) {
+        setCountdownState(newMilliseconds);
+      }
+      endTimeRef.current = Date.now() + milliseconds;
+      setIsPlaying(true);
+      onStart();
+    },
+    [countdown, onStart]
+  );
 
   const pauseTimer = useCallback(() => {
     setIsPlaying(false);
     onPause();
   }, [onPause]);
 
-  const resetTimer = useCallback((newMaxMs?: number) => {
-    const ms = newMaxMs !== undefined ? newMaxMs : maxMilliseconds;
-    setCountdownState(ms);
-    setIsPlaying(false);
-    onReset();
-  }, [maxMilliseconds, onReset]);
+  const resetTimer = useCallback(
+    (newMaxMs?: number) => {
+      const ms = newMaxMs !== undefined ? newMaxMs : maxMilliseconds;
+      setCountdownState(ms);
+      setIsPlaying(false);
+      onReset();
+    },
+    [maxMilliseconds, onReset]
+  );
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -94,7 +100,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
         tick();
       }
     };
-    
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {

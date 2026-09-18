@@ -39,7 +39,6 @@ const useTickSound = (): TickSoundReturnType => {
     }
   };
 
-
   return {
     play: playTickSound,
     stop,

@@ -97,9 +97,7 @@ const AppShellContent = ({ currentView = 'timer', children }: AppShellProps) => 
         ) : (
           <>
             <TimerView hidden={activeView !== 'timer'} />
-            {activeView === 'settings' && (
-              <SettingsView onClose={onSettingsClickHandler} />
-            )}
+            {activeView === 'settings' && <SettingsView onClose={onSettingsClickHandler} />}
           </>
         )}
         <Footer

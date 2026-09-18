@@ -1,16 +1,12 @@
+import * as React from 'react';
 import { Button, Icon } from '@chakra-ui/react';
 import { ActionButtonProps } from './types';
 import { ease } from '../../../theme/foundations/transitions';
 
-const ActionButton = ({
-  icon,
-  onClick,
-  variant = 'stroke',
-  size = 'md',
-  isDisabled = false,
-  children,
-  ...rest
-}: ActionButtonProps) => {
+const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(function ActionButton(
+  { icon, onClick, variant = 'stroke', size = 'md', isDisabled = false, children, ...rest },
+  ref
+) {
   const iconSize = size === 'sm' ? '24px' : '28px';
   const boxSize = {
     sm: '42px',
@@ -33,6 +29,7 @@ const ActionButton = ({
 
   return (
     <Button
+      ref={ref}
       unstyled
       flexShrink="0"
       transition={ease}
@@ -50,6 +47,6 @@ const ActionButton = ({
       {children}
     </Button>
   );
-};
+});
 
 export default ActionButton;

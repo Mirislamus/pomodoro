@@ -23,13 +23,7 @@ const PercentSlider = ({ onChange, title, defaultValue }: PercentSliderProps) =>
         >
           <Slider.Control h="24px">
             <Slider.Track h="4px" overflow="visible" borderRadius="2px" bgColor="slider.track" boxShadow="none">
-              <Slider.Range
-                h="6px"
-                top="50%"
-                transform="translateY(-50%)"
-                borderRadius="2px"
-                bgColor="accent.red"
-              />
+              <Slider.Range h="6px" top="50%" transform="translateY(-50%)" borderRadius="2px" bgColor="accent.red" />
             </Slider.Track>
             <Slider.Thumb
               index={0}

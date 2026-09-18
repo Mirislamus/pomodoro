@@ -23,13 +23,7 @@ const StageModal = ({ isOpen, onClose }: StageModalProps) => {
       <Portal>
         <Dialog.Backdrop bgColor="rgba(0, 0, 0, 0.48)" />
         <Dialog.Positioner alignItems="flex-start">
-          <Dialog.Content
-            my="64px"
-            p="24px 24px 30px"
-            borderRadius="20px"
-            bgColor="background.secondary"
-            maxW="328px"
-          >
+          <Dialog.Content my="64px" p="24px 24px 30px" borderRadius="20px" bgColor="background.secondary" maxW="328px">
             <Dialog.Header
               display="flex"
               alignItems="center"

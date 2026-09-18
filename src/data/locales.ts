@@ -36,7 +36,7 @@ export const locales: Record<string, LocaleMeta> = {
   uz: {
     code: 'uz-UZ',
     lang: 'uz',
-    name: "O'zbekcha",
+    name: 'O‘zbekcha',
     title: 'Pomotomo — Diqqatni Jamlash Pomodoro Taymeri',
     description:
       'Pomotomo — unumdorlikni oshirish uchun shaxsiy pomodoro taymeri. Vazifalarni tanaffuslar bilan qisqa seanslarga boʻlib, samarali ishlang.',

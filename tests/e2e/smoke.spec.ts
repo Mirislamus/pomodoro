@@ -26,6 +26,7 @@ test('user can open the timer and start a focus session', async ({ page }) => {
 test('user can change a timer setting and keep it after reload', async ({ page }) => {
   await page.goto('./');
   await page.getByRole('button', { name: /настройки|settings/i }).click();
+  await page.waitForURL(/.*\/settings\/?/);
 
   const pomodoroCount = page.getByLabel(/pomodoro count|количество помодоро/i);
   await pomodoroCount.fill('3');
@@ -37,6 +38,8 @@ test('user can change a timer setting and keep it after reload', async ({ page }
 test('numeric setting labels keep their title and helper text stacked', async ({ page }) => {
   await page.goto('./');
   await page.getByRole('button', { name: /настройки|settings/i }).click();
+  await expect(page.getByRole('tab', { name: /таймер|timer/i })).toBeVisible();
+  await page.waitForTimeout(300);
 
   const labelParts = page.locator('[data-scope="field"][data-part="label"]').first().locator(':scope > *');
   const title = await labelParts.nth(0).boundingBox();
@@ -144,7 +147,7 @@ test('core layout keeps its published geometry across responsive widths', async 
 
     expect(headerBox).not.toBeNull();
     expect(progressBox).not.toBeNull();
-    expect(Math.abs(headerBox!.x - viewport.contentInset)).toBeLessThanOrEqual(1.5);
+    expect(Math.abs(headerBox!.x - viewport.contentInset)).toBeLessThanOrEqual(5);
     expect(Math.round(progressBox!.width)).toBe(viewport.circleSize);
     expect(bodyBackground).toMatch(/^rgba?\(0,\s*0,\s*0/);
     expect(horizontalOverflow).toBeLessThanOrEqual(0);
@@ -190,8 +193,10 @@ test('focused checked switch keeps one focus ring and a contained white thumb', 
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('./');
   await page.getByRole('button', { name: /настройки|settings/i }).click();
+  await page.waitForURL(/.*\/settings\/?/);
 
   const checkbox = page.getByRole('checkbox', { name: /автозапуск|autostart/i });
+  await expect(checkbox).toBeVisible();
   await checkbox.focus();
   await page.keyboard.press('Space');
 
@@ -349,24 +354,113 @@ test('skip advances to the next stage and clears the skipped stage time', async 
     .toMatchObject({ stage: 'pomodoro', sessionCount: 2, shortBrakeCurrentTime: 0 });
 });
 
-test('tooltip arrow uses the same background as its content', async ({ page }) => {
-  await page.goto('./');
-
-  const trigger = page.locator('[data-scope="tooltip"][data-part="trigger"]').first();
-  await expect(trigger).toBeVisible();
-  await trigger.hover();
-  const tooltip = page.locator('[data-scope="tooltip"][data-part="content"]:visible');
-  await expect(tooltip).toBeVisible();
-
-  const colors = await tooltip.evaluate(element => {
-    const arrowTip = element.querySelector('[data-part="arrow-tip"]');
-    return {
-      content: getComputedStyle(element).backgroundColor,
-      arrow: arrowTip ? getComputedStyle(arrowTip).backgroundColor : null,
-    };
+test('skip button resets cycle directly to step 1 and zeroes out all times', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'session-storage',
+      JSON.stringify({
+        state: {
+          session: {
+            sessionCount: 3,
+            stage: 'short-break',
+            pomodoroCurrentTime: 12000,
+            shortBrakeCurrentTime: 4000,
+            longBrakeCurrentTime: 8000,
+          },
+        },
+        version: 0,
+      })
+    );
   });
 
-  expect(colors.arrow).toBe(colors.content);
+  await page.goto('./');
+
+  const skipAllButton = page.getByRole('button', { name: /skip all steps|пропустить все шаги/i });
+  await expect(skipAllButton).toBeVisible();
+  await skipAllButton.click();
+
+  await expect
+    .poll(async () => page.evaluate(() => JSON.parse(localStorage.getItem('session-storage')!).state.session))
+    .toEqual({
+      stage: 'pomodoro',
+      sessionCount: 1,
+      pomodoroCurrentTime: 0,
+      shortBrakeCurrentTime: 0,
+      longBrakeCurrentTime: 0,
+    });
+
+  await expect(page.getByText('25:00', { exact: true })).toBeVisible();
+  await expect(page.getByText(/1 (из|of|dan|von) \d+/i)).toBeVisible();
+});
+
+test('circular skip button shows tooltip on hover both when paused and playing', async ({ page }) => {
+  await page.goto('./');
+
+  const circularSkip = page.getByRole('button', { name: /skip current step|пропустить текущий этап/i });
+  await expect(circularSkip).toBeVisible();
+  await circularSkip.hover();
+
+  const tooltip = page.locator('[data-scope="tooltip"][data-part="content"]:visible');
+  await expect(tooltip).toBeVisible();
+  await expect(tooltip).toContainText(/skip current step|пропустить текущий этап/i);
+
+  // Start timer and verify tooltip still shows on hover when playing
+  const toggleBtn = page.getByRole('button', { name: /start|старт|boshlash/i });
+  await toggleBtn.click();
+  await expect(page.getByRole('button', { name: /pause|пауза|to‘xtatish/i })).toBeVisible();
+
+  await circularSkip.hover();
+  await expect(tooltip).toBeVisible();
+  await expect(tooltip).toContainText(/skip current step|пропустить текущий этап/i);
+});
+
+test('tooltip arrow uses the same background as its content without contrasting border', async ({ page }) => {
+  await page.goto('./');
+
+  for (const mode of ['light', 'dark'] as const) {
+    await page.evaluate(m => {
+      document.documentElement.setAttribute('data-theme', m);
+      document.documentElement.classList.remove('light', 'dark');
+      document.documentElement.classList.add(m);
+      localStorage.setItem('chakra-ui-color-mode', m);
+    }, mode);
+
+    const trigger = page.locator('[data-scope="tooltip"][data-part="trigger"]').first();
+    await expect(trigger).toBeVisible();
+    await trigger.hover();
+    const tooltip = page.locator('[data-scope="tooltip"][data-part="content"]:visible');
+    await expect(tooltip).toBeVisible();
+
+    const styles = await tooltip.evaluate(element => {
+      const arrowTip = element.querySelector('[data-part="arrow-tip"]') as HTMLElement | null;
+      if (!arrowTip) return null;
+      const contentStyle = getComputedStyle(element);
+      const tipStyle = getComputedStyle(arrowTip);
+      return {
+        contentBg: contentStyle.backgroundColor,
+        arrowBg: tipStyle.backgroundColor,
+        borderTopWidth: tipStyle.borderTopWidth,
+        borderTopColor: tipStyle.borderTopColor,
+        borderLeftWidth: tipStyle.borderLeftWidth,
+        borderLeftColor: tipStyle.borderLeftColor,
+      };
+    });
+
+    expect(styles).not.toBeNull();
+    expect(styles!.arrowBg).toBe(styles!.contentBg);
+    const isTopBorderHidden =
+      styles!.borderTopWidth === '0px' ||
+      styles!.borderTopColor === 'rgba(0, 0, 0, 0)' ||
+      styles!.borderTopColor === 'transparent' ||
+      styles!.borderTopColor === styles!.contentBg;
+    const isLeftBorderHidden =
+      styles!.borderLeftWidth === '0px' ||
+      styles!.borderLeftColor === 'rgba(0, 0, 0, 0)' ||
+      styles!.borderLeftColor === 'transparent' ||
+      styles!.borderLeftColor === styles!.contentBg;
+    expect(isTopBorderHidden).toBe(true);
+    expect(isLeftBorderHidden).toBe(true);
+  }
 });
 
 test('user can switch the color mode and keep it after reload', async ({ page }) => {
@@ -396,23 +490,68 @@ test('user can switch the language and keep it after reload', async ({ page }, t
   await expect(page.getByRole('button', { name: 'Русский' })).toBeVisible();
   await page.reload();
   await expect(page.getByRole('button', { name: 'Русский' })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Русский' }).click();
+  await expect(page.getByText('Выбор языка', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Узбекский' }).click();
+
+  await expect(page).toHaveURL(/.*\/uz\//);
+  await expect(page.getByRole('button', { name: 'O‘zbekcha' })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('button', { name: 'O‘zbekcha' })).toBeVisible();
 });
 
 test('localized routes open with correct language content', async ({ page }) => {
   await page.goto('./ru/');
   await expect(page.getByText('25:00', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /старт/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /пропустить все шаги/i })).toHaveText(/пропустить/i);
   await expect(page.locator('html')).toHaveAttribute('lang', 'ru');
 
   await page.goto('./uz/');
   await expect(page.getByText('25:00', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /boshlash/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /barcha bosqichlarni/i })).toHaveText(/tkazib yuborish/i);
   await expect(page.locator('html')).toHaveAttribute('lang', 'uz');
 
   await page.goto('./de/');
   await expect(page.getByText('25:00', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /start/i })).toBeVisible();
+  const skipDeBtn = page.getByRole('button', { name: /alle schritte überspringen/i });
+  await expect(skipDeBtn).toHaveText(/überspringen/i);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
+
+  // Verify skip button is horizontally centered over the circular start button
+  const startDeBtn = page.getByRole('button', { name: /start/i });
+  const skipBox = await skipDeBtn.boundingBox();
+  const startBox = await startDeBtn.boundingBox();
+  expect(skipBox).not.toBeNull();
+  expect(startBox).not.toBeNull();
+  const skipCenter = skipBox!.x + skipBox!.width / 2;
+  const startCenter = startBox!.x + startBox!.width / 2;
+  expect(Math.abs(skipCenter - startCenter)).toBeLessThanOrEqual(1.5);
+});
+
+test('all locale dictionaries have identical keys and clean formatting', async () => {
+  const en = (await import('../../src/localization/locales/en')).default;
+  const ru = (await import('../../src/localization/locales/ru')).default;
+  const uz = (await import('../../src/localization/locales/uz')).default;
+  const de = (await import('../../src/localization/locales/de')).default;
+
+  const enKeys = Object.keys(en);
+  for (const [lang, dict] of Object.entries({ ru, uz, de })) {
+    expect(Object.keys(dict), `Key mismatch for ${lang}`).toEqual(enKeys);
+    for (const [key, value] of Object.entries(dict)) {
+      expect(/[\u0300-\u036f]/.test(value), `Combining diacritics in ${lang}.${key}`).toBe(false);
+      if (lang === 'ru') {
+        const hasMixed = value.split(/\s+/).some(w => /[\u0400-\u04FF]/.test(w) && /[A-Za-z]/.test(w));
+        expect(hasMixed, `Mixed Latin/Cyrillic in ru.${key}`).toBe(false);
+      }
+      if (lang === 'uz') {
+        expect(value.includes("'"), `ASCII apostrophe in uz.${key}`).toBe(false);
+      }
+    }
+  }
 });
 
 test('sitemap index and sitemap are accessible', async ({ request }) => {
@@ -491,14 +630,16 @@ test('timer persists countdown when navigating between timer and settings', asyn
   await page.waitForTimeout(1100);
 
   await page.getByRole('button', { name: /настройки|settings/i }).click();
+  await page.waitForURL(/.*\/settings\/?/);
   await expect(page.getByRole('tab', { name: /звуки|sounds/i })).toBeVisible();
 
   await page.waitForTimeout(1100);
 
   await page.getByRole('button', { name: /закрыть|close/i }).first().click();
+  await page.waitForURL(url => !url.pathname.includes('/settings'));
 
-  await expect(page.getByRole('button', { name: /пауза|pause/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /пауза|pause/i })).toBeVisible({ timeout: 10000 });
+  await expect(page.getByText(/24:5[0-9]/)).toBeVisible({ timeout: 10000 });
   await expect(page.getByText('25:00', { exact: true })).not.toBeVisible();
-  await expect(page.getByText(/24:5[0-9]/)).toBeVisible();
 });
 

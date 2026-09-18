@@ -23,9 +23,22 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(function T
           <ChakraTooltip.Content ref={ref} {...contentProps}>
             {showArrow && (
               <ChakraTooltip.Arrow
-                style={{ '--arrow-background': 'var(--chakra-colors-background-tooltip)' } as React.CSSProperties}
+                style={
+                  {
+                    '--arrow-background': 'var(--tooltip-bg, var(--chakra-colors-background-tooltip))',
+                  } as React.CSSProperties
+                }
               >
-                <ChakraTooltip.ArrowTip />
+                <ChakraTooltip.ArrowTip
+                  style={
+                    {
+                      borderTopWidth: 0,
+                      borderLeftWidth: 0,
+                      borderWidth: 0,
+                      borderColor: 'transparent',
+                    } as React.CSSProperties
+                  }
+                />
               </ChakraTooltip.Arrow>
             )}
             {content}

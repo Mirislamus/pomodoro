@@ -32,6 +32,7 @@ const TimerView = ({ hidden }: TimerViewProps) => {
 
   const session = useSessionStore(state => state.session);
   const setSession = useSessionStore(state => state.setSession);
+  const resetSession = useSessionStore(state => state.resetSession);
 
   const alarmAndTickSoundControl = () => {
     playAlarmSound();
@@ -179,6 +180,14 @@ const TimerView = ({ hidden }: TimerViewProps) => {
     }
   };
 
+  const onSkipAllStepsClickHandler = () => {
+    stopTickSound();
+    prevStageRef.current = Stage.Pomodoro;
+    resetSession();
+    resetTimer(settings.duration);
+    countdownRef.current = settings.duration;
+  };
+
   const onResetButtonClickHandler = () => {
     stopTickSound();
     setStageCurrentTime(0);
@@ -283,7 +292,9 @@ const TimerView = ({ hidden }: TimerViewProps) => {
           </Text>
           <Text
             textStyle={getTitleStyle()}
-            minW={{ base: '200px', md: '340px' }}
+            textAlign="center"
+            fontVariantNumeric="tabular-nums"
+            w="full"
             marginBlockEnd={{ base: '65px', md: '35px' }}
           >
             {formatMilliseconds(countdown)}
@@ -297,30 +308,53 @@ const TimerView = ({ hidden }: TimerViewProps) => {
             pos={{ base: 'absolute', md: 'static' }}
           >
             <PomodoroTooltip label={t('reset_current_step')}>
-              <Box>
-                <ActionButton
-                  css={{
+              <ActionButton
+                css={{
+                  '& svg': {
+                    transition: ease,
+                  },
+                  _hover: {
                     '& svg': {
-                      transition: ease,
+                      transform: 'rotate(90deg)',
                     },
-                    _hover: {
-                      '& svg': {
-                        transform: 'rotate(90deg)',
-                      },
-                    },
-                  }}
-                  icon={IconRestart}
-                  onClick={onResetButtonClickHandler}
-                />
-              </Box>
+                  },
+                }}
+                icon={IconRestart}
+                onClick={onResetButtonClickHandler}
+                aria-label={t('reset_current_step')}
+              />
             </PomodoroTooltip>
-            <Button variant="circle" size="lg" css={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
-              {isPlaying ? t('pause') : t('start')}
-            </Button>
-            <PomodoroTooltip {...(isPlaying ? { label: t('skip_current_step') } : {})}>
-              <Box>
-                <ActionButton icon={IconSkip} onClick={onSkipButtonClickHandler} />
-              </Box>
+            <Box pos="relative" display="flex" justifyContent="center">
+              <PomodoroTooltip label={t('skip_all_steps')}>
+                <Button
+                  variant="ghost"
+                  size="xs"
+                  h="22px"
+                  px="10px"
+                  fontSize="11px"
+                  fontWeight="600"
+                  textTransform="uppercase"
+                  letterSpacing="0.08em"
+                  borderRadius="full"
+                  pos="absolute"
+                  top="-30px"
+                  left="50%"
+                  transform="translateX(-50%)"
+                  color="secondary"
+                  whiteSpace="nowrap"
+                  _hover={{ color: 'primary', bgColor: 'button.fill.hover' }}
+                  onClick={onSkipAllStepsClickHandler}
+                  aria-label={t('skip_all_steps')}
+                >
+                  {t('skip')}
+                </Button>
+              </PomodoroTooltip>
+              <Button variant="circle" size="lg" css={getToggleButtonStyles()} onClick={onToggleButtonClickHandler}>
+                {isPlaying ? t('pause') : t('start')}
+              </Button>
+            </Box>
+            <PomodoroTooltip label={t('skip_current_step')}>
+              <ActionButton icon={IconSkip} onClick={onSkipButtonClickHandler} aria-label={t('skip_current_step')} />
             </PomodoroTooltip>
           </HStack>
         </Flex>
@@ -330,4 +364,3 @@ const TimerView = ({ hidden }: TimerViewProps) => {
 };
 
 export default TimerView;
-

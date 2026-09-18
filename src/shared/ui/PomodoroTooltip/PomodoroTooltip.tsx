@@ -9,11 +9,14 @@ const PomodoroTooltip = ({ children, label, placement = 'top' }: PomodoroTooltip
     positioning={{ placement, gutter: 10 }}
     contentProps={{
       bg: 'background.tooltip',
-      color: 'primary',
+      color: 'white',
       textStyle: 'text.md',
       p: '10px',
       borderRadius: '10px',
       fontWeight: 400,
+      css: {
+        '--tooltip-bg': 'var(--chakra-colors-background-tooltip)',
+      },
     }}
   >
     {children}

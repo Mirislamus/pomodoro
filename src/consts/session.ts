@@ -1,5 +1,5 @@
-import { Stage } from "../typings/enums";
-import { Session } from "../typings/types";
+import { Stage } from '../typings/enums';
+import { Session } from '../typings/types';
 
 export const defaultSession: Session = {
   sessionCount: 1,
