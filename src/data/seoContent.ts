@@ -26,7 +26,7 @@ export interface SEOData {
 export const seoContent: Record<string, SEOData> = {
   en: {
     h1: 'Pomotomo — Free Online Pomodoro Timer for Deep Work & Productivity',
-    title: 'Pomotomo Focus Timer',
+    title: 'Pomotomo — Focus Timer',
     description:
       'Pomotomo is your personal pomodoro focus timer to increase productivity. Work efficiently by dividing tasks into short sessions with breaks. Ideal for focusing and completing tasks.',
     aboutTitle: 'Master Your Time with the Pomodoro Technique',
@@ -109,7 +109,7 @@ export const seoContent: Record<string, SEOData> = {
   },
   ru: {
     h1: 'Pomotomo — Бесплатный онлайн Помодоро таймер для продуктивной работы',
-    title: 'Помодоро Таймер Фокусировки — Pomotomo',
+    title: 'Pomotomo — Таймер фокусировки',
     description:
       'Pomotomo — ваш персональный таймер помодоро для повышения продуктивности. Работайте эффективно, разделяя задачи на короткие сессии с перерывами.',
     aboutTitle: 'Управляйте временем с помощью техники Помодоро',
@@ -191,7 +191,7 @@ export const seoContent: Record<string, SEOData> = {
   },
   uz: {
     h1: 'Pomotomo — Samarali Ish va Ta’lim Uchun Bepul Onlayn Pomodoro Taymeri',
-    title: 'Pomotomo — Diqqatni Jamlash Pomodoro Taymeri',
+    title: 'Pomotomo — Diqqatni jamlash taymeri',
     description:
       'Pomotomo — unumdorlikni oshirish uchun shaxsiy pomodoro taymeri. Vazifalarni tanaffuslar bilan qisqa seanslarga boʻlib, samarali ishlang.',
     aboutTitle: 'Pomodoro Texnikasi Bilan Vaqtingizni Boshqaring',
@@ -272,7 +272,7 @@ export const seoContent: Record<string, SEOData> = {
   },
   de: {
     h1: 'Pomotomo — Kostenloser Online-Pomodoro-Timer für Produktivität & Fokus',
-    title: 'Pomodoro Fokus-Timer — Pomotomo',
+    title: 'Pomotomo — Fokus-Timer',
     description:
       'Pomotomo ist Ihr persönlicher Pomodoro-Fokus-Timer zur Steigerung der Produktivität. Teilen Sie Ihre Aufgaben in kurze Arbeitsphasen mit Pausen ein.',
     aboutTitle: 'Meistern Sie Ihre Zeit mit der Pomodoro-Technik',

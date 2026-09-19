@@ -45,7 +45,7 @@ const AppShellContent = ({ currentView = 'timer', children }: AppShellProps) => 
         path = path.slice(baseUrl.length);
       }
       const segments = path.split('/').filter(Boolean);
-      const detectedLang = segments[0] === 'ru' || segments[0] === 'de' ? segments[0] : 'en';
+      const detectedLang = ['ru', 'uz', 'de'].includes(segments[0]) ? segments[0] : 'en';
       if (i18n.resolvedLanguage !== detectedLang) {
         i18n.changeLanguage(detectedLang);
       }

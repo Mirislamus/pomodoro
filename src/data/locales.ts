@@ -15,10 +15,10 @@ export const locales: Record<string, LocaleMeta> = {
     code: 'en-US',
     lang: 'en',
     name: 'English',
-    title: 'Pomotomo Focus Timer',
+    title: 'Pomotomo — Focus Timer',
     description:
-      'Pomotomo is your personal pomodoro focus timer to increase productivity. Work efficiently by dividing tasks into short sessions with breaks. Ideal for focusing and completing tasks.',
-    settingsTitle: 'Settings - Pomotomo Focus Timer',
+      'Pomotomo is your personal focus timer based on the Pomodoro Technique. Boost productivity by dividing tasks into focused sessions with regular breaks.',
+    settingsTitle: 'Settings — Pomotomo',
     settingsDescription:
       'Configure Pomotomo focus timer settings: durations, sounds, notifications, and autostart to suit your productivity workflow.',
   },
@@ -26,9 +26,9 @@ export const locales: Record<string, LocaleMeta> = {
     code: 'ru-RU',
     lang: 'ru',
     name: 'Русский',
-    title: 'Помодоро Таймер Фокусировки — Pomotomo',
+    title: 'Pomotomo — Таймер фокусировки',
     description:
-      'Pomotomo — ваш персональный таймер помодоро для повышения продуктивности. Работайте эффективно, разделяя задачи на короткие сессии с перерывами.',
+      'Pomotomo — ваш персональный таймер для продуктивной работы по технике Помодоро. Работайте эффективно, разделяя задачи на короткие сессии с перерывами.',
     settingsTitle: 'Настройки — Pomotomo',
     settingsDescription:
       'Настройте таймер Pomotomo под себя: длительность сессий, короткие и длинные перерывы, звуки и уведомления.',
@@ -37,9 +37,9 @@ export const locales: Record<string, LocaleMeta> = {
     code: 'uz-UZ',
     lang: 'uz',
     name: 'O‘zbekcha',
-    title: 'Pomotomo — Diqqatni Jamlash Pomodoro Taymeri',
+    title: 'Pomotomo — Diqqatni jamlash taymeri',
     description:
-      'Pomotomo — unumdorlikni oshirish uchun shaxsiy pomodoro taymeri. Vazifalarni tanaffuslar bilan qisqa seanslarga boʻlib, samarali ishlang.',
+      'Pomotomo — Pomodoro texnikasi asosida unumdorlikni oshirish uchun shaxsiy taymer. Vazifalarni tanaffuslar bilan qisqa seanslarga boʻlib, samarali ishlang.',
     settingsTitle: 'Sozlamalar — Pomotomo',
     settingsDescription:
       'Pomotomo taymerini oʻzingizga moslang: seanslar davomiyligi, qisqa va uzun tanaffuslar, ovozlar va bildirishnomalar.',
@@ -48,9 +48,9 @@ export const locales: Record<string, LocaleMeta> = {
     code: 'de-DE',
     lang: 'de',
     name: 'Deutsch',
-    title: 'Pomodoro Fokus-Timer — Pomotomo',
+    title: 'Pomotomo — Fokus-Timer',
     description:
-      'Pomotomo ist Ihr persönlicher Pomodoro-Fokus-Timer zur Steigerung der Produktivität. Teilen Sie Ihre Aufgaben in kurze Arbeitsphasen mit Pausen ein.',
+      'Pomotomo ist Ihr persönlicher Fokus-Timer nach der Pomodoro-Technik zur Steigerung der Produktivität. Teilen Sie Ihre Aufgaben in kurze Arbeitsphasen mit Pausen ein.',
     settingsTitle: 'Einstellungen — Pomotomo',
     settingsDescription:
       'Passen Sie die Pomotomo-Einstellungen an: Zeiten für Fokus und Pausen, Töne, Benachrichtigungen und Autostart.',

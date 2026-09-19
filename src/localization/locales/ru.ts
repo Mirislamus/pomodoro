@@ -38,10 +38,10 @@ const ru = {
   skip_current_step: 'Пропустить текущий этап',
   skip_all_steps: 'Пропустить все шаги',
   skip: 'Пропустить',
-  pomodoro_notification_short: `Помодоро закончилось, время небольшого перерыва`,
-  pomodoro_notification_long: `Помодоро закончилось, время большого перерыва`,
-  short_break_notification: `Небольшой перерыв закончился, время нового помодоро`,
-  long_break_notification: `Длинный перерыв закончился, время нового помодоро`,
+  pomodoro_notification_short: `Фокус-сессия окончена, время короткого перерыва`,
+  pomodoro_notification_long: `Фокус-сессия окончена, время длинного перерыва`,
+  short_break_notification: `Короткий перерыв окончен, пора вернуться к фокусу`,
+  long_break_notification: `Длинный перерыв окончен, пора вернуться к фокусу`,
 };
 
 export default ru;

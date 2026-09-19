@@ -511,7 +511,7 @@ test('localized routes open with correct language content', async ({ page }) => 
   await page.goto('./uz/');
   await expect(page.getByText('25:00', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /boshlash/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /barcha bosqichlarni/i })).toHaveText(/tkazib yuborish/i);
+  await expect(page.getByRole('button', { name: /barcha bosqichlarni/i })).toHaveText(/o‘tkazish/i);
   await expect(page.locator('html')).toHaveAttribute('lang', 'uz');
 
   await page.goto('./de/');

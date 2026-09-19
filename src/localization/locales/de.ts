@@ -18,7 +18,7 @@ const de = {
   pause: 'Pause',
   resume: 'Fortsetzen',
   close: 'Schließen',
-  stage_select: 'Stufe auswählen',
+  stage_select: 'Phase auswählen',
   timer: 'Timer',
   notifications: 'Benachrichtigungen',
   pomodoro_count_settings: 'Anzahl der Pomodoros',
@@ -38,10 +38,10 @@ const de = {
   skip_current_step: 'Aktuellen Schritt überspringen',
   skip_all_steps: 'Alle Schritte überspringen',
   skip: 'Überspringen',
-  pomodoro_notification_short: `Pomodoro ist vorbei, Zeit für eine kurze Pause`,
-  pomodoro_notification_long: `Pomodoro ist vorbei, Zeit für eine lange Pause`,
-  short_break_notification: `Die kurze Pause ist vorbei, Zeit für einen neuen Pomodoro`,
-  long_break_notification: `Die lange Pause ist vorbei, Zeit für einen neuen Pomodoro`,
+  pomodoro_notification_short: `Fokusphase beendet, Zeit für eine kurze Pause`,
+  pomodoro_notification_long: `Fokusphase beendet, Zeit für eine lange Pause`,
+  short_break_notification: `Kurze Pause beendet, Zeit für die nächste Fokusphase`,
+  long_break_notification: `Lange Pause beendet, Zeit für die nächste Fokusphase`,
 };
 
 export default de;

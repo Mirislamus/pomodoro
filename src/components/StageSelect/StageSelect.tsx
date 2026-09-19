@@ -4,9 +4,18 @@ import { IconChevronDown } from '../../theme/foundations/icons';
 import { ease } from '../../theme/foundations/transitions';
 import useGetStageColor from '../../hooks/useGetStageColor';
 import { getTextColor } from '../../utils';
+import { useTranslation } from 'react-i18next';
+import { Stage } from '../../typings/enums';
+
+const stageKeyMap: Record<Stage, 'pomodoro' | 'short_break' | 'long_break'> = {
+  [Stage.Pomodoro]: 'pomodoro',
+  [Stage.ShortBreak]: 'short_break',
+  [Stage.LongBreak]: 'long_break',
+};
 
 const _StageSelect = ({ stage, isActive = false, onClick, ...props }: StageSelectProps) => {
   const stageColor = useGetStageColor();
+  const { t } = useTranslation();
 
   return (
     <Flex
@@ -21,7 +30,9 @@ const _StageSelect = ({ stage, isActive = false, onClick, ...props }: StageSelec
       asChild
     >
       <button onClick={onClick}>
-        <Text textTransform="uppercase" textStyle="text.md" color={getTextColor(stage)}>{`${stage}`}</Text>
+        <Text textTransform="uppercase" textStyle="text.md" color={getTextColor(stage)}>
+          {t(stageKeyMap[stage] || 'pomodoro')}
+        </Text>
         <IconChevronDown
           transition={ease}
           transform={isActive ? 'scaleY(-1)' : ''}

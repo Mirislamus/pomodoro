@@ -38,10 +38,10 @@ const en = {
   skip_current_step: 'Skip current step',
   skip_all_steps: 'Skip all steps',
   skip: 'Skip',
-  pomodoro_notification_short: `Pomodoro is over, it's time for a short break`,
-  pomodoro_notification_long: `Pomodoro is over, it's time for a long break`,
-  short_break_notification: `Short break is over, it's time for a new pomodoro`,
-  long_break_notification: `Long break is over, it's time for a new pomodoro`,
+  pomodoro_notification_short: `Focus session is over, time for a short break`,
+  pomodoro_notification_long: `Focus session is over, time for a long break`,
+  short_break_notification: `Short break is over, time to focus`,
+  long_break_notification: `Long break is over, time to focus`,
 };
 
 export default en;

@@ -24,7 +24,7 @@ const uz = {
   pomodoro_count_settings: 'Pomodoro soni',
   pomodoro_duration_settings: 'Pomodoro davomiyligi',
   auto_start: 'Avtomatik boshlash',
-  up_to: 'gacha',
+  up_to: 'maks.',
   from: 'dan',
   minutes: 'daq',
   sounds: 'Ovozlar',
@@ -37,11 +37,11 @@ const uz = {
   reset_current_step: 'Joriy bosqichni qayta o‘rnatish',
   skip_current_step: 'Joriy bosqichni o‘tkazib yuborish',
   skip_all_steps: 'Barcha bosqichlarni o‘tkazib yuborish',
-  skip: 'O‘tkazib yuborish',
-  pomodoro_notification_short: `Pomodoro yakunlandi, qisqa tanaffus vaqti keldi`,
-  pomodoro_notification_long: `Pomodoro yakunlandi, uzoq tanaffus vaqti keldi`,
-  short_break_notification: `Qisqa tanaffus tugadi, yangi pomodoro boshlash vaqti`,
-  long_break_notification: `Uzun tanaffus tugadi, yangi pomodoro boshlash vaqti`,
+  skip: 'O‘tkazish',
+  pomodoro_notification_short: `Fokus seansi yakunlandi, qisqa tanaffus vaqti keldi`,
+  pomodoro_notification_long: `Fokus seansi yakunlandi, uzoq tanaffus vaqti keldi`,
+  short_break_notification: `Qisqa tanaffus tugadi, diqqatni jamlash vaqti`,
+  long_break_notification: `Uzoq tanaffus tugadi, diqqatni jamlash vaqti`,
 };
 
 export default uz;

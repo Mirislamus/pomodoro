@@ -329,20 +329,34 @@ const TimerView = ({ hidden }: TimerViewProps) => {
                 <Button
                   variant="ghost"
                   size="xs"
-                  h="22px"
-                  px="10px"
-                  fontSize="11px"
+                  h={{ base: '26px', md: '22px' }}
+                  px={{ base: '12px', md: '10px' }}
+                  fontSize={{ base: '11px', md: '11px' }}
                   fontWeight="600"
                   textTransform="uppercase"
                   letterSpacing="0.08em"
                   borderRadius="full"
                   pos="absolute"
-                  top="-30px"
+                  top={{ base: '-32px', md: '-30px' }}
                   left="50%"
                   transform="translateX(-50%)"
                   color="secondary"
                   whiteSpace="nowrap"
+                  zIndex="2"
+                  _before={{
+                    content: '""',
+                    pos: 'absolute',
+                    top: '-6px',
+                    bottom: '-6px',
+                    left: '-8px',
+                    right: '-8px',
+                  }}
                   _hover={{ color: 'primary', bgColor: 'button.fill.hover' }}
+                  _active={{
+                    color: 'primary',
+                    bgColor: 'button.fill.active',
+                    transform: 'translateX(-50%) scale(0.96)',
+                  }}
                   onClick={onSkipAllStepsClickHandler}
                   aria-label={t('skip_all_steps')}
                 >
