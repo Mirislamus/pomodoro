@@ -304,7 +304,7 @@ const TimerView = ({ hidden }: TimerViewProps) => {
             justifyContent="center"
             left="0"
             right="0"
-            bottom="-96px"
+            bottom="-118px"
             pos={{ base: 'absolute', md: 'static' }}
           >
             <PomodoroTooltip label={t('reset_current_step')}>
