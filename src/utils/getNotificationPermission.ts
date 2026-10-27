@@ -1,6 +1,2 @@
-export const getNotificationPermission = () => {
-  if ('Notification' in window) {
-    return Notification.permission;
-  }
-  return 'default';
-};
+export const getNotificationPermission = (): NotificationPermission =>
+  'Notification' in window ? Notification.permission : 'default';

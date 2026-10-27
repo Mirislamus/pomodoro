@@ -1,17 +1,11 @@
 import { Flex, Text, chakra } from '@chakra-ui/react';
-import { StateItemProps } from './types';
+import { useTranslation } from 'react-i18next';
+import { StageItemProps } from './types';
 import { IconTickLg } from '../../../theme/foundations/icons';
 import { ease, easeIn } from '../../../theme/foundations/transitions';
-import { useTranslation } from 'react-i18next';
-import { Stage } from '../../../typings/enums';
+import { stageConfig } from '../../../consts/stages';
 
-const stageKeyMap: Record<Stage, 'pomodoro' | 'short_break' | 'long_break'> = {
-  [Stage.Pomodoro]: 'pomodoro',
-  [Stage.ShortBreak]: 'short_break',
-  [Stage.LongBreak]: 'long_break',
-};
-
-const _StageItem = ({ stage, isActive, onClick, ...props }: StateItemProps) => {
+const _StageItem = ({ stage, isActive = false, onClick, ...props }: StageItemProps) => {
   const { t } = useTranslation();
 
   return (
@@ -25,12 +19,13 @@ const _StageItem = ({ stage, isActive, onClick, ...props }: StateItemProps) => {
       transition={ease}
       textTransform="uppercase"
       bgColor={isActive ? 'background.stageItem.active' : 'background.stageItem.default'}
+      _hover={isActive ? undefined : { bgColor: 'button.fill.hover' }}
       {...props}
       asChild
     >
-      <button onClick={onClick}>
-        <Text textStyle="text.md" color={isActive ? 'white' : 'primary'}>
-          {t(stageKeyMap[stage] || 'pomodoro')}
+      <button type="button" aria-pressed={isActive} onClick={onClick}>
+        <Text as="span" textStyle="text.md" color={isActive ? 'white' : 'primary'}>
+          {t(stageConfig[stage].labelKey)}
         </Text>
         <IconTickLg transition={easeIn} boxSize="24px" color="background.stageItem.tick" isActive={isActive} />
       </button>

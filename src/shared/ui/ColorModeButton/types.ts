@@ -1,6 +1,6 @@
-import type { ColorMode } from '../../../components/ui/color-mode';
+import type { ColorMode, TransitionOrigin } from '../../../components/ui/color-mode';
 
 export interface ColorModeButtonProps {
   colorMode: ColorMode;
-  onClick: () => void;
+  onClick: (origin: TransitionOrigin) => void;
 }

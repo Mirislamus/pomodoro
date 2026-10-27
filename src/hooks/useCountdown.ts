@@ -3,12 +3,11 @@ import { noop } from '../utils';
 
 interface UseCountdownOptions {
   maxMilliseconds: number;
+  /** Remaining time to resume from; `0` means the countdown starts from `maxMilliseconds`. */
   currentMilliseconds?: number;
   onStart?: () => void;
   onPause?: () => void;
-  onReset?: () => void;
   onComplete?: () => void;
-  onTick?: (remaining: number) => void;
 }
 
 interface CountdownState {
@@ -17,45 +16,42 @@ interface CountdownState {
   startTimer: (newMilliseconds?: number) => void;
   pauseTimer: () => void;
   resetTimer: (newMaxMs?: number) => void;
-  setCountdown: (val: number) => void;
 }
 
-const useCountdown = (options: UseCountdownOptions): CountdownState => {
-  const {
-    maxMilliseconds,
-    currentMilliseconds = maxMilliseconds,
-    onStart = noop,
-    onPause = noop,
-    onReset = noop,
-    onComplete = noop,
-    onTick = noop,
-  } = options;
+const TICK_INTERVAL = 200;
 
-  const initialTime = currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds;
-  const [countdown, setCountdownState] = useState<number>(initialTime);
+const useCountdown = ({
+  maxMilliseconds,
+  currentMilliseconds = maxMilliseconds,
+  onStart = noop,
+  onPause = noop,
+  onComplete = noop,
+}: UseCountdownOptions): CountdownState => {
+  const resumeFrom = currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds;
+  const [countdown, setCountdown] = useState<number>(resumeFrom);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
+  // The countdown is derived from a wall-clock deadline, so throttled background tabs stay accurate
   const endTimeRef = useRef<number>(0);
   const onCompleteRef = useRef(onComplete);
-  const onTickRef = useRef(onTick);
 
   useEffect(() => {
     onCompleteRef.current = onComplete;
-    onTickRef.current = onTick;
-  }, [onComplete, onTick]);
+  }, [onComplete]);
 
-  // Sync internal countdown when currentMilliseconds prop changes externally (e.g. stage change)
+  // Follow external changes (stage switch, new durations) while idle.
+  // `isPlaying` is intentionally not a dependency: pausing must keep the current countdown.
   useEffect(() => {
     if (!isPlaying) {
-      setCountdownState(currentMilliseconds > 0 ? currentMilliseconds : maxMilliseconds);
+      setCountdown(resumeFrom);
     }
-  }, [currentMilliseconds, maxMilliseconds]);
+  }, [resumeFrom]);
 
   const startTimer = useCallback(
     (newMilliseconds?: number) => {
       const milliseconds = newMilliseconds ?? countdown;
       if (newMilliseconds !== undefined) {
-        setCountdownState(newMilliseconds);
+        setCountdown(newMilliseconds);
       }
       endTimeRef.current = Date.now() + milliseconds;
       setIsPlaying(true);
@@ -71,12 +67,10 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
 
   const resetTimer = useCallback(
     (newMaxMs?: number) => {
-      const ms = newMaxMs !== undefined ? newMaxMs : maxMilliseconds;
-      setCountdownState(ms);
+      setCountdown(newMaxMs ?? maxMilliseconds);
       setIsPlaying(false);
-      onReset();
     },
-    [maxMilliseconds, onReset]
+    [maxMilliseconds]
   );
 
   useEffect(() => {
@@ -84,8 +78,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
 
     const tick = () => {
       const remaining = Math.max(endTimeRef.current - Date.now(), 0);
-      setCountdownState(remaining);
-      onTickRef.current(remaining);
+      setCountdown(remaining);
 
       if (remaining <= 0) {
         setIsPlaying(false);
@@ -93,7 +86,7 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
       }
     };
 
-    const intervalId = setInterval(tick, 200);
+    const intervalId = setInterval(tick, TICK_INTERVAL);
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
@@ -115,7 +108,6 @@ const useCountdown = (options: UseCountdownOptions): CountdownState => {
     startTimer,
     pauseTimer,
     resetTimer,
-    setCountdown: setCountdownState,
   };
 };
 

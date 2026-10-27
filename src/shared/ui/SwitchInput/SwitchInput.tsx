@@ -1,7 +1,7 @@
 import { Switch, Text } from '@chakra-ui/react';
 import { SwitchInputProps } from './types';
 
-const SwitchInput = ({ title, isChecked, isDisabled, onChange, ...props }: SwitchInputProps) => {
+const SwitchInput = ({ title, description, isChecked, isDisabled, onChange, ...props }: SwitchInputProps) => {
   return (
     <Switch.Root
       w="100%"
@@ -9,6 +9,7 @@ const SwitchInput = ({ title, isChecked, isDisabled, onChange, ...props }: Switc
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
+      gap="gap.16"
       cursor="pointer"
       checked={isChecked}
       disabled={isDisabled}
@@ -18,11 +19,16 @@ const SwitchInput = ({ title, isChecked, isDisabled, onChange, ...props }: Switc
     >
       <Switch.HiddenInput />
       <Switch.Label m="0">
-        <Text fontSize="16px" fontWeight="500" color="primary">
+        <Text as="span" display="block" fontSize="16px" fontWeight="500" color="primary">
           {title}
         </Text>
+        {description && (
+          <Text as="span" display="block" textStyle="text.md" fontWeight="400" color="grey.3">
+            {description}
+          </Text>
+        )}
       </Switch.Label>
-      <Switch.Control>
+      <Switch.Control flexShrink="0">
         <Switch.Thumb />
       </Switch.Control>
     </Switch.Root>

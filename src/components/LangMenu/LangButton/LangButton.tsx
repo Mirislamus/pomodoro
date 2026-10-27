@@ -1,40 +1,32 @@
-import { LangButtonProps } from './types';
 import { chakra, Flex } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
+import { LangButtonProps } from './types';
 import { ease } from '../../../theme/foundations/transitions';
 import { IconTickLg } from '../../../theme/foundations/icons';
 
-const _LangButton = ({ lang, onClick, isActive, ...rest }: LangButtonProps) => {
-  const { t } = useTranslation();
-
+const _LangButton = ({ name, onClick, isActive = false, ...rest }: LangButtonProps) => {
   return (
     <Flex
       w="100%"
       p="15px"
       textAlign="left"
+      alignItems="center"
       justifyContent="space-between"
+      color="primary"
       borderRadius="10px"
       transition={ease}
-      bgColor={isActive ? 'button.fill.default' : 'none'}
-      _hover={{
-        bgColor: 'button.fill.hover',
-      }}
-      _active={{
-        bgColor: 'button.fill.active',
-      }}
+      bgColor={isActive ? 'button.fill.default' : 'transparent'}
+      _hover={{ bgColor: 'button.fill.hover' }}
+      _active={{ bgColor: 'button.fill.active' }}
       {...rest}
       asChild
     >
-      <button onClick={onClick}>
-        {t(lang)}
-        <Flex opacity={isActive ? 1 : 0} transition={ease}>
-          <IconTickLg boxSize="24px" color="accent.red" />
-        </Flex>
+      <button type="button" aria-current={isActive ? 'true' : undefined} onClick={onClick}>
+        {name}
+        <IconTickLg boxSize="24px" color="accent.red" isActive={isActive} />
       </button>
     </Flex>
   );
 };
 
 const LangButton = chakra(_LangButton);
-
 export default LangButton;

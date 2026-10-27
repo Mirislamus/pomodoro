@@ -1,5 +1,5 @@
 export interface LangButtonProps {
-  lang: string;
+  name: string;
   isActive?: boolean;
   onClick: () => void;
 }

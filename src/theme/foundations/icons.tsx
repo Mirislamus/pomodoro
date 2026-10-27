@@ -1,5 +1,5 @@
 import { createIcon, Icon, IconProps } from '@chakra-ui/react';
-import { easeIn } from './transitions';
+import { ease, easeIn } from './transitions';
 
 interface IconLogoProps extends IconProps {
   stageColor: string;
@@ -20,7 +20,7 @@ export const IconLogo = (props: IconLogoProps) => {
   return (
     <Icon asChild {...rest}>
       <svg fill="none" viewBox="0 0 116 50">
-        <rect width="50" height="50" rx="10" fill={stageColor} />
+        <rect width="50" height="50" rx="10" fill={stageColor} style={{ transition: `fill ${ease}` }} />
         <path
           d="M8 25C8 15.6112 15.6112 8 25 8C34.3888 8 42 15.6112 42 25C42 34.3888 34.3888 42 25 42C15.6112 42 8 34.3888 8 25Z"
           stroke={pathColor}

@@ -10,7 +10,12 @@ const MenuStyles = defineSlotRecipe({
       bgColor: 'select.button.primary',
       borderRadius: '100px',
       paddingInline: 'gap.24',
-      fontStyle: 'text.xl',
+      textStyle: 'text.xl',
+      color: 'primary',
+      transition: easeIn,
+      _hover: {
+        bgColor: 'button.fill.hover',
+      },
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -36,9 +41,15 @@ const MenuStyles = defineSlotRecipe({
       h: '44px',
       borderRadius: '16px',
       flexDirection: 'row-reverse',
+      gap: 'gap.8',
       _hover: {
         bgColor: 'select.item.hover',
       },
+    },
+    // Rendered in the flow so the row-reversed item puts the checkmark on the right
+    itemIndicator: {
+      position: 'static',
+      transform: 'none',
     },
   },
 });

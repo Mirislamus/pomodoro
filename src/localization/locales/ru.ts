@@ -1,4 +1,6 @@
-const ru = {
+import { Translation } from '../../typings/types';
+
+const ru: Translation = {
   settings: 'Настройки',
   lang_selection: 'Выбор языка',
   lang: 'Язык',
@@ -16,7 +18,6 @@ const ru = {
   of: 'из',
   start: 'Старт',
   pause: 'Пауза',
-  resume: 'Продолжить',
   close: 'Закрыть',
   stage_select: 'Выбор этапа',
   timer: 'Таймер',
@@ -25,12 +26,10 @@ const ru = {
   pomodoro_duration_settings: 'Длительность помодоро',
   auto_start: 'Автозапуск',
   up_to: 'до',
-  from: 'от',
   minutes: 'мин',
   sounds: 'Звуки',
   reset_settings: 'Сбросить настройки',
   copy_settings: 'Скопировать настройки',
-  settings_copied_info: 'Ссылка со всеми настройками скопирована в буфер обмена',
   settings_copied_toast_info: 'Ссылка со всеми настройками скопирована в буфер обмена',
   finish_sound: 'Звук завершения',
   tick_sound: 'Звук тикания',
@@ -42,6 +41,11 @@ const ru = {
   pomodoro_notification_long: `Фокус-сессия окончена, время длинного перерыва`,
   short_break_notification: `Короткий перерыв окончен, пора вернуться к фокусу`,
   long_break_notification: `Длинный перерыв окончен, пора вернуться к фокусу`,
+  menu: 'Меню',
+  notifications_blocked: 'Уведомления заблокированы браузером',
+  increase: 'Увеличить',
+  decrease: 'Уменьшить',
+  settings_copy_failed_toast: 'Не удалось скопировать ссылку. Попробуйте ещё раз',
 };
 
 export default ru;

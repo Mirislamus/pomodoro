@@ -1,45 +1,40 @@
-import { Box, Menu, Portal } from '@chakra-ui/react';
+import { Menu, Portal, useDisclosure } from '@chakra-ui/react';
 import { SelectMenuProps } from './types';
 import { IconChevronDown, IconTickLg } from '../../theme/foundations/icons';
 import { easeIn } from '../../theme/foundations/transitions';
 
-const SelectMenu = ({ items, selectedItem, isOpen, onOpen, onClose }: SelectMenuProps) => {
-  const selectedValue = items.find(item => item.name === selectedItem)?.id ?? selectedItem;
+const SelectMenu = ({ value, items, describedBy }: SelectMenuProps) => {
+  const { open, setOpen } = useDisclosure();
+  const selectedItem = items.find(item => item.id === value) ?? items[0];
 
   return (
-    <Box pos="relative">
-      <Menu.Root
-        open={isOpen}
-        onOpenChange={({ open }) => (open ? onOpen() : onClose())}
-        positioning={{ sameWidth: true }}
-      >
-        <Menu.Trigger>
-          {selectedItem}
-          <IconChevronDown boxSize="12px" transition={easeIn} transform={isOpen ? 'rotate(180deg)' : ''} />
-        </Menu.Trigger>
-        <Portal>
-          <Menu.Positioner>
-            <Menu.Content zIndex={30}>
-              <Menu.RadioItemGroup value={selectedValue}>
-                {items.map(item => (
-                  <Menu.RadioItem
-                    key={item.id}
-                    value={item.id}
-                    bgColor={item.id === selectedValue ? 'select.item.selected' : 'transparent'}
-                    onClick={item.onClick}
-                  >
-                    <Menu.ItemIndicator>
-                      <IconTickLg boxSize="24px" color="accent.red" />
-                    </Menu.ItemIndicator>
-                    <Menu.ItemText>{item.name}</Menu.ItemText>
-                  </Menu.RadioItem>
-                ))}
-              </Menu.RadioItemGroup>
-            </Menu.Content>
-          </Menu.Positioner>
-        </Portal>
-      </Menu.Root>
-    </Box>
+    <Menu.Root open={open} onOpenChange={details => setOpen(details.open)} positioning={{ sameWidth: true }}>
+      <Menu.Trigger aria-describedby={describedBy}>
+        {selectedItem?.name}
+        <IconChevronDown boxSize="12px" transition={easeIn} transform={open ? 'rotate(180deg)' : undefined} />
+      </Menu.Trigger>
+      <Portal>
+        <Menu.Positioner>
+          <Menu.Content zIndex={30}>
+            <Menu.RadioItemGroup value={selectedItem?.id}>
+              {items.map(item => (
+                <Menu.RadioItem
+                  key={item.id}
+                  value={item.id}
+                  bgColor={item.id === selectedItem?.id ? 'select.item.selected' : 'transparent'}
+                  onClick={item.onClick}
+                >
+                  <Menu.ItemIndicator>
+                    <IconTickLg boxSize="24px" color="accent.red" isActive />
+                  </Menu.ItemIndicator>
+                  <Menu.ItemText>{item.name}</Menu.ItemText>
+                </Menu.RadioItem>
+              ))}
+            </Menu.RadioItemGroup>
+          </Menu.Content>
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
   );
 };
 

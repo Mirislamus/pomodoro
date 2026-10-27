@@ -1,12 +1,8 @@
-import { StageColor } from '../../typings/enums';
-
-export type Stage = {
-  text: string;
-  onClick: () => void;
-  isActive: boolean;
-};
+import { Stage } from '../../typings/enums';
 
 export interface StageSwitcherProps {
-  stageColor: StageColor;
-  stages: Stage[];
+  activeStage: Stage;
+  /** The switcher can only measure its buttons while the timer view is displayed. */
+  isVisible?: boolean;
+  onSelect: (stage: Stage) => void;
 }

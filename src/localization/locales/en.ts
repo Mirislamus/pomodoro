@@ -16,7 +16,6 @@ const en = {
   of: 'of',
   start: 'Start',
   pause: 'Pause',
-  resume: 'Resume',
   close: 'Close',
   stage_select: 'Stage select',
   timer: 'Timer',
@@ -25,12 +24,10 @@ const en = {
   pomodoro_duration_settings: 'Pomodoro duration',
   auto_start: 'Autostart',
   up_to: 'up to',
-  from: 'from',
   minutes: 'min',
   sounds: 'Sounds',
   reset_settings: 'Reset settings',
   copy_settings: 'Copy settings',
-  settings_copied_info: 'The link with all the settings has been copied to the clipboard',
   settings_copied_toast_info: 'The link with all the settings has been copied to the clipboard',
   finish_sound: 'Finish sound',
   tick_sound: 'Tick sound',
@@ -42,6 +39,11 @@ const en = {
   pomodoro_notification_long: `Focus session is over, time for a long break`,
   short_break_notification: `Short break is over, time to focus`,
   long_break_notification: `Long break is over, time to focus`,
+  menu: 'Menu',
+  notifications_blocked: 'Notifications are blocked by the browser',
+  increase: 'Increase',
+  decrease: 'Decrease',
+  settings_copy_failed_toast: 'Could not copy the link. Please try again',
 };
 
 export default en;

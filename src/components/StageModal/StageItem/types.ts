@@ -1,7 +1,7 @@
-import { Session } from '../../../typings/types';
+import { Stage } from '../../../typings/enums';
 
-export interface StateItemProps {
-  stage: Session['stage'];
+export interface StageItemProps {
+  stage: Stage;
   isActive?: boolean;
   onClick: () => void;
 }

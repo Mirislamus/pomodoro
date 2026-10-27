@@ -1,4 +1,8 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+// Not every engine honours the reduced-motion emulation, so geometry checks wait for entrance animations
+const waitForAnimations = (page: Page) =>
+  page.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
 
 test('user can open the timer and start a focus session', async ({ page }) => {
   const pageErrors: string[] = [];
@@ -39,7 +43,7 @@ test('numeric setting labels keep their title and helper text stacked', async ({
   await page.goto('./');
   await page.getByRole('button', { name: /настройки|settings/i }).click();
   await expect(page.getByRole('tab', { name: /таймер|timer/i })).toBeVisible();
-  await page.waitForTimeout(300);
+  await waitForAnimations(page);
 
   const labelParts = page.locator('[data-scope="field"][data-part="label"]').first().locator(':scope > *');
   const title = await labelParts.nth(0).boundingBox();
@@ -85,7 +89,9 @@ test('settings tabs and actions keep the intended desktop layout', async ({ page
 
   const enabledButtons = page.locator('button:not(:disabled)');
   await expect
-    .poll(async () => enabledButtons.evaluateAll(buttons => buttons.every(button => getComputedStyle(button).cursor === 'pointer')))
+    .poll(async () =>
+      enabledButtons.evaluateAll(buttons => buttons.every(button => getComputedStyle(button).cursor === 'pointer'))
+    )
     .toBe(true);
 
   const scrollArea = page.locator('.simplebar-content-wrapper');
@@ -103,6 +109,8 @@ test('mobile settings fit the viewport and keep both actions aligned', async ({ 
   await page.setViewportSize({ width: 320, height: 642 });
   await page.goto('./');
   await page.getByRole('button', { name: /настройки|settings/i }).click();
+  await expect(page.getByRole('tab', { name: /таймер|timer/i })).toBeVisible();
+  await waitForAnimations(page);
 
   const scrollArea = page.locator('.simplebar-content-wrapper');
   const resetButton = page.getByRole('button', { name: /сбросить настройки|reset settings/i });
@@ -164,9 +172,7 @@ test('mobile stage dialog keeps the published top offset and backdrop', async ({
   await expect
     .poll(async () => {
       const box = await dialog.boundingBox();
-      return box
-        ? { x: Math.round(box.x), y: Math.round(box.y), width: Math.round(box.width) }
-        : null;
+      return box ? { x: Math.round(box.x), y: Math.round(box.y), width: Math.round(box.width) } : null;
     })
     .toEqual({ x: 31, y: 64, width: 328 });
 
@@ -346,12 +352,12 @@ test('skip advances to the next stage and clears the skipped stage time', async 
 
   await expect
     .poll(async () => page.evaluate(() => JSON.parse(localStorage.getItem('session-storage')!).state.session))
-    .toMatchObject({ stage: 'short-break', pomodoroCurrentTime: 0, shortBrakeCurrentTime: 0 });
+    .toMatchObject({ stage: 'short-break', pomodoroCurrentTime: 0, shortBreakCurrentTime: 0 });
 
   await skipButton.click();
   await expect
     .poll(async () => page.evaluate(() => JSON.parse(localStorage.getItem('session-storage')!).state.session))
-    .toMatchObject({ stage: 'pomodoro', sessionCount: 2, shortBrakeCurrentTime: 0 });
+    .toMatchObject({ stage: 'pomodoro', sessionCount: 2, shortBreakCurrentTime: 0 });
 });
 
 test('skip button resets cycle directly to step 1 and zeroes out all times', async ({ page }) => {
@@ -385,8 +391,8 @@ test('skip button resets cycle directly to step 1 and zeroes out all times', asy
       stage: 'pomodoro',
       sessionCount: 1,
       pomodoroCurrentTime: 0,
-      shortBrakeCurrentTime: 0,
-      longBrakeCurrentTime: 0,
+      shortBreakCurrentTime: 0,
+      longBreakCurrentTime: 0,
     });
 
   await expect(page.getByText('25:00', { exact: true })).toBeVisible();
@@ -487,18 +493,18 @@ test('user can switch the language and keep it after reload', async ({ page }, t
   await page.getByRole('button', { name: 'Russian' }).click();
 
   await expect(page).toHaveURL(/.*\/ru\//);
-  await expect(page.getByRole('button', { name: 'Русский' })).toBeVisible();
+  await expect(page.locator('header').getByRole('button', { name: 'Русский' })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole('button', { name: 'Русский' })).toBeVisible();
+  await expect(page.locator('header').getByRole('button', { name: 'Русский' })).toBeVisible();
 
-  await page.getByRole('button', { name: 'Русский' }).click();
+  await page.locator('header').getByRole('button', { name: 'Русский' }).click();
   await expect(page.getByText('Выбор языка', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Узбекский' }).click();
 
   await expect(page).toHaveURL(/.*\/uz\//);
-  await expect(page.getByRole('button', { name: 'O‘zbekcha' })).toBeVisible();
+  await expect(page.locator('header').getByRole('button', { name: 'O‘zbekcha' })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole('button', { name: 'O‘zbekcha' })).toBeVisible();
+  await expect(page.locator('header').getByRole('button', { name: 'O‘zbekcha' })).toBeVisible();
 });
 
 test('localized routes open with correct language content', async ({ page }) => {
@@ -635,11 +641,13 @@ test('timer persists countdown when navigating between timer and settings', asyn
 
   await page.waitForTimeout(1100);
 
-  await page.getByRole('button', { name: /закрыть|close/i }).first().click();
+  await page
+    .getByRole('button', { name: /закрыть|close/i })
+    .first()
+    .click();
   await page.waitForURL(url => !url.pathname.includes('/settings'));
 
   await expect(page.getByRole('button', { name: /пауза|pause/i })).toBeVisible({ timeout: 10000 });
   await expect(page.getByText(/24:5[0-9]/)).toBeVisible({ timeout: 10000 });
   await expect(page.getByText('25:00', { exact: true })).not.toBeVisible();
 });
-

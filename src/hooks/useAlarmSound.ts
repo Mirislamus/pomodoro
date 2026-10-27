@@ -1,31 +1,12 @@
-import { useEffect } from 'react';
-import useAudioContext from './useAudioContext';
+import useAudioPlayer, { AudioPlayer } from './useAudioPlayer';
 import useSettingsStore from '../stores/useSettingsStore';
+import { withBase } from '../utils/url';
 
-interface AlarmSoundReturnType {
-  play: () => void;
-}
+const useAlarmSound = (): AudioPlayer => {
+  const alarmSound = useSettingsStore(state => state.settings.alarmSound);
+  const volume = useSettingsStore(state => state.settings.alarmSoundVolume);
 
-const useAlarmSound = (): AlarmSoundReturnType => {
-  const settings = useSettingsStore(state => state.settings);
-  const { setAudio, play, setVolume } = useAudioContext();
-
-  useEffect(() => {
-    if (settings.alarmSound) {
-      const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-      setAudio(`${baseUrl}/sounds/alarm/${settings.alarmSound}.mp3`);
-    }
-  }, [settings.alarmSound, setAudio]);
-
-  useEffect(() => {
-    if (settings.alarmSoundVolume) {
-      setVolume(settings.alarmSoundVolume);
-    }
-  }, [settings.alarmSoundVolume, setVolume]);
-
-  return {
-    play,
-  };
+  return useAudioPlayer({ src: withBase(`/sounds/alarm/${alarmSound}.mp3`), volume });
 };
 
 export default useAlarmSound;

@@ -5,6 +5,6 @@ export const defaultSession: Session = {
   sessionCount: 1,
   stage: Stage.Pomodoro,
   pomodoroCurrentTime: 0,
-  shortBrakeCurrentTime: 0,
-  longBrakeCurrentTime: 0,
+  shortBreakCurrentTime: 0,
+  longBreakCurrentTime: 0,
 };

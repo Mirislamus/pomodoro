@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDisclosure } from '@chakra-ui/react';
 import { useColorMode } from '../components/ui/color-mode';
 import { Provider } from '../components/ui/provider';
@@ -11,78 +11,47 @@ import LangMenu from '../components/LangMenu/LangMenu';
 import TimerView from '../views/TimerView';
 import SettingsView from '../views/SettingsView';
 import useNotificationPermission from '../hooks/useNotificationPermission';
+import useRouteSync from '../hooks/useRouteSync';
+import { useApplySettingsFromUrl } from '../hooks/useSettingsLink';
 import useSettingsStore from '../stores/useSettingsStore';
 import i18n from '../localization/i18n';
-import useAppNavigate from '../hooks/useAppNavigate';
+import { Locale } from '../typings/enums';
+import { DEFAULT_LOCALE } from '../consts/locales';
+import { AppRoute } from '../utils/url';
 
 export interface AppShellProps {
   currentView?: 'timer' | 'settings';
-  locale?: string;
-  children?: React.ReactNode;
+  locale?: Locale;
 }
 
-const AppShellContent = ({ currentView = 'timer', children }: AppShellProps) => {
+const AppShellContent = ({ currentView = 'timer' }: Pick<AppShellProps, 'currentView'>) => {
   const { open: isLangMenuOpen, onClose: onLangMenuClose, onOpen: onLangMenuOpen } = useDisclosure();
   const { open: isMobileMenuOpen, onClose: onMobileMenuClose, onOpen: onMobileMenuOpen } = useDisclosure();
-
   const { colorMode, toggleColorMode } = useColorMode();
-  const settings = useSettingsStore(state => state.settings);
+  const allowNotifications = useSettingsStore(state => state.settings.allowNotifications);
   const setSettings = useSettingsStore(state => state.setSettings);
   const notificationPermission = useNotificationPermission();
-  const appNavigate = useAppNavigate();
+  const [route, navigateTo] = useRouteSync(currentView === 'settings' ? '/settings/' : '/');
 
-  const [activeView, setActiveView] = useState<'timer' | 'settings'>(currentView);
+  useApplySettingsFromUrl();
+
+  const isSettings = route === '/settings/';
+  const otherRoute: AppRoute = isSettings ? '/' : '/settings/';
+
+  // Settings are mounted ahead of time while idle, so opening them only reveals a ready panel
+  // instead of rendering the whole form on click, in the middle of the entrance animation
+  const [isSettingsPrepared, setIsSettingsPrepared] = useState(false);
 
   useEffect(() => {
-    const syncRouteAndLocale = () => {
-      const pathname = window.location.pathname;
-      const isSettings = pathname.includes('/settings');
-      setActiveView(isSettings ? 'settings' : 'timer');
-
-      const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
-      let path = pathname;
-      if (baseUrl && path.startsWith(baseUrl)) {
-        path = path.slice(baseUrl.length);
-      }
-      const segments = path.split('/').filter(Boolean);
-      const detectedLang = ['ru', 'uz', 'de'].includes(segments[0]) ? segments[0] : 'en';
-      if (i18n.resolvedLanguage !== detectedLang) {
-        i18n.changeLanguage(detectedLang);
-      }
-    };
-
-    syncRouteAndLocale();
-    document.documentElement.setAttribute('data-app-hydrated', 'true');
-    window.dispatchEvent(new CustomEvent('app:hydrated'));
-
-    document.addEventListener('astro:page-load', syncRouteAndLocale);
-    window.addEventListener('popstate', syncRouteAndLocale);
-
-    return () => {
-      document.removeEventListener('astro:page-load', syncRouteAndLocale);
-      window.removeEventListener('popstate', syncRouteAndLocale);
-    };
+    const id = setTimeout(() => setIsSettingsPrepared(true), 1000);
+    return () => clearTimeout(id);
   }, []);
 
-  const isSettings = activeView === 'settings';
-
-  const onSettingsClickHandler = () => {
-    if (isSettings) {
-      setActiveView('timer');
-      appNavigate('/');
-    } else {
-      setActiveView('settings');
-      appNavigate('/settings/');
-    }
-  };
-
-  const onNotifyClickHandler = () => {
-    setSettings('allowNotifications', !settings.allowNotifications);
-  };
+  const toggleSettings = () => navigateTo(otherRoute);
 
   return (
     <>
-      <LangMenu isOpen={isLangMenuOpen} onClose={onLangMenuClose} />
+      <LangMenu isOpen={isLangMenuOpen} onClose={onLangMenuClose} onLocaleChange={onMobileMenuClose} />
       <MobileMenu
         isOpen={isMobileMenuOpen}
         colorMode={colorMode}
@@ -92,38 +61,32 @@ const AppShellContent = ({ currentView = 'timer', children }: AppShellProps) => 
       />
       <Layout>
         <Header onLangClick={onLangMenuOpen} onMenuClick={onMobileMenuOpen} />
-        {children ? (
-          children
-        ) : (
-          <>
-            <TimerView hidden={activeView !== 'timer'} />
-            {activeView === 'settings' && <SettingsView onClose={onSettingsClickHandler} />}
-          </>
-        )}
+        {/* The timer stays mounted on the settings page so a running countdown keeps going */}
+        <TimerView hidden={isSettings} />
+        {(isSettings || isSettingsPrepared) && <SettingsView hidden={!isSettings} onClose={toggleSettings} />}
         <Footer
-          allowNotification={settings.allowNotifications}
-          isNotificationDisabled={notificationPermission === 'denied'}
           isSettings={isSettings}
           colorMode={colorMode}
+          areNotificationsEnabled={allowNotifications}
+          areNotificationsBlocked={notificationPermission === 'denied'}
           onColorModeClick={toggleColorMode}
-          onNotifyClick={onNotifyClickHandler}
-          onSettingsClick={onSettingsClickHandler}
+          onNotifyClick={() => setSettings('allowNotifications', !allowNotifications)}
+          onSettingsClick={toggleSettings}
         />
       </Layout>
     </>
   );
 };
 
-const AppShell = ({ currentView = 'timer', locale = 'en', children }: AppShellProps) => {
-  if (locale && i18n.language !== locale) {
+const AppShell = ({ currentView = 'timer', locale = DEFAULT_LOCALE }: AppShellProps) => {
+  // Runs during render on purpose: the server-rendered HTML must already be in the page language
+  if (i18n.language !== locale) {
     i18n.changeLanguage(locale);
   }
 
   return (
     <Provider storageKey="chakra-ui-color-mode" defaultTheme="system" enableSystem>
-      <AppShellContent currentView={currentView} locale={locale}>
-        {children}
-      </AppShellContent>
+      <AppShellContent currentView={currentView} />
       <Toaster />
     </Provider>
   );

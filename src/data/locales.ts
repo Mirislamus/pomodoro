@@ -1,6 +1,8 @@
+import { Locale } from '../typings/enums';
+
 export interface LocaleMeta {
   code: string;
-  lang: string;
+  lang: Locale;
   name: string;
   title: string;
   description: string;
@@ -8,12 +10,10 @@ export interface LocaleMeta {
   settingsDescription: string;
 }
 
-export const defaultLocale = 'en';
-
-export const locales: Record<string, LocaleMeta> = {
+export const locales: Record<Locale, LocaleMeta> = {
   en: {
     code: 'en-US',
-    lang: 'en',
+    lang: Locale.En,
     name: 'English',
     title: 'Pomotomo — Focus Timer',
     description:
@@ -24,7 +24,7 @@ export const locales: Record<string, LocaleMeta> = {
   },
   ru: {
     code: 'ru-RU',
-    lang: 'ru',
+    lang: Locale.Ru,
     name: 'Русский',
     title: 'Pomotomo — Таймер фокусировки',
     description:
@@ -35,7 +35,7 @@ export const locales: Record<string, LocaleMeta> = {
   },
   uz: {
     code: 'uz-UZ',
-    lang: 'uz',
+    lang: Locale.Uz,
     name: 'O‘zbekcha',
     title: 'Pomotomo — Diqqatni jamlash taymeri',
     description:
@@ -46,7 +46,7 @@ export const locales: Record<string, LocaleMeta> = {
   },
   de: {
     code: 'de-DE',
-    lang: 'de',
+    lang: Locale.De,
     name: 'Deutsch',
     title: 'Pomotomo — Fokus-Timer',
     description:

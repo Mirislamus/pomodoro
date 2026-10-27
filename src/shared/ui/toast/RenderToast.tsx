@@ -47,7 +47,7 @@ export const RenderToast = ({ title, isClosable, status = 'info', onUserClose = 
           asChild
         >
           <button onClick={handleToastClose}>
-            <IconClose _groupHover={{ opacity: 0.8 }} transition={ease} color="gray.3" boxSize="16px" />
+            <IconClose _groupHover={{ opacity: 0.8 }} transition={ease} color="grey.3" boxSize="16px" />
           </button>
         </Box>
       )}

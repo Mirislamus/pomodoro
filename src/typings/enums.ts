@@ -11,12 +11,6 @@ export enum Locale {
   De = 'de',
 }
 
-export enum StageColor {
-  Pomodoro = 'accent.red',
-  ShortBreak = 'accent.yellow',
-  LongBreak = 'accent.green',
-}
-
 export enum AlarmSound {
   Bell = 'alarm-bell',
   Bird = 'alarm-bird',

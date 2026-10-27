@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { useSwipeable } from 'react-swipeable';
 import { LangMenuProps } from './types';
 import LangButton from './LangButton/LangButton';
-import useGetLocales from '../../hooks/useGetLocales';
+import useLocales from '../../hooks/useLocales';
 import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import { IconArrow, IconClose } from '../../theme/foundations/icons';
 
-const LangMenu = ({ isOpen, onClose }: LangMenuProps) => {
-  const { t, i18n } = useTranslation();
-  const locales = useGetLocales();
+const LangMenu = ({ isOpen, onClose, onLocaleChange }: LangMenuProps) => {
+  const { t } = useTranslation();
+  const locales = useLocales();
   const handlers = useSwipeable({ onSwipedRight: onClose, delta: 50, trackMouse: true });
 
   return (
@@ -17,7 +17,7 @@ const LangMenu = ({ isOpen, onClose }: LangMenuProps) => {
       <Portal>
         <Drawer.Backdrop />
         <Drawer.Positioner>
-          <Drawer.Content aria-hidden={!isOpen} maxW={{ base: '100%', md: '300px' }} {...handlers}>
+          <Drawer.Content maxW={{ base: '100%', md: '300px' }} {...handlers}>
             <Drawer.Header
               display="flex"
               justifyContent="space-between"
@@ -37,23 +37,33 @@ const LangMenu = ({ isOpen, onClose }: LangMenuProps) => {
                   {t('lang_selection')}
                 </Text>
               </Drawer.Title>
-              <Drawer.CloseTrigger asChild>
-                <ActionButton boxSize="40px" display={{ base: 'none', md: 'flex' }} variant="fill" onClick={onClose}>
-                  <IconClose boxSize="24px" />
-                </ActionButton>
-              </Drawer.CloseTrigger>
-              <ActionButton boxSize="40px" display={{ base: 'flex', md: 'none' }} icon={IconArrow} onClick={onClose} />
+              <ActionButton
+                aria-label={t('close')}
+                size="xs"
+                display={{ base: 'none', md: 'flex' }}
+                variant="fill"
+                icon={IconClose}
+                onClick={onClose}
+              />
+              <ActionButton
+                aria-label={t('close')}
+                size="xs"
+                display={{ base: 'flex', md: 'none' }}
+                icon={IconArrow}
+                onClick={onClose}
+              />
             </Drawer.Header>
             <Drawer.Body p="15px">
               <VStack gap="4px">
-                {Object.entries(locales).map(([key, { id, name, onChangeLang }]) => (
+                {locales.map(({ id, name, isActive, onSelect }) => (
                   <LangButton
-                    key={key}
-                    lang={name}
-                    isActive={i18n.resolvedLanguage === id}
+                    key={id}
+                    name={name}
+                    isActive={isActive}
                     onClick={() => {
                       onClose();
-                      onChangeLang();
+                      onLocaleChange?.();
+                      onSelect();
                     }}
                   />
                 ))}

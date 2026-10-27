@@ -3,6 +3,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import AstroPWA from '@vite-pwa/astro';
 import meta from './src/data/meta.ts';
+import { DEFAULT_LOCALE, LOCALES } from './src/consts/locales.ts';
 
 const site = 'https://mirislamus.github.io';
 const base = '/pomodoro';
@@ -16,15 +17,10 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) => !page.includes('/settings'),
+      filter: page => !page.includes('/settings'),
       i18n: {
-        defaultLocale: 'en',
-        locales: {
-          en: 'en',
-          ru: 'ru',
-          uz: 'uz',
-          de: 'de',
-        },
+        defaultLocale: DEFAULT_LOCALE,
+        locales: Object.fromEntries(LOCALES.map(locale => [locale, locale])),
       },
     }),
     AstroPWA({

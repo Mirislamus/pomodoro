@@ -1,16 +1,13 @@
 import { Dialog, Portal, Text, VStack } from '@chakra-ui/react';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { StageModalProps } from './types';
 import { IconClose } from '../../theme/foundations/icons';
 import ActionButton from '../../shared/ui/ActionButton/ActionButton';
 import StageItem from './StageItem/StageItem';
-import { Stage } from '../../typings/enums';
-import useSessionStore from '../../stores/useSessionStore';
+import { STAGES } from '../../consts/stages';
 
-const StageModal = ({ isOpen, onClose }: StageModalProps) => {
-  const session = useSessionStore(state => state.session);
-  const setSession = useSessionStore(state => state.setSession);
-  const stages = [Stage.Pomodoro, Stage.ShortBreak, Stage.LongBreak];
+const StageModal = ({ isOpen, activeStage, onClose, onSelect }: StageModalProps) => {
+  const { t } = useTranslation();
 
   return (
     <Dialog.Root
@@ -32,22 +29,25 @@ const StageModal = ({ isOpen, onClose }: StageModalProps) => {
               paddingBlockEnd="16px"
             >
               <Dialog.Title asChild>
-                <Text fontWeight="600" textStyle="text.xl">
+                <Text fontWeight="600" textStyle="text.xl" color="primary">
                   {t('stage_select')}
                 </Text>
               </Dialog.Title>
-              <ActionButton boxSize="40px" variant="fill" onClick={onClose}>
-                <IconClose mt="-2px" boxSize="20px" />
+              <ActionButton aria-label={t('close')} size="xs" variant="fill" onClick={onClose}>
+                <IconClose boxSize="20px" />
               </ActionButton>
             </Dialog.Header>
             <Dialog.Body p="0">
               <VStack gap="gap.10">
-                {stages.map(stage => (
+                {STAGES.map(stage => (
                   <StageItem
                     key={stage}
                     stage={stage}
-                    isActive={session.stage === stage}
-                    onClick={() => setSession('stage', stage)}
+                    isActive={activeStage === stage}
+                    onClick={() => {
+                      onSelect(stage);
+                      onClose();
+                    }}
                   />
                 ))}
               </VStack>

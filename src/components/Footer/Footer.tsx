@@ -1,21 +1,29 @@
 import { Box, Button, Flex, chakra } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { FooterProps } from './types';
 import ActionButton from '../../shared/ui/ActionButton/ActionButton';
-import { IconClose, IconDark, IconLight, IconNotify, IconSettings } from '../../theme/foundations/icons';
-import { t } from 'i18next';
-import { ease, easeIn } from '../../theme/foundations/transitions';
 import PomodoroTooltip from '../../shared/ui/PomodoroTooltip/PomodoroTooltip';
+import { IconClose, IconDark, IconLight, IconNotify, IconSettings } from '../../theme/foundations/icons';
+import { animations, ease, easeIn } from '../../theme/foundations/transitions';
+import { getElementCenter } from '../../utils';
 
 const _Footer = ({
   isSettings = false,
   colorMode,
-  allowNotification,
+  areNotificationsEnabled,
+  areNotificationsBlocked,
   onSettingsClick,
   onNotifyClick,
   onColorModeClick,
-  isNotificationDisabled,
   ...props
 }: FooterProps) => {
+  const { t } = useTranslation();
+  const isOn = areNotificationsEnabled && !areNotificationsBlocked;
+  const notifyLabel = t(
+    areNotificationsBlocked ? 'notifications_blocked' : isOn ? 'notification_off' : 'notification_on'
+  );
+  const colorModeLabel = t(colorMode === 'light' ? 'dark_mode' : 'light_mode');
+
   return (
     <Flex
       as="footer"
@@ -27,41 +35,46 @@ const _Footer = ({
       pos="relative"
       {...props}
     >
-      <PomodoroTooltip placement="top-start" label={t(allowNotification ? 'notification_off' : 'notification_on')}>
+      <PomodoroTooltip placement="top-start" label={notifyLabel}>
+        {/* Disabled buttons swallow pointer events, the wrapper keeps the tooltip working */}
         <Box>
-          <ActionButton isDisabled={isNotificationDisabled} variant="fill" onClick={onNotifyClick}>
-            <IconNotify transition={easeIn} boxSize="24px" color="primary" isActive={!allowNotification} />
+          <ActionButton
+            aria-label={notifyLabel}
+            aria-pressed={isOn}
+            isDisabled={areNotificationsBlocked}
+            variant="fill"
+            onClick={onNotifyClick}
+          >
+            <IconNotify transition={easeIn} boxSize="24px" isActive={!isOn} />
           </ActionButton>
         </Box>
       </PomodoroTooltip>
-      <Button minW="150px" className="group" textTransform="uppercase" fontWeight="600" onClick={onSettingsClick}>
+      <Button minW="150px" className="group" fontWeight="600" onClick={onSettingsClick}>
         {isSettings ? (
           <>
-            <IconClose boxSize="24px" mr="gap.4" />
+            <IconClose boxSize="24px" animation={animations.iconEnter} />
             {t('close')}
           </>
         ) : (
           <>
             <IconSettings
-              _groupFocus={{ transform: 'rotate(90deg)' }}
+              _groupFocusVisible={{ transform: 'rotate(90deg)' }}
               _groupHover={{ transform: 'rotate(90deg)' }}
               transition={ease}
               boxSize="24px"
-              mr="gap.4"
+              animation={animations.iconEnter}
             />
             {t('settings')}
           </>
         )}
       </Button>
-      <PomodoroTooltip placement="top-end" label={t(colorMode === 'light' ? 'dark_mode' : 'light_mode')}>
-        <Box>
-          <ActionButton
-            aria-label={t(colorMode === 'light' ? 'dark_mode' : 'light_mode')}
-            variant="fill"
-            icon={colorMode === 'light' ? IconDark : IconLight}
-            onClick={onColorModeClick}
-          />
-        </Box>
+      <PomodoroTooltip placement="top-end" label={colorModeLabel}>
+        <ActionButton
+          aria-label={colorModeLabel}
+          variant="fill"
+          icon={colorMode === 'light' ? IconDark : IconLight}
+          onClick={event => onColorModeClick(getElementCenter(event.currentTarget))}
+        />
       </PomodoroTooltip>
     </Flex>
   );

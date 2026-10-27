@@ -5,9 +5,8 @@ type SelectMenuItem = {
 };
 
 export interface SelectMenuProps {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  selectedItem: string;
+  value: string;
   items: SelectMenuItem[];
+  /** Id of the element describing what is being selected. */
+  describedBy?: string;
 }

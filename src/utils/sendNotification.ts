@@ -1,22 +1,25 @@
 import i18n from 'i18next';
+import meta from '../data/meta';
+import locales from '../data/locales';
+import { DEFAULT_LOCALE, isLocale } from '../consts/locales';
+import { withBase } from './url';
 
-const sendNotification = (options?: NotificationOptions) => {
+const sendNotification = (body: string) => {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
 
-  const currentLang = i18n.resolvedLanguage || i18n.language || 'en';
-  const langMap: Record<string, string> = {
-    en: 'en-US',
-    ru: 'ru-RU',
-    uz: 'uz-UZ',
-    de: 'de-DE',
-  };
+  const language = i18n.resolvedLanguage;
+  const icon = withBase('/images/icons/icon-96x96.png');
 
-  new Notification('Pomotomo', {
-    ...options,
-    lang: langMap[currentLang] || 'en-US',
-    icon: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
-    badge: `${import.meta.env.BASE_URL}/images/icons/icon-96x96.png`,
-  });
+  try {
+    new Notification(meta.short_name, {
+      body,
+      lang: locales[isLocale(language) ? language : DEFAULT_LOCALE].code,
+      icon,
+      badge: icon,
+    });
+  } catch {
+    // Some mobile browsers only allow notifications from a service worker
+  }
 };
 
 export default sendNotification;

@@ -1,11 +1,11 @@
-import type { ColorMode } from '../ui/color-mode';
+import type { ColorMode, TransitionOrigin } from '../ui/color-mode';
 
 export interface FooterProps {
   isSettings?: boolean;
   colorMode: ColorMode;
-  allowNotification?: boolean;
+  areNotificationsEnabled: boolean;
+  areNotificationsBlocked: boolean;
   onSettingsClick: () => void;
   onNotifyClick: () => void;
-  onColorModeClick: () => void;
-  isNotificationDisabled?: boolean;
+  onColorModeClick: (origin: TransitionOrigin) => void;
 }

@@ -1,48 +1,47 @@
 import { Box, chakra, useToken } from '@chakra-ui/react';
-import useGetStageColor from '../../hooks/useGetStageColor';
+import useActiveStage from '../../hooks/useActiveStage';
 import { ProgressCircleProps } from './types';
 
-const _ProgressCircle = ({ fillPercentage, isActive = false, ...props }: ProgressCircleProps) => {
-  const radius = 230;
-  const strokeWidth = 36;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = ((100 - fillPercentage) / 100) * circumference;
-  const stageColor = useGetStageColor();
+const SIZE = 500;
+const RADIUS = 230;
+const STROKE_WIDTH = 36;
+const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-  const [circlePrimary, circleSecondary, currentStageColor] = useToken('colors', [
+const _ProgressCircle = ({ fillPercentage, isActive = false, ...props }: ProgressCircleProps) => {
+  const { color } = useActiveStage();
+  const [circlePrimary, circleSecondary, stageColor] = useToken('colors', [
     'circle.primary',
     'circle.secondary',
-    stageColor,
+    color,
   ]);
+  const hasProgress = fillPercentage > 0;
+  const center = SIZE / 2;
 
   return (
     <Box boxSize={{ base: '300px', md: '500px' }} css={{ '& svg': { maxW: '100%', h: 'auto' } }} {...props}>
-      <svg width="500" height="500" viewBox="0 0 500 500" fill="none">
+      <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`} fill="none" aria-hidden="true">
         <circle
-          cx="250"
-          cy="250"
-          r={radius}
-          fill="none"
+          cx={center}
+          cy={center}
+          r={RADIUS}
           stroke={circlePrimary}
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          transform="rotate(-90 250 250)"
+          strokeWidth={STROKE_WIDTH}
+          transform={`rotate(-90 ${center} ${center})`}
         />
         <circle
-          cx="250"
-          cy="250"
-          r={radius}
-          fill="none"
-          stroke={fillPercentage > 0 && isActive ? currentStageColor : circleSecondary}
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
+          cx={center}
+          cy={center}
+          r={RADIUS}
+          stroke={hasProgress && isActive ? stageColor : circleSecondary}
+          strokeWidth={STROKE_WIDTH}
+          strokeDasharray={CIRCUMFERENCE}
+          strokeDashoffset={((100 - fillPercentage) / 100) * CIRCUMFERENCE}
           strokeLinecap="round"
-          transform="rotate(-90 250 250)"
+          transform={`rotate(-90 ${center} ${center})`}
           style={{
-            transition: 'stroke-dashoffset 0.3s linear',
-            opacity: fillPercentage > 0 ? 1 : 0,
-            visibility: fillPercentage > 0 ? 'visible' : 'hidden',
+            transition: 'stroke-dashoffset 0.3s linear, stroke 0.3s ease',
+            opacity: hasProgress ? 1 : 0,
+            visibility: hasProgress ? 'visible' : 'hidden',
           }}
         />
       </svg>

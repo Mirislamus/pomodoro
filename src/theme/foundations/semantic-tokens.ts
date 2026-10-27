@@ -16,9 +16,6 @@ const semanticTokens = {
       _light: 'grey.2',
       _dark: 'grey.5',
     },
-    additionaly: {
-      default: 'grey.3',
-    },
     border: {
       _light: 'grey.6',
       _dark: 'whiteAlpha.10',
@@ -98,10 +95,10 @@ const semanticTokens = {
           _light: 'black.1',
           _dark: 'white',
         },
-      },
-      ghostActive: {
-        _light: 'white',
-        _dark: 'black.1',
+        active: {
+          _light: 'blackAlpha.8',
+          _dark: 'whiteAlpha.10',
+        },
       },
       circle: {
         default: {

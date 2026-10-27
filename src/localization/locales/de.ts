@@ -1,4 +1,6 @@
-const de = {
+import { Translation } from '../../typings/types';
+
+const de: Translation = {
   settings: 'Einstellungen',
   lang_selection: 'Sprachauswahl',
   lang: 'Sprache',
@@ -16,7 +18,6 @@ const de = {
   of: 'von',
   start: 'Start',
   pause: 'Pause',
-  resume: 'Fortsetzen',
   close: 'Schließen',
   stage_select: 'Phase auswählen',
   timer: 'Timer',
@@ -25,12 +26,10 @@ const de = {
   pomodoro_duration_settings: 'Pomodoro-Dauer',
   auto_start: 'Automatischer Start',
   up_to: 'bis zu',
-  from: 'von',
   minutes: 'Min.',
   sounds: 'Töne',
   reset_settings: 'Einstellungen zurücksetzen',
   copy_settings: 'Einstellungen kopieren',
-  settings_copied_info: 'Ein Link mit allen Einstellungen wurde in die Zwischenablage kopiert',
   settings_copied_toast_info: 'Ein Link mit allen Einstellungen wurde in die Zwischenablage kopiert',
   finish_sound: 'Abschlusston',
   tick_sound: 'Tick-Ton',
@@ -42,6 +41,11 @@ const de = {
   pomodoro_notification_long: `Fokusphase beendet, Zeit für eine lange Pause`,
   short_break_notification: `Kurze Pause beendet, Zeit für die nächste Fokusphase`,
   long_break_notification: `Lange Pause beendet, Zeit für die nächste Fokusphase`,
+  menu: 'Menü',
+  notifications_blocked: 'Benachrichtigungen sind im Browser blockiert',
+  increase: 'Erhöhen',
+  decrease: 'Verringern',
+  settings_copy_failed_toast: 'Der Link konnte nicht kopiert werden. Bitte versuchen Sie es erneut',
 };
 
 export default de;

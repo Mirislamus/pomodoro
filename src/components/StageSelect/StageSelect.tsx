@@ -1,21 +1,13 @@
-import { StageSelectProps } from './types';
 import { Flex, Text, chakra } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
+import { StageSelectProps } from './types';
 import { IconChevronDown } from '../../theme/foundations/icons';
 import { ease } from '../../theme/foundations/transitions';
-import useGetStageColor from '../../hooks/useGetStageColor';
-import { getTextColor } from '../../utils';
-import { useTranslation } from 'react-i18next';
-import { Stage } from '../../typings/enums';
+import { stageConfig } from '../../consts/stages';
 
-const stageKeyMap: Record<Stage, 'pomodoro' | 'short_break' | 'long_break'> = {
-  [Stage.Pomodoro]: 'pomodoro',
-  [Stage.ShortBreak]: 'short_break',
-  [Stage.LongBreak]: 'long_break',
-};
-
-const _StageSelect = ({ stage, isActive = false, onClick, ...props }: StageSelectProps) => {
-  const stageColor = useGetStageColor();
+const _StageSelect = ({ stage, isOpen = false, onClick, ...props }: StageSelectProps) => {
   const { t } = useTranslation();
+  const { color, textColor, labelKey } = stageConfig[stage];
 
   return (
     <Flex
@@ -24,22 +16,19 @@ const _StageSelect = ({ stage, isActive = false, onClick, ...props }: StageSelec
       px="25px"
       alignItems="center"
       justifyContent="space-between"
-      bgColor={stageColor}
+      bgColor={color}
+      color={textColor}
       borderRadius="100px"
+      transition={ease}
+      _active={{ transform: 'scale(0.98)' }}
       {...props}
       asChild
     >
-      <button onClick={onClick}>
-        <Text textTransform="uppercase" textStyle="text.md" color={getTextColor(stage)}>
-          {t(stageKeyMap[stage] || 'pomodoro')}
+      <button type="button" aria-haspopup="dialog" aria-expanded={isOpen} onClick={onClick}>
+        <Text as="span" textTransform="uppercase" textStyle="text.md">
+          {t(labelKey)}
         </Text>
-        <IconChevronDown
-          transition={ease}
-          transform={isActive ? 'scaleY(-1)' : ''}
-          w="14px"
-          h="8px"
-          color={getTextColor(stage)}
-        />
+        <IconChevronDown transition={ease} transform={isOpen ? 'scaleY(-1)' : undefined} w="14px" h="8px" />
       </button>
     </Flex>
   );

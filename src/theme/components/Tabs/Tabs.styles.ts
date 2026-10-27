@@ -1,4 +1,5 @@
 import { defineSlotRecipe } from '@chakra-ui/react';
+import { animations, ease } from '../../foundations/transitions';
 
 const TabsStyles = defineSlotRecipe({
   slots: ['root', 'list', 'trigger', 'content', 'indicator'],
@@ -21,6 +22,7 @@ const TabsStyles = defineSlotRecipe({
           lineHeight: '20px',
           textAlign: 'center',
           zIndex: 2,
+          transition: `color ${ease}`,
           h: { base: '44px', md: '50px' },
           _selected: {
             color: 'primary',
@@ -34,6 +36,11 @@ const TabsStyles = defineSlotRecipe({
           },
           _focusVisible: {
             boxShadow: 'none!important',
+          },
+          // Only the opening panel animates: a closing panel with no animation is hidden at once
+          // instead of lingering on top of the new one
+          _open: {
+            animation: animations.contentEnter,
           },
         },
       },

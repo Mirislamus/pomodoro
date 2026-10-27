@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AppShell from '../../app/AppShell';
+import { getLocaleStaticPaths } from '../../utils/getLocaleStaticPaths';
+
+export const getStaticPaths = getLocaleStaticPaths;
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout locale={locale} isSettings>
+  <AppShell client:load transition:persist="pomotomo-app" locale={locale} currentView="settings" />
+</BaseLayout>

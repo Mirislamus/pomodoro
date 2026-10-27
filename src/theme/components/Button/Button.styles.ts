@@ -18,7 +18,7 @@ const ButtonStyles = defineRecipe({
         color: 'primary',
         borderRadius: '100px',
         bgColor: 'button.fill.default',
-        gap: 'gap.4',
+        gap: 'gap.8',
         '& svg': { boxSize: '24px' },
         _hover: { bgColor: 'button.fill.hover' },
         _active: { bgColor: 'button.fill.active' },

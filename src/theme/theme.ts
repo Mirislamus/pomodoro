@@ -15,6 +15,7 @@ import InputStyles from './components/Input/Input.styles';
 import LinkStyles from './components/Link/Link.styles';
 import MenuStyles from './components/Menu/Menu.styles';
 import global from './foundations/global';
+import keyframes from './foundations/keyframes';
 import sizes from './foundations/sizes';
 import { createColorSemanticTokens, createTokens } from './utils';
 
@@ -22,6 +23,7 @@ const config = defineConfig({
   globalCss: global,
   theme: {
     breakpoints,
+    keyframes,
     tokens: {
       ...createTokens({
         ...typography,

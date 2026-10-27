@@ -1,4 +1,6 @@
-const uz = {
+import { Translation } from '../../typings/types';
+
+const uz: Translation = {
   settings: 'Sozlamalar',
   lang_selection: 'Tilni tanlash',
   lang: 'Til',
@@ -16,7 +18,6 @@ const uz = {
   of: '/',
   start: 'Boshlash',
   pause: 'Pauza',
-  resume: 'Davom ettirish',
   close: 'Yopish',
   stage_select: 'Bosqichni tanlash',
   timer: 'Taymer',
@@ -25,12 +26,10 @@ const uz = {
   pomodoro_duration_settings: 'Pomodoro davomiyligi',
   auto_start: 'Avtomatik boshlash',
   up_to: 'maks.',
-  from: 'dan',
   minutes: 'daq',
   sounds: 'Ovozlar',
   reset_settings: 'Sozlamalarni tiklash',
   copy_settings: 'Sozlamalardan nusxa olish',
-  settings_copied_info: 'Barcha sozlamalar havolasi buferga nusxalandi',
   settings_copied_toast_info: 'Barcha sozlamalar havolasi buferga nusxalandi',
   finish_sound: 'Tugash ovozi',
   tick_sound: 'Chertish ovozi',
@@ -42,6 +41,11 @@ const uz = {
   pomodoro_notification_long: `Fokus seansi yakunlandi, uzoq tanaffus vaqti keldi`,
   short_break_notification: `Qisqa tanaffus tugadi, diqqatni jamlash vaqti`,
   long_break_notification: `Uzoq tanaffus tugadi, diqqatni jamlash vaqti`,
+  menu: 'Menyu',
+  notifications_blocked: 'Bildirishnomalar brauzer tomonidan bloklangan',
+  increase: 'Oshirish',
+  decrease: 'Kamaytirish',
+  settings_copy_failed_toast: 'Havoladan nusxa olib bo‘lmadi. Qaytadan urinib ko‘ring',
 };
 
 export default uz;
