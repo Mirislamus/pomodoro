@@ -21,11 +21,11 @@ jobs:
             output: src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/*-setup.exe
             asset: Pomotomo-windows-x64-setup.exe
           - platform: macos-latest
-            target: universal-apple-darwin
-            rust-targets: aarch64-apple-darwin,x86_64-apple-darwin
+            target: aarch64-apple-darwin
+            rust-targets: aarch64-apple-darwin
             bundle: dmg
-            output: src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg
-            asset: Pomotomo-macos-universal.dmg
+            output: src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
+            asset: Pomotomo-macos-arm64.dmg
 
     runs-on: ${{ matrix.platform }}
 

@@ -1,6 +1,6 @@
 [package]
 name = "pomotomo"
-version = "0.1.0"
+version = "0.1.1"
 description = "Pomotomo focus timer"
 authors = ["Mirislamus"]
 edition = "2021"

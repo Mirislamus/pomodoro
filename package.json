@@ -1,7 +1,7 @@
 {
   "name": "pomodoro",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "start": "astro dev",
@@ -39,6 +39,9 @@
     "react-swipeable": "^7.0.2",
     "simplebar-react": "^3.3.2",
     "zustand": "^5.0.16"
+  },
+  "overrides": {
+    "zod": "^4.6.6"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",

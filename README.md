@@ -5,7 +5,7 @@
 Desktop app (Tauri):
 
 - **Windows** (10/11, x64): [Pomotomo-windows-x64-setup.exe](https://github.com/Mirislamus/pomodoro/releases/latest/download/Pomotomo-windows-x64-setup.exe)
-- **macOS** (10.15+, Apple Silicon and Intel): [Pomotomo-macos-universal.dmg](https://github.com/Mirislamus/pomodoro/releases/latest/download/Pomotomo-macos-universal.dmg)
+- **macOS** (11+, Apple Silicon): [Pomotomo-macos-arm64.dmg](https://github.com/Mirislamus/pomodoro/releases/latest/download/Pomotomo-macos-arm64.dmg)
 
 All versions are on the [Releases](https://github.com/Mirislamus/pomodoro/releases) page. Web version: [mirislamus.github.io/pomodoro](https://mirislamus.github.io/pomodoro/).
 
@@ -80,4 +80,4 @@ git tag v0.1.0
 git push origin v0.1.0
 ```
 
-The `Release desktop apps` workflow builds the Windows installer and the universal macOS `.dmg` and attaches them to the GitHub release under fixed names, so the download links above always point to the latest version.
+The `Release desktop apps` workflow builds the Windows installer and the Apple Silicon macOS `.dmg` and attaches them to the GitHub release under fixed names, so the download links above always point to the latest version.
