@@ -7,5 +7,5 @@ export interface ActionButtonProps extends Omit<ButtonProps, 'size' | 'variant' 
   isDisabled?: boolean;
   icon?: ElementType;
   children?: ReactNode;
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }

@@ -46,6 +46,7 @@ const uz: Translation = {
   increase: 'Oshirish',
   decrease: 'Kamaytirish',
   settings_copy_failed_toast: 'Havoladan nusxa olib bo‘lmadi. Qaytadan urinib ko‘ring',
+  download_app: '{{platform}} uchun yuklab olish',
 };
 
 export default uz;

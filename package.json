@@ -1,7 +1,7 @@
 {
   "name": "pomodoro",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "start": "astro dev",
@@ -11,6 +11,9 @@
     "build": "bun run typegen && bun run typecheck && astro build",
     "build:app": "astro build",
     "preview": "astro preview",
+    "tauri": "tauri",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build",
     "lint": "eslint",
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
@@ -42,6 +45,7 @@
     "@axe-core/playwright": "^4.14.0",
     "@chakra-ui/cli": "^3.37.0",
     "@playwright/test": "^1.64.1",
+    "@tauri-apps/cli": "^2",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

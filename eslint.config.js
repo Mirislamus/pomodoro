@@ -22,6 +22,8 @@ export default tseslint.config(
       'node_modules/',
       '.astro/',
       'dist/',
+      'dist-desktop/',
+      'src-tauri/',
       'build/',
       'public/',
       'coverage/',

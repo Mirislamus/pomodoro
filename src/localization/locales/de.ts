@@ -46,6 +46,7 @@ const de: Translation = {
   increase: 'Erhöhen',
   decrease: 'Verringern',
   settings_copy_failed_toast: 'Der Link konnte nicht kopiert werden. Bitte versuchen Sie es erneut',
+  download_app: 'Für {{platform}} herunterladen',
 };
 
 export default de;

@@ -44,6 +44,7 @@ const en = {
   increase: 'Increase',
   decrease: 'Decrease',
   settings_copy_failed_toast: 'Could not copy the link. Please try again',
+  download_app: 'Download for {{platform}}',
 };
 
 export default en;

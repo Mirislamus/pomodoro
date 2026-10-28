@@ -46,6 +46,7 @@ const ru: Translation = {
   increase: 'Увеличить',
   decrease: 'Уменьшить',
   settings_copy_failed_toast: 'Не удалось скопировать ссылку. Попробуйте ещё раз',
+  download_app: 'Скачать для {{platform}}',
 };
 
 export default ru;
